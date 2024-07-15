@@ -77,6 +77,29 @@
             --bg-color: #e0e0e0;
         }
 
+        .about-content {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        body.light-mode .about-content {
+            background-color: #f8f8f8;
+            color: #006400;
+        }
+
+        .highlight {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        body.light-mode .highlight {
+            color: #006400;
+        }
+
         .container {
             display: flex;
             flex-direction: column;
@@ -88,7 +111,7 @@
         }
 
         .about-content {
-            background: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 2rem;
             border-radius: 10px;
             max-width: 600px;
