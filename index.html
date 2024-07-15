@@ -251,6 +251,39 @@
             z-index: 9999;
             filter: blur(10px);
         }
+
+        #about-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 2px solid currentColor;
+            color: inherit;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px currentColor;
+            text-decoration: none;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        #about-button:hover {
+            background: currentColor;
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        #about-button:hover::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--bg-color);
+            z-index: 1;
+            text-shadow: none;
+        }
     </style>
 </head>
 <body class="dark-mode">
@@ -266,23 +299,39 @@
         </div>
     </div>
     <button id="mode-toggle" data-text="Toggle Mode">Toggle Mode</button>
+    <a href="about.html" id="about-button" data-text="About Me">About Me</a>
     <div class="glitch-overlay"></div>
     <div id="visit-counter">Visits: <span id="count">0</span></div>
     <script>
+        function setMode(mode) {
+            body.className = mode;
+            localStorage.setItem('mode', mode);
+        }
         const body = document.body;
         const modeToggle = document.getElementById('mode-toggle');
         const glitchOverlay = document.querySelector('.glitch-overlay');
+        const aboutButton = document.getElementById('about-button');
 
-        modeToggle.addEventListener('click', () => {
+        modeToggle.addEventListener('click', toggleMode);
+        aboutButton.addEventListener('click', navigateToAbout);
+
+        function toggleMode() {
             glitchOverlay.classList.add('active');
             setTimeout(() => {
-                body.classList.toggle('dark-mode');
-                body.classList.toggle('light-mode');
+                setMode(body.classList.contains('dark-mode') ? 'light-mode' : 'dark-mode');
                 setTimeout(() => {
                     glitchOverlay.classList.remove('active');
                 }, 300);
             }, 150);
-        });
+        }
+
+        function navigateToAbout(event) {
+            event.preventDefault();
+            glitchOverlay.classList.add('active');
+            setTimeout(() => {
+                window.location.href = 'about.html';
+            }, 300);
+        }
 
         function incrementVisitCount() {
             let count = localStorage.getItem('visitCount');
@@ -344,6 +393,11 @@
             text.classList.remove('glitching');
         }, 150);
     });
+
+    const savedMode = localStorage.getItem('mode');
+        if (savedMode) {
+        setMode(savedMode);
+    }
 </script>
 </body>
 </html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Saqin</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' ry='20' fill='black'/><text x='50%' y='50%' font-size='70' text-anchor='middle' dy='.35em' font-family='Courier, monospace' fill='%2300ff00' style='animation: glitch 1s infinite;'>S.</text><style>@keyframes glitch { 0%, 100% { transform: translate(0, 0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(2px, -2px); } 60% { transform: translate(-1px, -1px); } 80% { transform: translate(1px, 1px); }}</style></svg>">
+    <style>
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            5% { opacity: 0.85; }
+            10% { opacity: 0.95; }
+            15% { opacity: 0.9; }
+            20% { opacity: 1; }
+            80% { opacity: 0.95; }
+            85% { opacity: 0.85; }
+            90% { opacity: 0.9; }
+            95% { opacity: 0.95; }
+            100% { opacity: 0.9; }
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Courier New', monospace;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle, transparent 60%, rgba(0,0,0,0.6) 100%),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.11),
+                    rgba(0, 0, 0, 0.11) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.07);
+            animation: scanline 6s linear infinite;
+            z-index: 1001;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+            color: #00ff00;
+            --bg-color: #0a0a0a;
+        }
+
+        body.light-mode {
+            background: linear-gradient(45deg, #e0e0e0, #f0f0f0);
+            color: #006400;
+            --bg-color: #e0e0e0;
+        }
+
+        .about-content {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        body.light-mode .about-content {
+            background-color: #f8f8f8;
+            color: #006400;
+        }
+
+        .highlight {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        body.light-mode .highlight {
+            color: #006400;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            animation: flicker 0.15s infinite;
+            transform: perspective(800px) rotateX(2deg);
+        }
+
+        .about-content {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .highlight {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        body.light-mode .highlight {
+            color: #006400;
+        }
+
+        #home-button, #mode-toggle {
+            position: fixed;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 2px solid currentColor;
+            color: inherit;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px currentColor;
+            text-decoration: none;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #home-button {
+            top: 20px;
+            left: 20px;
+        }
+
+        #mode-toggle {
+            top: 20px;
+            right: 20px;
+        }
+
+        #home-button:hover, #mode-toggle:hover {
+            background: currentColor;
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        #home-button:hover::before, #mode-toggle:hover::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--bg-color);
+            z-index: 1;
+            text-shadow: none;
+        }
+
+        .glitch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: currentColor;
+            mix-blend-mode: difference;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .glitch-overlay.active {
+            animation: glitchTransition 0.3s ease-out;
+        }
+
+        @keyframes glitchTransition {
+            0% { opacity: 0; transform: scale(1); }
+            20% { opacity: 0.8; transform: scale(1.01); }
+            40% { opacity: 0.4; transform: scale(0.99); }
+            60% { opacity: 0.6; transform: scale(1.02); }
+            80% { opacity: 0.2; transform: scale(0.98); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+
+        #spotlight {
+            position: fixed;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,255,0,0.15) 0%, rgba(0,255,0,0) 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <div id="spotlight"></div>
+    <div class="container">
+        <div class="about-content">
+            <h1>About Me</h1>
+            <p>Name: <span class="highlight">A.K.M Saqin Noor</span></p>
+            <p>Age: <span class="highlight">14</span></p>
+            <p>School: <span class="highlight">Ideal School & College, Motijheel (Banasree Branch)</span></p>
+            <p>Class: <span class="highlight">8</span></p>
+            <p>Section: <span class="highlight">E</span></p>
+            <p>Roll: <span class="highlight">01</span></p>
+            <p>Volunteer at: <span class="highlight">Ideal School & College</span></p>
+            <p>Position in Bangladesh Scouts: <span class="highlight">Assistant Patrol Leader</span></p>
+        </div>
+    </div>
+    <a href="index.html" id="home-button" data-text="Home">Home</a>
+    <button id="mode-toggle" data-text="Toggle Mode">Toggle Mode</button>
+    <div class="glitch-overlay"></div>
+    <script>
+        const body = document.body;
+        const modeToggle = document.getElementById('mode-toggle');
+        const glitchOverlay = document.querySelector('.glitch-overlay');
+        const homeButton = document.getElementById('home-button');
+
+        function setMode(mode) {
+            body.className = mode;
+            localStorage.setItem('mode', mode);
+        }
+
+        function toggleMode() {
+            glitchOverlay.classList.add('active');
+            setTimeout(() => {
+                setMode(body.classList.contains('dark-mode') ? 'light-mode' : 'dark-mode');
+                setTimeout(() => {
+                    glitchOverlay.classList.remove('active');
+                }, 300);
+            }, 150);
+        }
+
+        function navigateToHome(event) {
+            event.preventDefault();
+            glitchOverlay.classList.add('active');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 300);
+        }
+
+        modeToggle.addEventListener('click', toggleMode);
+        homeButton.addEventListener('click', navigateToHome);
+
+        const savedMode = localStorage.getItem('mode');
+        if (savedMode) {
+            setMode(savedMode);
+        }
+
+        const spotlight = document.getElementById('spotlight');
+        document.addEventListener('mousemove', (e) => {
+            spotlight.style.left = e.pageX + 'px';
+            spotlight.style.top = e.pageY + 'px';
+        });
+    </script>
+</body>
+</html>
