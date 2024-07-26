@@ -73,20 +73,20 @@
             align-items: center;
             height: 100%;
             animation: flicker 0.15s infinite;
-            transform: perspective(800px) rotateX(2deg);
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .redirect-content {
             background-color: rgba(0, 0, 0, 0.7);
             padding: 2rem;
             border-radius: 10px;
+            width: 90%;
             max-width: 600px;
             margin: 0 auto;
             text-align: center;
             box-shadow: 0 0 50px 20px rgba(0, 255, 0, 0.2),
-                        0 0 100px 40px rgba(0, 255, 0, 0.1),
-                        0 0 150px 60px rgba(0, 255, 0, 0.05),
-                        0 0 200px 80px rgba(0, 255, 0, 0.025);
+                        0 0 100px 40px rgba(0, 255, 0, 0.1);
         }
 
         h1, p {
@@ -94,16 +94,47 @@
             filter: blur(0.5px);
         }
 
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-top: 0;
+        }
+
+        @media (max-width: 480px) {
+            .redirect-content {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+
         #spotlight {
-            position: fixed;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,255,0,0.15) 0%, rgba(0,255,0,0) 70%);
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            filter: blur(10px);
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            #spotlight {
+                display: block;
+                position: fixed;
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(0,255,0,0.15) 0%, rgba(0,255,0,0) 70%);
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+                z-index: 9999;
+                filter: blur(10px);
+            }
         }
     </style>
     <script>
@@ -145,10 +176,12 @@
     </div>
     <script>
         const spotlight = document.getElementById('spotlight');
-        document.addEventListener('mousemove', (e) => {
-            spotlight.style.left = e.pageX + 'px';
-            spotlight.style.top = e.pageY + 'px';
-        });
+        if (window.innerWidth >= 768) {
+            document.addEventListener('mousemove', (e) => {
+                spotlight.style.left = e.pageX + 'px';
+                spotlight.style.top = e.pageY + 'px';
+            });
+        }
     </script>
 </body>
 </html>
