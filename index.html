@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' ry='20' fill='black'/><text x='50%' y='50%' font-size='70' text-anchor='middle' dy='.35em' font-family='Courier, monospace' fill='%2300ff00' style='animation: glitch 1s infinite;'>S.</text><style>@keyframes glitch { 0%, 100% { transform: translate(0, 0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(2px, -2px); } 60% { transform: translate(-1px, -1px); } 80% { transform: translate(1px, 1px); }}</style></svg>">
+    <style>
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            5% { opacity: 0.85; }
+            10% { opacity: 0.95; }
+            15% { opacity: 0.9; }
+            20% { opacity: 1; }
+            80% { opacity: 0.95; }
+            85% { opacity: 0.85; }
+            90% { opacity: 0.9; }
+            95% { opacity: 0.95; }
+            100% { opacity: 0.9; }
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+            color: #00ff00;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle, transparent 60%, rgba(0,0,0,0.6) 100%),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.11),
+                    rgba(0, 0, 0, 0.11) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.07);
+            animation: scanline 6s linear infinite;
+            z-index: 1001;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            animation: flicker 0.15s infinite;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .redirect-content {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 0 50px 20px rgba(0, 255, 0, 0.2),
+                        0 0 100px 40px rgba(0, 255, 0, 0.1);
+        }
+
+        h1, p {
+            text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+            filter: blur(0.5px);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-top: 0;
+        }
+
+        @media (max-width: 480px) {
+            .redirect-content {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+        }
+
+        #spotlight {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            #spotlight {
+                display: block;
+                position: fixed;
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(0,255,0,0.15) 0%, rgba(0,255,0,0) 70%);
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+                z-index: 9999;
+                filter: blur(10px);
+            }
+        }
+    </style>
+    <script>
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        function redirect() {
+            var path = window.location.pathname;
+            var currentPage = path.split("/").pop();
+
+            if (currentPage === "" || currentPage === "index.html") {
+                if (isMobile()) {
+                    window.location.href = "home2.html";
+                } else {
+                    window.location.href = "home.html";
+                }
+            } else if (currentPage === "about.html" || currentPage === "about2.html") {
+                if (isMobile()) {
+                    window.location.href = "about2.html";
+                } else {
+                    window.location.href = "about.html";
+                }
+            }
+        }
+
+        window.onload = function() {
+            setTimeout(redirect, 2000); // Redirect after 2 seconds
+        };
+    </script>
+</head>
+<body>
+    <div id="spotlight"></div>
+    <div class="container">
+        <div class="redirect-content">
+            <h1>Initializing...</h1>
+            <p>Detecting device type and optimizing experience.</p>
+        </div>
+    </div>
+    <script>
+        const spotlight = document.getElementById('spotlight');
+        if (window.innerWidth >= 768) {
+            document.addEventListener('mousemove', (e) => {
+                spotlight.style.left = e.pageX + 'px';
+                spotlight.style.top = e.pageY + 'px';
+            });
+        }
+    </script>
+</body>
+</html>

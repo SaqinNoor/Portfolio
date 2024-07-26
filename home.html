@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saqin's Portfolio</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' ry='20' fill='black'/><text x='50%' y='50%' font-size='70' text-anchor='middle' dy='.35em' font-family='Courier, monospace' fill='%2300ff00' style='animation: glitch 1s infinite;'>S.</text><style>@keyframes glitch { 0%, 100% { transform: translate(0, 0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(2px, -2px); } 60% { transform: translate(-1px, -1px); } 80% { transform: translate(1px, 1px); }}</style></svg>">
+    <style>
+        @keyframes flicker {
+            0% { opacity: 0.95; }
+            5% { opacity: 0.85; }
+            10% { opacity: 0.95; }
+            15% { opacity: 0.9; }
+            20% { opacity: 1; }
+            80% { opacity: 0.95; }
+            85% { opacity: 0.85; }
+            90% { opacity: 0.9; }
+            95% { opacity: 0.95; }
+            100% { opacity: 0.9; }
+        }
+
+        @keyframes scanline {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100%); }
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Courier New', monospace;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle, transparent 60%, rgba(0,0,0,0.6) 100%),
+                repeating-linear-gradient(
+                    0deg,
+                    rgba(0, 0, 0, 0.11),
+                    rgba(0, 0, 0, 0.11) 1px,
+                    transparent 1px,
+                    transparent 2px
+                );
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.07);
+            animation: scanline 6s linear infinite;
+            z-index: 1001;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+            color: #00ff00;
+            --bg-color: #0a0a0a;
+        }
+
+        body.light-mode {
+            background: linear-gradient(45deg, #e0e0e0, #f0f0f0);
+            color: #006400;
+            --bg-color: #e0e0e0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            animation: flicker 0.15s infinite;
+            transform: perspective(800px) rotateX(2deg);
+        }
+
+        .text-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .text {
+            font-size: 3rem;
+            text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            filter: blur(0.5px);
+            padding: 10px;
+        }
+
+        .text.glitching {
+            animation: seriousGlitch 0.3s steps(2, jump-none) infinite;
+        }
+
+        @keyframes seriousGlitch {
+            0%, 100% { 
+                clip-path: inset(30% 0 40% 0);
+                transform: translate(-5px, 5px);
+                text-shadow: 2px 0 #0f0, -2px 0 #0f0;
+            }
+            20%, 80% {
+                clip-path: inset(60% 0 10% 0);
+                transform: translate(5px, -5px);
+                text-shadow: -2px 0 #0f0, 2px 0 #0f0;
+            }
+            40%, 60% {
+                clip-path: inset(10% 0 70% 0);
+                transform: translate(5px, 5px);
+                text-shadow: 2px 0 #0f0, -2px 0 #0f0;
+            }
+        }
+
+        .text:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-button {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 2px solid currentColor;
+            color: inherit;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        .social-button:hover {
+            background: currentColor;
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        .social-button:hover::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--bg-color);
+            z-index: 1;
+            text-shadow: none;
+        }
+
+        #mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 2px solid currentColor;
+            color: inherit;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px currentColor;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #mode-toggle:hover {
+            background: currentColor;
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        #mode-toggle:hover::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--bg-color);
+            z-index: 1;
+            text-shadow: none;
+            white-space: nowrap;
+        }
+
+        .glitch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: currentColor;
+            mix-blend-mode: difference;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .glitch-overlay.active {
+            animation: glitchTransition 0.3s ease-out;
+        }
+
+        @keyframes glitchTransition {
+            0% { opacity: 0; transform: scale(1); }
+            20% { opacity: 0.8; transform: scale(1.01); }
+            40% { opacity: 0.4; transform: scale(0.99); }
+            60% { opacity: 0.6; transform: scale(1.02); }
+            80% { opacity: 0.2; transform: scale(0.98); }
+            100% { opacity: 0; transform: scale(1); }
+        }
+
+        #visit-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        #visit-counter:hover {
+            opacity: 1;
+        }
+
+        #spotlight {
+            position: fixed;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,255,0,0.15) 0%, rgba(0,255,0,0) 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            filter: blur(10px);
+        }
+
+        #about-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 2px solid currentColor;
+            color: inherit;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 5px currentColor;
+            text-decoration: none;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        #about-button:hover {
+            background: currentColor;
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        #about-button:hover::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--bg-color);
+            z-index: 1;
+            text-shadow: none;
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <div id="spotlight"></div>
+    <div class="container">
+        <div class="text-wrapper">
+            <div class="text" data-text="Hi, I'm Saqin.">Hi, I'm Saqin.</div>
+        </div>
+        <div class="social-buttons">
+            <a href="https://facebook.com/saqin.noor" target="_blank" class="social-button" data-text="Facebook">Facebook</a>
+            <a href="https://discord.com/users/saqin" target="_blank" class="social-button" data-text="Discord">Discord</a>
+            <a href="https://instagram.com/@saaqinn" target="_blank" class="social-button" data-text="Instagram">Instagram</a>
+        </div>
+    </div>
+    <button id="mode-toggle" data-text="Toggle Mode">Toggle Mode</button>
+    <a href="about.html" id="about-button" data-text="About Me">About Me</a>
+    <div class="glitch-overlay"></div>
+    <div id="visit-counter">Visits: <span id="count">0</span></div>
+    <script>
+        function setMode(mode) {
+            body.className = mode;
+            localStorage.setItem('mode', mode);
+        }
+        const body = document.body;
+        const modeToggle = document.getElementById('mode-toggle');
+        const glitchOverlay = document.querySelector('.glitch-overlay');
+        const aboutButton = document.getElementById('about-button');
+
+        modeToggle.addEventListener('click', toggleMode);
+        aboutButton.addEventListener('click', navigateToAbout);
+
+        function toggleMode() {
+            glitchOverlay.classList.add('active');
+            setTimeout(() => {
+                setMode(body.classList.contains('dark-mode') ? 'light-mode' : 'dark-mode');
+                setTimeout(() => {
+                    glitchOverlay.classList.remove('active');
+                }, 300);
+            }, 150);
+        }
+
+        function navigateToAbout(event) {
+            event.preventDefault();
+            glitchOverlay.classList.add('active');
+            setTimeout(() => {
+                window.location.href = 'about.html';
+            }, 300);
+        }
+
+        function incrementVisitCount() {
+            let count = localStorage.getItem('visitCount');
+            if (count === null) {
+                count = 1;
+            } else {
+                count = Number(count) + 1;
+            }
+            localStorage.setItem('visitCount', count);
+            document.getElementById('count').textContent = count;
+        }
+
+        incrementVisitCount();
+
+        const spotlight = document.getElementById('spotlight');
+        document.addEventListener('mousemove', (e) => {
+            spotlight.style.left = e.pageX + 'px';
+            spotlight.style.top = e.pageY + 'px';
+        });
+
+    const textWrapper = document.querySelector('.text-wrapper');
+    const text = document.querySelector('.text');
+    let isOriginalText = true;
+    let transitionTimeout;
+
+    function setOriginalText() {
+        text.setAttribute('data-text', "Hi, I'm Saqin.");
+        text.textContent = "Hi, I'm Saqin.";
+        isOriginalText = true;
+    }
+
+    function setAlternateText() {
+        text.setAttribute('data-text', 'BEISC 08-E-01');
+        text.textContent = 'BEISC 08-E-01';
+        isOriginalText = false;
+    }
+
+    function toggleText() {
+        clearTimeout(transitionTimeout);
+        text.classList.add('glitching');
+
+        transitionTimeout = setTimeout(() => {
+            if (isOriginalText) {
+                setAlternateText();
+            } else {
+                setOriginalText();
+            }
+            text.classList.remove('glitching');
+        }, 150);
+    }
+
+    textWrapper.addEventListener('mouseenter', toggleText);
+    textWrapper.addEventListener('mouseleave', () => {
+        clearTimeout(transitionTimeout);
+        text.classList.add('glitching');
+
+        transitionTimeout = setTimeout(() => {
+            setOriginalText();
+            text.classList.remove('glitching');
+        }, 150);
+    });
+
+    const savedMode = localStorage.getItem('mode');
+        if (savedMode) {
+        setMode(savedMode);
+    }
+</script>
+</body>
+</html>
