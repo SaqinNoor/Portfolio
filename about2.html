@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>About Saqin</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' ry='20' fill='black'/><text x='50%' y='50%' font-size='70' text-anchor='middle' dy='.35em' font-family='Courier, monospace' fill='%2300ff00' style='animation: glitch 1s infinite;'>S.</text><style>@keyframes glitch { 0%, 100% { transform: translate(0, 0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(2px, -2px); } 60% { transform: translate(-1px, -1px); } 80% { transform: translate(1px, 1px); }}</style></svg>">
     <style>
@@ -59,7 +59,7 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 5px;
+            height: 2px;
             background: rgba(255, 255, 255, 0.07);
             animation: scanline 6s linear infinite;
             z-index: 1001;
@@ -84,42 +84,46 @@
             align-items: center;
             height: 100%;
             animation: flicker 0.15s infinite;
-            transform: perspective(800px) rotateX(2deg);
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
         }
 
         .about-content {
             background-color: rgba(0, 0, 0, 0.7);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
+            width: 90%;
             max-width: 600px;
             margin: 0 auto;
             text-align: left;
-            box-shadow: 0 0 50px 20px rgba(0, 255, 0, 0.2),
-                        0 0 100px 40px rgba(0, 255, 0, 0.1),
-                        0 0 150px 60px rgba(0, 255, 0, 0.05),
-                        0 0 200px 80px rgba(0, 255, 0, 0.025);
+            box-shadow: 0 0 25px 10px rgba(0, 255, 0, 0.2),
+                        0 0 50px 20px rgba(0, 255, 0, 0.1);
             transition: box-shadow 0.3s ease;
         }
 
         body.light-mode .about-content {
             background-color: rgba(248, 248, 248, 0.8);
             color: #006400;
-            box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.1),
-                        0 0 100px 40px rgba(0, 0, 0, 0.05),
-                        0 0 150px 60px rgba(0, 0, 0, 0.025),
-                        0 0 200px 80px rgba(0, 0, 0, 0.0125);
+            box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.1),
+                        0 0 50px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .about-content h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-content p {
+            font-size: 1rem;
+            margin: 0.5rem 0;
         }
 
         .about-content h1,
         .about-content p {
-            text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
+            text-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
             transition: all 0.3s ease;
             filter: blur(0.5px);
-        }
-
-        .about-content h1:hover,
-        .about-content p:hover {
-            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
         }
 
         .highlight {
@@ -133,7 +137,7 @@
 
         #home-button, #mode-toggle {
             position: fixed;
-            padding: 0.5rem 1rem;
+            padding: 0.8rem;
             background: transparent;
             border: 2px solid currentColor;
             color: inherit;
@@ -145,24 +149,25 @@
             text-decoration: none;
             white-space: nowrap;
             overflow: hidden;
+            z-index: 1002;
         }
 
         #home-button {
-            top: 20px;
-            left: 20px;
+            top: 10px;
+            left: 10px;
         }
 
         #mode-toggle {
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            right: 10px;
         }
 
-        #home-button:hover, #mode-toggle:hover {
+        #home-button:active, #mode-toggle:active {
             background: currentColor;
             box-shadow: 0 0 15px currentColor;
         }
 
-        #home-button:hover::before, #mode-toggle:hover::before {
+        #home-button:active::before, #mode-toggle:active::before {
             content: attr(data-text);
             position: absolute;
             top: 50%;
@@ -200,15 +205,38 @@
         }
 
         #spotlight {
-            position: fixed;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0,255,0,0.15) 0%, rgba(0,255,0,0) 70%);
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            filter: blur(10px);
+            display: none;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            #spotlight {
+                display: block;
+                position: fixed;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                background: radial-gradient(circle, rgba(0,255,0,0.15) 0%, rgba(0,255,0,0) 70%);
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+                z-index: 9999;
+                filter: blur(10px);
+            }
+
+            #home-button:hover, #mode-toggle:hover {
+                background: currentColor;
+                box-shadow: 0 0 15px currentColor;
+            }
+
+            #home-button:hover::before, #mode-toggle:hover::before {
+                content: attr(data-text);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: var(--bg-color);
+                z-index: 1;
+                text-shadow: none;
+            }
         }
     </style>
 </head>
@@ -268,9 +296,24 @@
         }
 
         const spotlight = document.getElementById('spotlight');
-        document.addEventListener('mousemove', (e) => {
-            spotlight.style.left = e.pageX + 'px';
-            spotlight.style.top = e.pageY + 'px';
+        if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                spotlight.style.left = e.pageX + 'px';
+                spotlight.style.top = e.pageY + 'px';
+            });
+        }
+
+        // Add touch event listeners for buttons
+        const buttons = document.querySelectorAll('#home-button, #mode-toggle');
+        buttons.forEach(button => {
+            button.addEventListener('touchstart', function() {
+                this.style.background = 'currentColor';
+                this.style.boxShadow = '0 0 15px currentColor';
+            });
+            button.addEventListener('touchend', function() {
+                this.style.background = 'transparent';
+                this.style.boxShadow = 'none';
+            });
         });
     </script>
 </body>
