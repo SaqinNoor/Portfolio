@@ -136,6 +136,10 @@
         }
 
         .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             padding: 0.8rem;
             background: transparent;
             border: 2px solid currentColor;
@@ -152,6 +156,16 @@
             box-sizing: border-box;
         }
 
+        .social-icon {
+            width: 24px;
+            height: 24px;
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+        }
+
+        body.light-mode .social-icon {
+            filter: invert(18%) sepia(98%) saturate(6449%) hue-rotate(147deg) brightness(97%) contrast(101%);
+        }
+
         .social-button:active {
             background: currentColor;
             box-shadow: 0 0 15px currentColor;
@@ -166,6 +180,31 @@
             color: var(--bg-color);
             z-index: 1;
             text-shadow: none;
+        }
+
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icon::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 255, 0, 0.1) 50%,
+                rgba(0, 0, 0, 0.1) 50%
+            );
+            background-size: 100% 4px;
+            animation: scanline 10s linear infinite;
+            pointer-events: none;
         }
 
         #mode-toggle, #about-button {
@@ -260,6 +299,10 @@
             display: none;
         }
 
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
         @media (hover: hover) and (pointer: fine) {
             #spotlight {
                 display: block;
@@ -297,6 +340,13 @@
                 text-shadow: none;
             }
         }
+
+        @media (max-width: 768px) {
+            #mode-toggle, #about-button {
+                font-size: 0.7rem;
+                padding: 0.4rem;
+            }
+        }
     </style>
 </head>
 <body class="dark-mode">
@@ -306,9 +356,18 @@
             <div class="text" data-text="Hi, I'm Saqin.">Hi, I'm Saqin.</div>
         </div>
         <div class="social-buttons">
-            <a href="https://facebook.com/saqin.noor" target="_blank" class="social-button" data-text="Facebook">Facebook</a>
-            <a href="https://discord.com/users/saqin" target="_blank" class="social-button" data-text="Discord">Discord</a>
-            <a href="https://instagram.com/@saaqinn" target="_blank" class="social-button" data-text="Instagram">Instagram</a>
+            <a href="https://facebook.com/saqin.noor" target="_blank" class="social-button" data-text="Facebook">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNOSA4aC0zdjRoM3YxMmg1di0xMmgzLjY0MmwuMzU4LTRoLTR2LTEuNjY3YzAtLjk1NS4xOTItMS4zMzMgMS4xMTUtMS4zMzNoMi44ODV2LTVoLTMuODA4Yy0zLjU5NiAwLTUuMTkyIDEuNTgzLTUuMTkyIDQuNjE1djMuMzg1eiIvPjwvc3ZnPg==" alt="Facebook" class="social-icon">
+                Facebook
+            </a>
+            <a href="https://discord.com/users/saqin" target="_blank" class="social-button" data-text="Discord">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjcuMTQgOTYuMzYiPjxwYXRoIGQ9Ik0xMDcuNyw4LjA3QTEwNS4xNSwxMDUuMTUsMCwwLDAsODEuNDcsMGE3Mi4wNiw3Mi4wNiwwLDAsMC0zLjM2LDYuODNBOTcuNjgsOTcuNjgsMCwwLDAsNDksNi44M0E3Mi4zNyw3Mi4zNywwLDAsMCw0NS42NCwwLDEwNS44OSwxMDUuODksMCwwLDAsMTkuMzksOC4wOUMyLjc5LDMyLjY1LTEuNzEsNTYuNi41NCw4MC4yMWgwQTEwNS43MywxMDUuNzMsMCwwLDAsMzIuNzEsOTYuMzYsNzcuNyw3Ny43LDAsMCwwLDM5LjYsODUuMjVhNjguNDIsNjguNDIsMCwwLDEtMTAuODUtNS4xOGMuOTEtLjY2LDEuOC0xLjM0LDIuNjYtMmE3NS41Nyw3NS41NywwLDAsMCw2NC4zMiwwYy44Ny43MSwxLjc2LDEuMzksMi42NiwyYTY4LjY4LDY4LjY4LDAsMCwxLTEwLjg3LDUuMTksNzcsMzcsMCwwLDAsNi44OSwxMS4xQTEwNS4yNSwxMDUuMjUsMCwwLDAsMTI2LjYsODAuMjJoMEMxMjkuMjQsNTIuODQsMTIyLjA5LDI5LjExLDEwNy43LDguMDdaTTQyLjQ1LDY1LjY5QzM2LjE4LDY1LjY5LDMxLDYwLDMxLDUzczUtMTIuNzQsMTEuNDMtMTIuNzRTNTQsNDYsNTMuODksNTMsNDguODQsNjUuNjksNDIuNDUsNjUuNjlabTQyLjI0LDBDNzguNDEsNjUuNjksNzMuMjUsNjAsNzMuMjUsNTNzNS0xMi43NCwxMS40NC0xMi43NFM5Ni4yMyw0Niw5Ni4xMiw1Myw5MS4wOCw2NS42OSw4NC42OSw2NS42OVoiLz48L3N2Zz4=" alt="Discord" class="social-icon">
+                Discord
+            </a>
+            <a href="https://instagram.com/@saaqinn" target="_blank" class="social-button" data-text="Instagram">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMi4xNjNjMy4yMDQgMCAzLjU4NC4wMTIgNC44NS4wNyAzLjI1Mi4xNDggNC43NzEgMS42OTEgNC45MTkgNC45MTkuMDU4IDEuMjY1LjA2OSAxLjY0NS4wNjkgNC44NDkgMCAzLjIwNS0uMDEyIDMuNTg0LS4wNjkgNC44NDktLjE0OSAzLjIyNS0xLjY2NCA0Ljc3MS00LjkxOSA0LjkxOS0xLjI2Ni4wNTgtMS42NDQuMDctNC44NS4wNy0zLjIwNCAwLTMuNTg0LS4wMTItNC44NDktLjA3LTMuMjYtLjE0OS00Ljc3MS0xLjY5OS00LjkxOS00LjkyLS4wNTgtMS4yNjUtLjA3LTEuNjQ0LS4wNy00Ljg0OSAwLTMuMjA0LjAxMy0zLjU4My4wNy00Ljg0OS4xNDktMy4yMjcgMS42NjQtNC43NzEgNC45MTktNC45MTkgMS4yNjYtLjA1NyAxLjY0NS0uMDY5IDQuODQ5LS4wNjl6bTAtMi4xNjNjLTMuMjU5IDAtMy42NjcuMDE0LTQuOTQ3LjA3Mi00LjM1OC4yLTYuNzggMi42MTgtNi45OCA2Ljk4LS4wNTkgMS4yODEtLjA3MyAxLjY4OS0uMDczIDQuOTQ4IDAgMy4yNTkuMDE0IDMuNjY4LjA3MiA0Ljk0OC4yIDQuMzU4IDIuNjE4IDYuNzggNi45OCA2Ljk4IDEuMjgxLjA1OCAxLjY4OS4wNzIgNC45NDguMDcyIDMuMjU5IDAgMy42NjgtLjAxNCA0Ljk0OC0uMDcyIDQuMzU0LS4yIDYuNzgyLTIuNjE4IDYuOTc5LTYuOTguMDU5LTEuMjguMDczLTEuNjg5LjA3My00Ljk0OCAwLTMuMjU5LS4wMTQtMy42NjctLjA3Mi00Ljk0Ny0uMTk2LTQuMzU0LTIuNjE3LTYuNzgtNi45NzktNi45OC0xLjI4MS0uMDU5LTEuNjktLjA3My00Ljk0OS0uMDczem0wIDUuODM4Yy0zLjQwMyAwLTYuMTYyIDIuNzU5LTYuMTYyIDYuMTYyczIuNzU5IDYuMTYzIDYuMTYyIDYuMTYzIDYuMTYyLTIuNzU5IDYuMTYyLTYuMTYzYzAtMy40MDMtMi43NTktNi4xNjItNi4xNjItNi4xNjJ6bTAgMTAuMTYyYy0yLjIwOSAwLTQtMS43OS00LTQgMC0yLjIwOSAxLjc5MS00IDQtNHM0IDEuNzkxIDQgNGMwIDIuMjEtMS43OTEgNC00IDR6bTYuNDA2LTExLjg0NWMtLjc5NiAwLTEuNDQxLjY0NS0xLjQ0MSAxLjQ0cy42NDUgMS40NCAxLjQ0MSAxLjQ0Yy43OTUgMCAxLjQzOS0uNjQ1IDEuNDM5LTEuNDRzLS42NDQtMS40NC0xLjQzOS0xLjQ0eiIvPjwvc3ZnPg==" alt="Instagram" class="social-icon">
+                Instagram
+            </a>
         </div>
     </div>
     <button id="mode-toggle" data-text="Toggle Mode">Toggle Mode</button>
