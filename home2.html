@@ -297,10 +297,31 @@
                 text-shadow: none;
             }
         }
+
+        .achievement-banner {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(0, 255, 0, 0.1);
+            border: 2px solid currentColor;
+            border-radius: 5px;
+            z-index: 1002;
+            text-shadow: 0 0 5px currentColor;
+            white-space: nowrap;
+            max-width: 90%;
+            box-sizing: border-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     </style>
 </head>
 <body class="dark-mode">
     <div id="spotlight"></div>
+    <div class="achievement-banner">Runners-up at 2nd IAIT National Fest!</div>
     <div class="container">
         <div class="text-wrapper">
             <div class="text" data-text="Hi, I'm Saqin.">Hi, I'm Saqin.</div>
