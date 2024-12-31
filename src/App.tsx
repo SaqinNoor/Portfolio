@@ -16,7 +16,7 @@ function App() {
     } else {
       document.body.className = mode;
     }
-  }, []);
+  }, [mode]);
 
   const toggleMode = () => {
     setIsGlitching(true);
@@ -49,9 +49,9 @@ function App() {
       <button
         className="mode-toggle"
         onClick={toggleMode}
-        data-text="Toggle Mode"
+        data-text={mode === 'dark-mode' ? 'Light Mode' : 'Dark Mode'}
       >
-        Toggle Mode
+        {mode === 'dark-mode' ? 'Light Mode' : 'Dark Mode'}
       </button>
       <a
         href="about.html"

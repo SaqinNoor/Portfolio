@@ -140,6 +140,7 @@ body.light-mode {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
+  z-index: 1002;
 }
 
 .social-button {
@@ -152,7 +153,7 @@ body.light-mode {
   text-decoration: none;
   transition: all 0.3s ease;
   position: relative;
-  overflow: hidden;
+  white-space: nowrap;
   text-shadow: 0 0 5px currentColor;
 }
 
@@ -170,6 +171,7 @@ body.light-mode {
   color: var(--bg-color);
   z-index: 1;
   text-shadow: none;
+  white-space: nowrap;
 }
 
 .mode-toggle {
@@ -186,7 +188,7 @@ body.light-mode {
   transition: all 0.3s ease;
   text-shadow: 0 0 5px currentColor;
   white-space: nowrap;
-  overflow: hidden;
+  z-index: 1002;
 }
 
 .mode-toggle:hover {
@@ -203,7 +205,6 @@ body.light-mode {
   color: var(--bg-color);
   z-index: 1;
   text-shadow: none;
-  white-space: nowrap;
 }
 
 .glitch-overlay {
@@ -217,6 +218,7 @@ body.light-mode {
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s ease;
+  z-index: 1003;
 }
 
 .glitch-overlay.active {
@@ -232,6 +234,7 @@ body.light-mode {
   opacity: 0.7;
   transition: all 0.3s ease;
   text-shadow: 0 0 5px currentColor;
+  z-index: 1002;
 }
 
 .visit-counter:hover {
@@ -265,6 +268,7 @@ body.light-mode {
   text-shadow: 0 0 5px currentColor;
   text-decoration: none;
   white-space: nowrap;
+  z-index: 1002;
 }
 
 .about-button:hover {
