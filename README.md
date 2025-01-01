@@ -6,10 +6,13 @@ A personal portfolio website built with React, TypeScript, and Tailwind CSS.
 Visit the site at [https://saqinnoor.github.io/Portfolio/](https://saqinnoor.github.io/Portfolio/)
 
 ## Tech Stack
-![React](https://img.shields.io/badge/React-%2320232a?style=flat&logo=react&logoColor=%61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-%23232323?style=flat&logo=typescript&logoColor=3178C6)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC?style=flat&logo=tailwindcss&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-%23F7C500?style=flat&logo=vite&logoColor=black)
+<div align="center" style="white-space: nowrap;">
+  <img src="https://readmebadge.vercel.app/badges/react.svg" width="200" height="60" alt="React Badge" style="margin-right: 2px; display: inline-block;"/>
+  <img src="https://readmebadge.vercel.app/badges/typescript.svg" width="200" height="60" alt="TypeScript Badge" style="margin-right: 2px; display: inline-block;"/>
+  <img src="https://readmebadge.vercel.app/badges/tailwind.svg" width="200" height="60" alt="Tailwind Badge" style="margin-right: 2px; display: inline-block;"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Vitejs-logo.svg" width="200" height="60" alt="Vite Badge" style="display: inline-block;"/>
+</div>
+
 
 ## Viewing Experience
 For optimal experience, please view on desktop. While the site is responsive for mobile devices, the desktop version offers the most polished experience with all intended features and interactions.
