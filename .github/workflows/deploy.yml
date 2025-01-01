@@ -3,14 +3,17 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Trigger deployment on pushing to the 'main' branch
+      - main
   pull_request:
     branches:
-      - main  # Also trigger on pull requests to 'main'
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # This is important for deployment
 
     steps:
       - name: Checkout code
@@ -19,28 +22,26 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Or whichever version you're using
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
 
+      - name: Type check
+        run: npx tsc
+
       - name: Build project
         run: npm run build
 
-      # Add this step to check the build output
-      - name: List directory contents
-        run: ls -R
+      - name: Debug - List directory contents
+        run: |
+          echo "Root directory contents:"
+          ls -la
+          echo "Dist directory contents:"
+          ls -la dist || echo "dist directory not found"
 
       - name: Deploy to GitHub Pages
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://github.com/${{ github.repository }}.git
-          git checkout --orphan gh-pages
-          git rm -rf .
-          cp -r dist/* .
-          git add .
-          git commit -m "Deploy to GitHub Pages"
-          git push https://github.com/${{ github.repository }}.git gh-pages --force
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          publish_dir: ./dist
