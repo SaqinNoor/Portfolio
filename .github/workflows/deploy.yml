@@ -3,10 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - main  # Trigger deployment on pushing to the 'main' branch
   pull_request:
     branches:
-      - main
+      - main  # Also trigger on pull requests to 'main'
 
 jobs:
   deploy:
@@ -26,6 +26,10 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      # Add this step to check the build output
+      - name: List directory contents
+        run: ls -R
 
       - name: Deploy to GitHub Pages
         run: |
