@@ -1,7 +1,7 @@
 {
   "name": "vite-react-typescript-starter",
   "private": true,
-  "homepage": "https://SaqinNoor.github.io/Portfolio-rewrite",
+  "homepage": "https://SaqinNoor.github.io/Portfolio",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
