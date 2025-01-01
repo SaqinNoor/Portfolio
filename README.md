@@ -31,4 +31,4 @@ npm run build
 ```
 
 ## License
-This project is under development and maintained by Saqin Noor.
+This project is under development and maintained by Saqin Noor. This project is licensed under the MIT License - see the LICENSE file for details.
