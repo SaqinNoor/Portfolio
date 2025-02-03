@@ -43,7 +43,7 @@ function App() {
     <>
       <Spotlight />
       <div className="container">
-        <GlitchText originalText="Hi, I'm Saqin." alternateText="BEISC 09-E-02" />
+        <GlitchText originalText="Hi, I'm Saqin." alternateText="BEISC 09-E-03" />
         <SocialButtons />
       </div>
       <button
