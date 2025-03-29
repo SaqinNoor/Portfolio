@@ -1,288 +1,306 @@
-@keyframes flicker {
-  0% { opacity: 0.95; }
-  5% { opacity: 0.85; }
-  10% { opacity: 0.95; }
-  15% { opacity: 0.9; }
-  20% { opacity: 1; }
-  80% { opacity: 0.95; }
-  85% { opacity: 0.85; }
-  90% { opacity: 0.9; }
-  95% { opacity: 0.95; }
-  100% { opacity: 0.9; }
+/* --- LOADER STYLES --- */
+#loader-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: #0a0a0a; /* Darker background */
+  z-index: 10000;
+  display: flex; /* Helps center content if needed */
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', monospace;
+  color: #00ff00;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.6s ease-out 0.3s; /* Fade out transition */
+}
+body.loaded #loader-overlay {
+  opacity: 0;
+  pointer-events: none;
 }
 
-@keyframes scanline {
+/* Loader CRT Effects */
+#loader-overlay::before { /* Noise/Grain */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.08"/></svg>');
+  z-index: 10001; /* Behind text/progress */
+  pointer-events: none;
+  animation: flicker 0.15s infinite; /* Reuse flicker animation */
+}
+#loader-overlay::after { /* Scanline */
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 255, 0, 0.1);
+  box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+  animation: loader-scanline 5s linear infinite;
+  z-index: 10002; /* Behind text/progress */
+  pointer-events: none;
+}
+
+#crt-line { /* CRT power-on line */
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #00ff00;
+  box-shadow: 0 0 8px #00ff00, 0 0 15px #00ff00aa, 0 0 25px #00ff0055;
+  transform: scaleY(0.01);
+  animation: crt-warmup 0.5s cubic-bezier(0.1, 0.7, 0.3, 1) forwards;
+  z-index: 10005; /* Above overlay effects */
+}
+#crt-static { /* Brief static flash */
+  position: absolute;
+  inset: 0;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.95" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.1"/></svg>');
+  opacity: 0;
+  animation: show-static 0.2s 0.5s forwards;
+  z-index: 10006; /* Above CRT line */
+}
+#boot-text {
+  position: relative;
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
+  white-space: pre;
+  margin: 0;
+  opacity: 0;
+  line-height: 1.4;
+  text-shadow: 0 0 3px #00ff00a0;
+  animation: fade-in-text 0.1s 0.7s forwards;
+  z-index: 10003; /* Above overlay effects */
+  transition: opacity 0.3s ease-out;
+  padding: 30px;
+  max-width: 90%;
+  box-sizing: border-box;
+  text-align: left;
+}
+#cursor {
+  background-color: #00ff00;
+  animation: blink 1s step-end infinite;
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  margin-left: 1px;
+  vertical-align: bottom;
+  box-shadow: 0 0 5px #00ff00;
+  transition: opacity 0.3s ease-out;
+}
+#boot-text.hide, #cursor.hide {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* Progress Bar Styles */
+#progress-container {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(250px, 50%, 400px);
+  display: flex; /* Initially none, set by JS */
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  opacity: 0; /* Hidden initially */
+  transition: opacity 0.3s ease-in 0.1s; /* Fade in */
+  z-index: 10004; /* Above text */
+}
+#progress-container.show {
+  opacity: 1;
+}
+#progress-logo {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 5px;
+}
+#progress-logo svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 3px #00ff00);
+}
+#progress-bar-outer {
+  width: 100%;
+  height: 8px;
+  border: 1px solid rgba(0, 255, 0, 0.5);
+  border-radius: 4px;
+  padding: 1px;
+  background-color: rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+#progress-bar-inner {
+  width: 0%;
+  height: 100%;
+  background-color: #00ff00;
+  border-radius: 3px;
+  box-shadow: inset 0 0 3px rgba(0,0,0,0.5), 0 0 5px #00ff00;
+  transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1); /* Progress fill duration */
+}
+#progress-bar-inner.fill {
+   width: 100%;
+}
+
+/* Keyframes */
+@keyframes crt-warmup {
+  0% { transform: scaleY(0.01) scaleX(0.8); height: 1px; opacity: 0.5; filter: blur(1px); }
+  20% { transform: scaleY(0.01) scaleX(1); height: 2px; opacity: 1; filter: blur(0); }
+  99% { transform: scaleY(1000) scaleX(1); height: 2px; opacity: 0.5; filter: blur(2px);}
+  100% { transform: scaleY(1000) scaleX(1); height: 2px; opacity: 0; filter: blur(2px);}
+}
+@keyframes show-static {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.1; }
+}
+@keyframes fade-in-text {
+  to { opacity: 1; }
+}
+@keyframes blink {
+  from, to { background-color: transparent; box-shadow: none; }
+  50% { background-color: #00ff00; box-shadow: 0 0 5px #00ff00; }
+}
+@keyframes loader-scanline {
+  0% { transform: translateY(-10px); }
+  100% { transform: translateY(calc(100vh + 10px)); }
+}
+/* --- END LOADER STYLES --- */
+
+
+/* --- ORIGINAL index.css CONTENT --- */
+@keyframes flicker { /* This flicker is for both loader overlay noise AND main container */
+  0% { opacity: 0.95; } 5% { opacity: 0.85; } 10% { opacity: 0.95; }
+  15% { opacity: 0.9; } 20% { opacity: 1; } 80% { opacity: 0.95; }
+  85% { opacity: 0.85; } 90% { opacity: 0.9; } 95% { opacity: 0.95; }
+  100% { opacity: 0.9; }
+}
+/* Adjust flicker for loader's ::before */
+#loader-overlay::before { animation: flicker-loader 0.15s infinite; }
+@keyframes flicker-loader {
+  0% { opacity: 0.08; } 5% { opacity: 0.06; } 10% { opacity: 0.09; }
+  15% { opacity: 0.07; } 20% { opacity: 0.1; } 80% { opacity: 0.08; }
+  85% { opacity: 0.07; } 90% { opacity: 0.09; } 95% { opacity: 0.06; }
+  100% { opacity: 0.08; }
+}
+
+
+@keyframes scanline { /* This is for the main page body effect */
   0% { transform: translateY(0); }
   100% { transform: translateY(100%); }
 }
 
 @keyframes seriousGlitch {
-  0%, 100% { 
-    clip-path: inset(30% 0 40% 0);
-    transform: translate(-5px, 5px);
-    text-shadow: 2px 0 #0f0, -2px 0 #0f0;
-  }
-  20%, 80% {
-    clip-path: inset(60% 0 10% 0);
-    transform: translate(5px, -5px);
-    text-shadow: -2px 0 #0f0, 2px 0 #0f0;
-  }
-  40%, 60% {
-    clip-path: inset(10% 0 70% 0);
-    transform: translate(5px, 5px);
-    text-shadow: 2px 0 #0f0, -2px 0 #0f0;
-  }
+  0%, 100% { clip-path: inset(30% 0 40% 0); transform: translate(-5px, 5px); text-shadow: 2px 0 #0f0, -2px 0 #0f0; }
+  20%, 80% { clip-path: inset(60% 0 10% 0); transform: translate(5px, -5px); text-shadow: -2px 0 #0f0, 2px 0 #0f0; }
+  40%, 60% { clip-path: inset(10% 0 70% 0); transform: translate(5px, 5px); text-shadow: 2px 0 #0f0, -2px 0 #0f0; }
 }
 
 @keyframes glitchTransition {
-  0% { opacity: 0; transform: scale(1); }
-  20% { opacity: 0.8; transform: scale(1.01); }
-  40% { opacity: 0.4; transform: scale(0.99); }
-  60% { opacity: 0.6; transform: scale(1.02); }
-  80% { opacity: 0.2; transform: scale(0.98); }
-  100% { opacity: 0; transform: scale(1); }
+  0% { opacity: 0; transform: scale(1); } 20% { opacity: 0.8; transform: scale(1.01); }
+  40% { opacity: 0.4; transform: scale(0.99); } 60% { opacity: 0.6; transform: scale(1.02); }
+  80% { opacity: 0.2; transform: scale(0.98); } 100% { opacity: 0; transform: scale(1); }
 }
 
 body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+  margin: 0; padding: 0; height: 100%;
   font-family: 'Courier New', monospace;
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow: hidden;
 }
 
+/* Main page body CRT Effects - Lower z-index than loader */
 body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle, transparent 60%, rgba(0,0,0,0.6) 100%),
-    repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.11),
-      rgba(0, 0, 0, 0.11) 1px,
-      transparent 1px,
-      transparent 2px
-    );
-  pointer-events: none;
-  z-index: 1000;
+  content: ""; position: fixed; inset: 0;
+  background: radial-gradient(circle, transparent 60%, rgba(0,0,0,0.6) 100%), repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.11) 0px, rgba(0, 0, 0, 0.11) 1px, transparent 1px, transparent 2px);
+  pointer-events: none; z-index: 1000;
 }
-
 body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
+  content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 5px;
   background: rgba(255, 255, 255, 0.07);
-  animation: scanline 6s linear infinite;
-  z-index: 1001;
+  animation: scanline 6s linear infinite; /* Main page scanline */
+  z-index: 1001; pointer-events: none;
 }
 
-body.dark-mode {
-  background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
-  color: #00ff00;
-  --bg-color: #0a0a0a;
-}
+body.dark-mode { background: linear-gradient(45deg, #0a0a0a, #1a1a1a); color: #00ff00; --bg-color: #0a0a0a; }
+body.light-mode { background: linear-gradient(45deg, #e0e0e0, #f0f0f0); color: #006400; --bg-color: #e0e0e0; }
 
-body.light-mode {
-  background: linear-gradient(45deg, #e0e0e0, #f0f0f0);
-  color: #006400;
-  --bg-color: #e0e0e0;
-}
+/* Adjust body effects for light mode */
+body.light-mode::before { background: radial-gradient(circle, transparent 70%, rgba(255,255,255,0.4) 100%), repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.1) 0px, rgba(255, 255, 255, 0.1) 1px, transparent 1px, transparent 2px); }
+body.light-mode::after { background: rgba(0, 0, 0, 0.05); }
 
-#root {
-  min-height: 100vh;
-}
+#root { min-height: 100vh; }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  animation: flicker 0.15s infinite;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  min-height: 100vh; animation: flicker 0.15s infinite;
   transform: perspective(800px) rotateX(2deg);
-  position: relative;
-  z-index: 1;
+  position: relative; z-index: 1050; /* Above body effects */
 }
 
-.text-wrapper {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-
+.text-wrapper { position: relative; display: inline-block; cursor: pointer; }
 .text {
-  font-size: 3rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 15px currentColor;
-  margin-bottom: 2rem;
-  transition: all 0.3s ease;
-  filter: blur(0.5px);
-  padding: 10px;
+  margin-bottom: 2rem; transition: all 0.3s ease; filter: blur(0.5px); padding: 10px;
 }
+.text.glitching { animation: seriousGlitch 0.3s steps(2, jump-none) infinite; }
+body.light-mode .text.glitching { text-shadow: 2px 0 #004d00, -2px 0 #004d00; }
+.text:hover { transform: scale(1.05); text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor; }
 
-.text.glitching {
-  animation: seriousGlitch 0.3s steps(2, jump-none) infinite;
-}
-
-.text:hover {
-  transform: scale(1.05);
-  text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
-}
-
-.social-buttons {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  z-index: 1002;
-}
-
+.social-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 1rem; z-index: 1100; }
 .social-button {
-  padding: 0.5rem 1rem;
-  background: transparent;
-  border: 2px solid currentColor;
-  color: inherit;
-  font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  position: relative;
-  white-space: nowrap;
-  text-shadow: 0 0 5px currentColor;
+  padding: 0.5rem 1rem; background: transparent; border: 2px solid currentColor; color: inherit;
+  font-family: 'Courier New', monospace; font-size: 1rem; text-decoration: none;
+  transition: all 0.3s ease; position: relative; white-space: nowrap; text-shadow: 0 0 5px currentColor;
 }
-
-.social-button:hover {
-  background: currentColor;
-  box-shadow: 0 0 15px currentColor;
-}
-
+.social-button:hover { background: currentColor; box-shadow: 0 0 15px currentColor; }
 .social-button:hover::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--bg-color);
-  z-index: 1;
-  text-shadow: none;
-  white-space: nowrap;
+  content: attr(data-text); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  color: var(--bg-color); z-index: 1; text-shadow: none; white-space: nowrap;
 }
 
 .mode-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 0.5rem 1rem;
-  background: transparent;
-  border: 2px solid currentColor;
-  color: inherit;
-  font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-shadow: 0 0 5px currentColor;
-  white-space: nowrap;
-  z-index: 1002;
+  position: absolute; top: 20px; right: 20px; padding: 0.5rem 1rem; background: transparent;
+  border: 2px solid currentColor; color: inherit; font-family: 'Courier New', monospace;
+  font-size: 1rem; cursor: pointer; transition: all 0.3s ease;
+  text-shadow: 0 0 5px currentColor; white-space: nowrap; z-index: 1100;
 }
+.mode-toggle:hover { background: currentColor; box-shadow: 0 0 15px currentColor; }
+.mode-toggle:hover::before { content: attr(data-text); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--bg-color); z-index: 1; text-shadow: none; }
 
-.mode-toggle:hover {
-  background: currentColor;
-  box-shadow: 0 0 15px currentColor;
+.glitch-overlay { /* Theme/page transitions */
+  position: fixed; inset: 0; background: currentColor; mix-blend-mode: difference;
+  pointer-events: none; opacity: 0; transition: opacity 0.3s ease; z-index: 10003;
 }
-
-.mode-toggle:hover::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--bg-color);
-  z-index: 1;
-  text-shadow: none;
-}
-
-.glitch-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: currentColor;
-  mix-blend-mode: difference;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1003;
-}
-
-.glitch-overlay.active {
-  animation: glitchTransition 0.3s ease-out;
-}
+.glitch-overlay.active { animation: glitchTransition 0.3s ease-out; }
 
 .visit-counter {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.9rem;
-  opacity: 0.7;
-  transition: all 0.3s ease;
-  text-shadow: 0 0 5px currentColor;
-  z-index: 1002;
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  font-size: 0.9rem; opacity: 0.7; transition: all 0.3s ease;
+  text-shadow: 0 0 5px currentColor; z-index: 1100;
 }
-
-.visit-counter:hover {
-  opacity: 1;
-}
+.visit-counter:hover { opacity: 1; }
 
 .spotlight {
-  position: fixed;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  position: fixed; width: 150px; height: 150px; border-radius: 50%;
   background: radial-gradient(circle, rgba(0,255,0,0.15) 0%, rgba(0,255,0,0) 70%);
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
-  filter: blur(10px);
+  pointer-events: none; transform: translate(-50%, -50%);
+  z-index: 9999; filter: blur(10px); transition: background 0.3s ease;
 }
+body.light-mode .spotlight { background: radial-gradient(circle, rgba(0,100,0,0.1) 0%, rgba(0,100,0,0) 70%); }
 
 .about-button {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 0.5rem 1rem;
-  background: transparent;
-  border: 2px solid currentColor;
-  color: inherit;
-  font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-shadow: 0 0 5px currentColor;
-  text-decoration: none;
-  white-space: nowrap;
-  z-index: 1002;
+  position: absolute; top: 20px; left: 20px; padding: 0.5rem 1rem; background: transparent;
+  border: 2px solid currentColor; color: inherit; font-family: 'Courier New', monospace;
+  font-size: 1rem; cursor: pointer; transition: all 0.3s ease;
+  text-shadow: 0 0 5px currentColor; text-decoration: none; white-space: nowrap; z-index: 1100;
 }
+.about-button:hover { background: currentColor; box-shadow: 0 0 15px currentColor; }
+.about-button:hover::before { content: attr(data-text); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--bg-color); z-index: 1; text-shadow: none; }
 
-.about-button:hover {
-  background: currentColor;
-  box-shadow: 0 0 15px currentColor;
-}
-
-.about-button:hover::before {
-  content: attr(data-text);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--bg-color);
-  z-index: 1;
-  text-shadow: none;
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .text { font-size: 2rem; margin-bottom: 1.5rem; }
+  .social-button, .mode-toggle, .about-button { font-size: 0.9rem; padding: 0.4rem 0.8rem; }
+  #boot-text { top: 20px; left: 15px; right: 15px; white-space: pre-wrap; padding: 20px 15px; max-width: 100%; }
+  #progress-container { width: 80%; bottom: 10%; }
 }
