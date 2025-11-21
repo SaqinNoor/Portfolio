@@ -98,10 +98,13 @@
         }
         
         .hero-bg-text {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            position: absolute; 
+            /* GSAP handles centering now for better parallax control */
+            top: 50%; left: 50%; 
             font-size: 22vw; font-family: var(--font-display); font-weight: 800;
             color: var(--surface); white-space: nowrap; z-index: -1; opacity: 0.6;
             pointer-events: none;
+            line-height: 0.8; /* Tighten height to improve optical center */
         }
 
         .hero-content { z-index: 2; width: 100%; }
@@ -158,8 +161,8 @@
             display: flex; justify-content: space-between;
             padding: 2rem var(--pad-x);
             border-bottom: 1px solid var(--line);
-            background: rgba(5, 5, 5, 0.8); /* Glass effect */
-            backdrop-filter: blur(10px);
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -172,7 +175,7 @@
             color: var(--text-dim);
             text-transform: uppercase;
             transition: color 0.3s, transform 0.3s;
-            cursor: none; /* Keep custom cursor */
+            cursor: none;
         }
         
         .dim-link:hover { color: var(--text); transform: translateY(-2px); }
@@ -184,7 +187,7 @@
         
         .persona-sticky {
             width: var(--sidebar-width);
-            height: 100vh; position: sticky; top: var(--nav-height); /* Account for nav */
+            height: 100vh; position: sticky; top: var(--nav-height);
             display: flex; flex-direction: column; justify-content: center;
             padding: 0 var(--pad-x); border-right: 1px solid var(--line);
             background: var(--bg); z-index: 10;
@@ -290,13 +293,28 @@
         }
 
 
-        /* --- VAULT --- */
-        .photo-vault { padding: var(--pad-y) 0; border-top: 1px solid var(--line); overflow: hidden; background: var(--bg); }
-        .vault-header { padding: 0 var(--pad-x); margin-bottom: 4rem; }
-        .vault-track { display: flex; gap: 1rem; padding-left: var(--pad-x); width: max-content; }
+        /* --- VAULT (Vertical Centered Horizontal Scroll) --- */
+        .photo-vault { 
+            height: 100vh; /* Force Full Height */
+            padding: 0; /* Remove padding to allow perfect centering */
+            border-top: 1px solid var(--line); 
+            overflow: hidden; 
+            background: var(--bg); 
+            display: flex;
+            align-items: center; /* Vertical Center */
+        }
+        
+        .vault-track { 
+            display: flex; gap: 2rem; padding-left: var(--pad-x); width: max-content;
+            will-change: transform;
+        }
+        
         .vault-img { 
-            width: 400px; height: 500px; object-fit: cover; filter: grayscale(100%) contrast(1.1); 
-            transition: filter 0.5s; border: 1px solid var(--line);
+            width: 500px; height: 65vh; /* Large vertical images */
+            object-fit: cover; 
+            filter: grayscale(100%) contrast(1.1); 
+            transition: filter 0.5s; 
+            border: 1px solid var(--line);
         }
         .vault-img:hover { filter: grayscale(0%) contrast(1); border-color: var(--accent); }
 
@@ -326,6 +344,7 @@
             .hero-bg-text { font-size: 30vw; }
             .id-grid { grid-template-columns: 1fr; gap: 2rem; }
             .dimension-nav { flex-wrap: wrap; gap: 1rem; padding: 1rem var(--pad-x); }
+            .vault-img { width: 80vw; }
         }
     </style>
 </head>
@@ -350,7 +369,7 @@
             <div class="hero-content">
                 <div class="hero-line"><h1 class="hero-title"><span class="reveal-text">SAQIN</span></h1></div>
                 <div class="hero-line"><h1 class="hero-title accent"><span class="reveal-text">NOOR</span></h1></div>
-                <div class="hero-line"><h1 class="hero-title--sm"><span class="reveal-text">ISC - 27</span></h1></div>
+                <div class="hero-line"><h1 class="hero-title--sm"><span class="reveal-text">DEVELOPER</span></h1></div>
             </div>
 
             <div class="hero-footer">
@@ -530,17 +549,19 @@
 
         <!-- VAULT -->
         <section class="photo-vault">
-            <div class="vault-header">
-                <div class="tag">THE LENS</div>
-                <h2 style="font-size: clamp(2rem, 4vw, 3rem); margin-top: 1rem; color: var(--text);">SONY DSC-W110</h2>
-            </div>
-            
+            <!-- Track -->
             <div class="vault-track">
-                <img src="https://images.unsplash.com/photo-1517502474097-f9b30659dadb?w=600&q=80" class="vault-img" alt="Photo 1">
-                <img src="https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=600&q=80" class="vault-img" alt="Photo 2">
-                <img src="https://images.unsplash.com/photo-1493514789931-586cb221d7a7?w=600&q=80" class="vault-img" alt="Photo 3">
-                <img src="https://images.unsplash.com/photo-1552168324-d612d77725e3?w=600&q=80" class="vault-img" alt="Photo 4">
-                <img src="https://images.unsplash.com/photo-1542259681-d4cd4a6377ba?w=600&q=80" class="vault-img" alt="Photo 5">
+                <div class="vault-header" style="margin-right: 4rem; min-width: 300px;">
+                    <div class="tag">THE LENS</div>
+                    <h2 style="font-size: 4rem; font-family: var(--font-display); font-weight: 800; line-height: 1; margin-top: 1rem;">SONY<br>DSC-W110</h2>
+                </div>
+                <img src="https://i.imgur.com/IKfvnAJ.jpeg" class="vault-img" alt="Photo 1">
+                <img src="https://i.imgur.com/qRWzzcz.jpeg" class="vault-img" alt="Photo 2">
+                <img src="https://i.imgur.com/uHiXxja.jpeg" class="vault-img" alt="Photo 3">
+                <img src="https://i.imgur.com/W01MoB4.jpeg" class="vault-img" alt="Photo 4">
+                <img src="https://i.imgur.com/vNj94jE.jpeg" class="vault-img" alt="Photo 5">
+                <img src="https://i.imgur.com/ioDhyFt.jpeg" class="vault-img" alt="Photo 6">
+                <img src="https://i.imgur.com/2VLfPGC.jpeg" class="vault-img" alt="Photo 7">
             </div>
         </section>
 
@@ -601,9 +622,9 @@
             tl.to('.loader-text', { scale: 0.8, opacity: 0, duration: 0.5, ease: "power2.out" }, 'exit');
             tl.to('.acid-loader', { yPercent: -100, duration: 1.2, ease: "power4.inOut" }, 'exit+=0.1');
             tl.to('.reveal-text', { y: 0, duration: 1.5, stagger: 0.15, ease: "power4.out" }, '-=0.8'); 
+            tl.set('.hero-bg-text', { xPercent: -50, yPercent: -50 }); // Ensure center first
             tl.to('.hero-bg-text', { opacity: 0.8, duration: 1 }, '-=1');
             
-            // Trigger Identity Animations slightly after
             tl.from('.reveal-bio', { y: 30, opacity: 0, stagger: 0.1, duration: 1, ease: "power2.out" }, '-=0.5');
         }
 
@@ -620,7 +641,7 @@
         
         function getScrollAmount() {
             let trackWidth = vaultTrack.scrollWidth;
-            return -(trackWidth - window.innerWidth) - 100;
+            return -(trackWidth - window.innerWidth);
         }
 
         let scrollTween = gsap.to(vaultTrack, {
@@ -630,7 +651,7 @@
 
         ScrollTrigger.create({
             trigger: vaultSection,
-            start: "top 20%",
+            start: "top top", /* Start EXACTLY when section hits top */
             end: () => `+=${Math.abs(getScrollAmount())}`,
             pin: true,
             animation: scrollTween,
@@ -669,7 +690,6 @@
         
         window.addEventListener('scroll', highlightNav);
 
-        // Smooth Scroll for Nav Links
         navLinks.forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
