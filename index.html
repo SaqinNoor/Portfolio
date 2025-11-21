@@ -98,13 +98,10 @@
         }
         
         .hero-bg-text {
-            position: absolute; 
-            /* GSAP handles centering now for better parallax control */
-            top: 50%; left: 50%; 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             font-size: 22vw; font-family: var(--font-display); font-weight: 800;
             color: var(--surface); white-space: nowrap; z-index: -1; opacity: 0.6;
             pointer-events: none;
-            line-height: 0.8; /* Tighten height to improve optical center */
         }
 
         .hero-content { z-index: 2; width: 100%; }
@@ -295,13 +292,13 @@
 
         /* --- VAULT (Vertical Centered Horizontal Scroll) --- */
         .photo-vault { 
-            height: 100vh; /* Force Full Height */
-            padding: 0; /* Remove padding to allow perfect centering */
+            height: 100vh; 
+            padding: 0; 
             border-top: 1px solid var(--line); 
             overflow: hidden; 
             background: var(--bg); 
             display: flex;
-            align-items: center; /* Vertical Center */
+            align-items: center; 
         }
         
         .vault-track { 
@@ -310,13 +307,18 @@
         }
         
         .vault-img { 
-            width: 500px; height: 65vh; /* Large vertical images */
+            width: 500px; height: 65vh; 
             object-fit: cover; 
             filter: grayscale(100%) contrast(1.1); 
-            transition: filter 0.5s; 
+            transition: filter 0.5s, border-color 0.5s; 
             border: 1px solid var(--line);
         }
-        .vault-img:hover { filter: grayscale(0%) contrast(1); border-color: var(--accent); }
+        
+        /* NOTE: :hover removed here, controlled by JS for accuracy during scroll */
+        .vault-img.active { 
+            filter: grayscale(0%) contrast(1); 
+            border-color: var(--accent); 
+        }
 
         /* --- FOOTER --- */
         .footer {
@@ -549,19 +551,18 @@
 
         <!-- VAULT -->
         <section class="photo-vault">
-            <!-- Track -->
             <div class="vault-track">
                 <div class="vault-header" style="margin-right: 4rem; min-width: 300px;">
                     <div class="tag">THE LENS</div>
                     <h2 style="font-size: 4rem; font-family: var(--font-display); font-weight: 800; line-height: 1; margin-top: 1rem;">SONY<br>DSC-W110</h2>
                 </div>
-                <img src="https://i.imgur.com/IKfvnAJ.jpeg" class="vault-img" alt="Photo 1">
-                <img src="https://i.imgur.com/qRWzzcz.jpeg" class="vault-img" alt="Photo 2">
-                <img src="https://i.imgur.com/uHiXxja.jpeg" class="vault-img" alt="Photo 3">
-                <img src="https://i.imgur.com/W01MoB4.jpeg" class="vault-img" alt="Photo 4">
-                <img src="https://i.imgur.com/vNj94jE.jpeg" class="vault-img" alt="Photo 5">
-                <img src="https://i.imgur.com/ioDhyFt.jpeg" class="vault-img" alt="Photo 6">
-                <img src="https://i.imgur.com/2VLfPGC.jpeg" class="vault-img" alt="Photo 7">
+                <img src="https://i.imgur.com/IKfvnAJ.jpeg" class="vault-img" alt="DSC W110 Photo 1">
+                <img src="https://i.imgur.com/qRWzzcz.jpeg" class="vault-img" alt="DSC W110 Photo 2">
+                <img src="https://i.imgur.com/uHiXxja.jpeg" class="vault-img" alt="DSC W110 Photo 3">
+                <img src="https://i.imgur.com/W01MoB4.jpeg" class="vault-img" alt="DSC W110 Photo 4">
+                <img src="https://i.imgur.com/vNj94jE.jpeg" class="vault-img" alt="DSC W110 Photo 5">
+                <img src="https://i.imgur.com/ioDhyFt.jpeg" class="vault-img" alt="DSC W110 Photo 6">
+                <img src="https://i.imgur.com/2VLfPGC.jpeg" class="vault-img" alt="DSC W110 Photo 7">
             </div>
         </section>
 
@@ -591,11 +592,16 @@
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // --- 2. CUSTOM CURSOR ---
+        // --- 2. CUSTOM CURSOR & HIT TESTING ---
         const cursor = document.querySelector('.cursor');
+        let mouseX = 0, mouseY = 0;
+
         window.addEventListener('mousemove', (e) => {
-            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            gsap.to(cursor, { x: mouseX, y: mouseY, duration: 0.1 });
         });
+
         document.querySelectorAll('a, .magnetic').forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
@@ -622,7 +628,9 @@
             tl.to('.loader-text', { scale: 0.8, opacity: 0, duration: 0.5, ease: "power2.out" }, 'exit');
             tl.to('.acid-loader', { yPercent: -100, duration: 1.2, ease: "power4.inOut" }, 'exit+=0.1');
             tl.to('.reveal-text', { y: 0, duration: 1.5, stagger: 0.15, ease: "power4.out" }, '-=0.8'); 
-            tl.set('.hero-bg-text', { xPercent: -50, yPercent: -50 }); // Ensure center first
+            
+            // Set initial parallax center then fade in
+            tl.set('.hero-bg-text', { xPercent: -50, yPercent: -50 });
             tl.to('.hero-bg-text', { opacity: 0.8, duration: 1 }, '-=1');
             
             tl.from('.reveal-bio', { y: 30, opacity: 0, stagger: 0.1, duration: 1, ease: "power2.out" }, '-=0.5');
@@ -632,10 +640,11 @@
         gsap.registerPlugin(ScrollTrigger);
 
         gsap.to('.hero-bg-text', {
-            y: 200,
+            yPercent: -30, // Move up slightly
             scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
         });
 
+        // Vault Scroll with HIT TESTING
         let vaultTrack = document.querySelector('.vault-track');
         let vaultSection = document.querySelector('.photo-vault');
         
@@ -644,20 +653,43 @@
             return -(trackWidth - window.innerWidth);
         }
 
+        // Function to manually check hover state during scroll
+        function checkVaultHover() {
+            const elements = document.elementsFromPoint(mouseX, mouseY);
+            const vaultImgs = document.querySelectorAll('.vault-img');
+            
+            // Reset all
+            vaultImgs.forEach(img => img.classList.remove('active'));
+            
+            // Find if we are over an image
+            const img = elements.find(el => el.classList.contains('vault-img'));
+            if(img) {
+                img.classList.add('active');
+            }
+        }
+
         let scrollTween = gsap.to(vaultTrack, {
             x: getScrollAmount,
             ease: "none",
+            onUpdate: checkVaultHover // Check on every frame of the scroll
         });
 
         ScrollTrigger.create({
             trigger: vaultSection,
-            start: "top top", /* Start EXACTLY when section hits top */
+            start: "top top",
             end: () => `+=${Math.abs(getScrollAmount())}`,
             pin: true,
             animation: scrollTween,
             scrub: 1,
             invalidateOnRefresh: true
         });
+
+        // Add standard listeners for when not scrolling
+        document.querySelectorAll('.vault-img').forEach(img => {
+            img.addEventListener('mouseenter', () => img.classList.add('active'));
+            img.addEventListener('mouseleave', () => img.classList.remove('active'));
+        });
+
 
         gsap.utils.toArray('.persona-title').forEach(title => {
             gsap.from(title, {
