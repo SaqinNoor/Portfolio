@@ -29,7 +29,8 @@
             --font-display: 'Syne', sans-serif;
             --font-body: 'Space Grotesk', sans-serif;
             
-            --ease-lux: cubic-bezier(0.6, 0.01, -0.05, 0.9);
+            /* Animation Curves */
+            --ease-snap: cubic-bezier(0.6, 0.01, -0.05, 0.9);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -82,7 +83,7 @@
         h1, h2, h3, h4 { font-family: var(--font-display); text-transform: uppercase; line-height: 0.9; color: var(--text); }
         a { text-decoration: none; color: inherit; cursor: none; }
         
-        .icon-svg { width: 40px; height: 40px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+        .icon-svg { width: 40px; height: 40px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s; }
         
         .tag {
             font-family: var(--font-body); display: inline-flex; align-items: center; gap: 8px;
@@ -92,7 +93,7 @@
             transition: color 0.3s, border-color 0.3s;
         }
 
-        /* --- KINETIC HERO (Calculated Bounds) --- */
+        /* --- KINETIC HERO --- */
         .hero {
             height: 100vh; width: 100%;
             display: flex; flex-direction: column; justify-content: center;
@@ -109,13 +110,13 @@
         .hero-content { z-index: 2; width: 100%; }
         .hero-line { overflow: hidden; width: 100%; margin-bottom: -0.5vw; }
         
-        /* FIX: 9.5vw allows "DEVELOPER" (9 chars) to fit with padding */
         .hero-title {
             font-size: clamp(3rem, 9.5vw, 10rem);
             font-weight: 800; 
             letter-spacing: -0.02em;
             color: var(--text);
             line-height: 0.9;
+            white-space: nowrap; 
         }
         .hero-title.accent { color: var(--accent); }
         .reveal-text { display: block; transform: translateY(110%); }
@@ -134,23 +135,32 @@
             display: flex; flex-direction: column; justify-content: center;
             padding: 0 var(--pad-x); border-right: 1px solid var(--line);
             background: var(--bg); z-index: 10;
+            /* Enable Container Queries for text sizing */
+            container-type: inline-size;
         }
         
-        .persona-title { 
-            font-size: clamp(3rem, 6vw, 7rem); font-weight: 800; color: var(--text); 
-            letter-spacing: -2px; word-break: break-word; line-height: 0.9;
+        .persona-group { display: flex; flex-direction: column; width: 100%; }
+        .persona-label { font-family: var(--font-body); color: var(--text-dim); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
+        
+        .persona-title {
+            /* Scaled to fit longest word "ACHIEVER" (8 chars) in 30vw width */
+            font-size: 15cqi; 
+            font-weight: 800; 
+            color: var(--text); 
+            line-height: 0.9;
+            text-transform: uppercase;
+            white-space: nowrap; /* Strict one line */
         }
+
         .persona-subtitle {
             color: var(--accent); font-family: var(--font-body); 
-            margin-top: 1.5rem; font-size: 0.9rem; line-height: 1.4; letter-spacing: 0.5px;
+            margin-top: 2rem; font-size: 0.9rem; line-height: 1.4; letter-spacing: 0.5px;
             border-left: 2px solid var(--accent); padding-left: 1rem;
         }
 
         .persona-content { width: 70%; padding: var(--pad-y) var(--pad-x); }
 
-        /* --- MODULES --- */
-        
-        /* Dev */
+        /* --- DEVELOPER MODULES --- */
         .award-highlight {
             background: var(--surface); border: 1px solid var(--line); padding: 4rem;
             margin-bottom: 6rem; position: relative; transition: border-color 0.3s;
@@ -163,22 +173,48 @@
             font-family: var(--font-body); letter-spacing: 1px;
         }
 
+        /* Project Item (Swipe Hover) */
         .project-item { 
-            padding: 3rem 0; border-bottom: 1px solid var(--line); 
-            display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 1rem;
-            transition: background 0.3s;
+            position: relative; padding: 3.5rem 2rem;
+            border: 1px solid var(--line); border-top: none; 
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+            overflow: hidden; z-index: 1;
         }
-        .project-item:hover { background: rgba(255,255,255,0.02); padding-left: 1rem; padding-right: 1rem; }
-        .p-left h3 { font-size: 2rem; margin-bottom: 0.5rem; }
-        .p-left p { font-size: 0.9rem; max-width: 400px; }
-        .p-link { 
-            font-size: 0.8rem; color: var(--text); text-transform: uppercase; letter-spacing: 1px;
-            border: 1px solid var(--line); padding: 0.5rem 1.5rem; border-radius: 50px;
-            transition: all 0.3s;
+        .project-item:first-of-type { border-top: 1px solid var(--line); }
+        
+        .project-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--accent);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 0.5s var(--ease-snap);
+            z-index: -1;
         }
-        .p-link:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+        .project-item:hover .project-overlay { transform: scaleX(1); }
+        
+        .project-item h3, .project-item p { transition: color 0.3s; position: relative; z-index: 2; }
+        .project-item:hover h3 { color: #000000; }
+        .project-item:hover p { color: #333333; }
+        
+        .p-left h3 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .p-left p { font-size: 0.9rem; max-width: 400px; color: var(--text-dim); }
+        
+        .p-arrow {
+            width: 50px; height: 50px; border: 1px solid var(--line); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; transition: border-color 0.3s; background: var(--bg);
+        }
+        .p-arrow svg { width: 18px; height: 18px; stroke: var(--text); stroke-width: 2; transition: all 0.4s var(--ease-snap); }
+        .project-item:hover .p-arrow { border-color: #000000; background: transparent; }
+        .project-item:hover .p-arrow svg { stroke: #000000; transform: translate(150%, -150%); }
+        .p-arrow::after {
+            content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='7' y1='17' x2='17' y2='7'%3E%3C/line%3E%3Cpolyline points='7 7 17 7 17 17'%3E%3C/polyline%3E%3C/svg%3E");
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            transform: translate(-150%, 150%); transition: transform 0.4s var(--ease-snap);
+        }
+        .project-item:hover .p-arrow::after { transform: translate(0, 0); }
 
-        /* Leader */
+        /* Leader Timeline */
         .timeline-node { position: relative; padding-left: 3rem; margin-bottom: 5rem; border-left: 1px solid var(--line); }
         .timeline-node::before {
             content: ''; position: absolute; left: -3px; top: 0; width: 5px; height: 5px;
@@ -186,48 +222,48 @@
         }
         .t-role { font-size: 2rem; margin-bottom: 0.5rem; color: var(--text); }
         .t-org { color: var(--text-dim); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: 1px; display: block; }
-        
-        /* ACHIEVER GRID - COLUMNAR LAYOUT */
-        .achiever-grid { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            border: 1px solid var(--line);
-        }
-        
-        @media (min-width: 1024px) {
-            .achiever-grid {
-                /* 3 Equal Columns */
-                grid-template-columns: repeat(3, 1fr);
-            }
-            /* Vertical dividers */
-            .achievement-col {
-                border-right: 1px solid var(--line);
-            }
-            .achievement-col:last-child {
-                border-right: none;
-            }
+
+        /* ACHIEVER (Vertical Stack Layout) */
+        .achiever-list {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
 
-        .achievement-col {
-            background: var(--bg); 
-            padding: 3rem 2rem; 
-            position: relative; 
-            min-height: 400px; /* Force tall aspect ratio */
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between;
-            transition: background 0.3s;
+        .achievement-row {
+            position: relative;
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--line);
+            display: grid;
+            grid-template-columns: 80px 1fr; /* Icon | Content */
+            gap: 2rem;
+            align-items: start;
+            overflow: hidden;
+            transition: transform 0.3s;
+            z-index: 1;
         }
-        .achievement-col:hover { background: var(--surface); }
         
-        /* Top accent line for hover */
-        .achievement-col::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-            background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease-lux);
+        .achievement-row:first-child { border-top: 1px solid var(--line); }
+        
+        /* Hover Fill Effect */
+        .achievement-row::before {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+            background: var(--surface);
+            transform: scaleY(0); transform-origin: bottom;
+            transition: transform 0.5s var(--ease-snap);
+            z-index: -1;
         }
-        .achievement-col:hover::before { transform: scaleX(1); }
+        .achievement-row:hover::before { transform: scaleY(1); }
+        .achievement-row:hover .icon-svg { stroke: var(--accent); transform: scale(1.1); }
         
-        .ac-icon { margin-bottom: 3rem; }
+        /* Accent Line */
+        .achievement-row::after {
+            content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 2px;
+            background: var(--accent);
+            transform: scaleX(0); transform-origin: right;
+            transition: transform 0.5s var(--ease-snap);
+        }
+        .achievement-row:hover::after { transform: scaleX(1); transform-origin: left; }
 
         /* Vault */
         .photo-vault { padding: var(--pad-y) 0; border-top: 1px solid var(--line); overflow: hidden; background: var(--bg); }
@@ -256,15 +292,13 @@
             .persona-sticky { 
                 width: 100%; height: auto; position: relative; 
                 padding: 4rem var(--pad-x); border-right: none; border-bottom: 1px solid var(--line); 
+                container-type: normal; /* Reset for mobile */
             }
+            .persona-title { font-size: 3.5rem; white-space: normal; } 
             .persona-content { width: 100%; padding: 4rem var(--pad-x); }
-            .project-item { flex-direction: column; gap: 1.5rem; }
-            .p-link { width: fit-content; }
+            .project-item { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
             .hero-bg-text { font-size: 30vw; }
-            
-            .achiever-grid { grid-template-columns: 1fr; border: none; }
-            .achievement-col { border: 1px solid var(--line); border-bottom: none; min-height: auto; }
-            .achievement-col:last-child { border-bottom: 1px solid var(--line); }
+            .achievement-row { grid-template-columns: 1fr; gap: 1rem; }
         }
     </style>
 </head>
@@ -292,16 +326,19 @@
             </div>
 
             <div class="hero-footer">
-                <span>Dhaka, BD</span>
+                <span>Based in DHK</span>
                 <span>(SCROLL)</span>
-                <span>2024</span>
+                <span>2025</span>
             </div>
         </section>
 
         <!-- THE DEVELOPER -->
         <section class="persona-section">
             <div class="persona-sticky">
-                <h2 class="persona-title">THE<br>DEV</h2>
+                <div class="persona-group">
+                    <span class="persona-label">THE</span>
+                    <h2 class="persona-title">DEV</h2>
+                </div>
                 <div class="persona-subtitle">
                     ARCHITECTING RESILIENT<br>DIGITAL SYSTEMS.
                 </div>
@@ -319,20 +356,28 @@
                 <div style="margin-top: 6rem;">
                     <div class="tag" style="margin-bottom: 2rem;">SELECTED WORKS</div>
                     
+                    <!-- Project 1 -->
                     <div class="project-item magnetic">
+                        <div class="project-overlay"></div>
                         <div class="p-left">
                             <h3>6th NELC Homepage</h3>
-                            <p>Official event portal for Ideal English Language Club. Features event registration and live gallery.</p>
+                            <p>Official event portal for Ideal English Language Club.</p>
                         </div>
-                        <a href="https://saqinnoor.github.io/6th-NELC-Homepage" target="_blank" class="p-link">LIVE VIEW</a>
+                        <a href="https://saqinnoor.github.io/6th-NELC-Homepage" target="_blank" class="p-arrow">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </a>
                     </div>
 
+                    <!-- Project 2 -->
                     <div class="project-item magnetic">
+                        <div class="project-overlay"></div>
                         <div class="p-left">
                             <h3>IELC Official Site</h3>
-                            <p>A proposed modern redesign for the institutional presence focusing on accessibility.</p>
+                            <p>A proposed modern redesign for the institutional presence.</p>
                         </div>
-                        <a href="https://saqinnoor.github.io/IELC-Site" target="_blank" class="p-link">PROTOTYPE</a>
+                        <a href="https://saqinnoor.github.io/IELC-Site" target="_blank" class="p-arrow">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -341,7 +386,10 @@
         <!-- THE LEADER -->
         <section class="persona-section">
             <div class="persona-sticky">
-                <h2 class="persona-title">THE<br>LEADER</h2>
+                <div class="persona-group">
+                    <span class="persona-label">THE</span>
+                    <h2 class="persona-title">LEADER</h2>
+                </div>
                 <div class="persona-subtitle">
                     COMMANDING TEAMS.<br>SETTING STANDARDS.
                 </div>
@@ -379,45 +427,48 @@
         <!-- THE ACHIEVER -->
         <section class="persona-section">
             <div class="persona-sticky">
-                <h2 class="persona-title">THE<br>ACHIEVER</h2>
+                <div class="persona-group">
+                    <span class="persona-label">THE</span>
+                    <h2 class="persona-title">ACHIEVER</h2>
+                </div>
                 <div class="persona-subtitle">
                     WINNING IS A HABIT.<br>EXCELLENCE IS STANDARD.
                 </div>
             </div>
             <div class="persona-content">
                 
-                <div class="achiever-grid">
-                    <!-- Column 1 -->
-                    <div class="achievement-col magnetic">
+                <div class="achiever-list">
+                    <!-- Row 1 -->
+                    <div class="achievement-row magnetic">
                         <div class="ac-icon">
                             <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                         </div>
                         <div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Champion</h3>
+                            <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">Champion</h3>
                             <p style="font-size: 0.9rem; color: var(--text-dim);">8th Notre Dame National Earth & Space Summit</p>
                             <p style="margin-top: 0.5rem; color: var(--accent); font-size: 0.75rem;">SEGMENT: EARTH SCIENCE OLYMPIAD</p>
                         </div>
                     </div>
 
-                    <!-- Column 2 -->
-                    <div class="achievement-col magnetic">
+                    <!-- Row 2 -->
+                    <div class="achievement-row magnetic">
                         <div class="ac-icon">
                             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
                         </div>
                         <div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">1st Place</h3>
+                            <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">1st Place</h3>
                             <p style="font-size: 0.9rem; color: var(--text-dim);">4th Viqarunnisa English Language Fiesta</p>
                             <p style="margin-top: 0.5rem; color: var(--accent); font-size: 0.75rem;">SEGMENT: SPELL BEE</p>
                         </div>
                     </div>
 
-                    <!-- Column 3 -->
-                    <div class="achievement-col magnetic">
+                    <!-- Row 3 -->
+                    <div class="achievement-row magnetic">
                         <div class="ac-icon">
                             <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
                         </div>
                         <div>
-                            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">1st Runners Up</h3>
+                            <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">1st Runners Up</h3>
                             <p style="font-size: 0.9rem; color: var(--text-dim);">6th National English Language Carnival</p>
                             <p style="margin-top: 0.5rem; color: var(--accent); font-size: 0.75rem;">SEGMENT: PHOTOGRAPHY</p>
                         </div>
@@ -452,7 +503,7 @@
                 <a href="#" class="magnetic p-link" style="border:none; color: var(--text-dim);">LINKEDIN</a>
             </div>
             <div style="margin-top: 6rem; font-size: 0.7rem; color: var(--line);">
-                &copy; 2024 SAQIN NOOR.
+                &copy; 2025 SAQIN NOOR.
             </div>
         </footer>
 
