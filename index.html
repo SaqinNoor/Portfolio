@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saqin Noor — Generational Talent</title>
+    <meta name="description" content="Saqin Noor: Developer, Leader, Achiever.">
+
+    <!-- 1. Typography (Syne for Impact, Space Grotesk for Tech) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+
+    <!-- 2. Styles -->
+    <style>
+        :root {
+            /* Palette */
+            --bg: #050505;
+            --surface: #0f0f0f;
+            --text: #ECECEC;
+            --text-dim: #666666;
+            --accent: #CCFF00; /* Acid Lime */
+            --border: rgba(255, 255, 255, 0.08);
+
+            /* Spacing */
+            --pad-x: 5vw;
+            --pad-y: 120px;
+
+            /* Fonts */
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        /* Lenis Smooth Scroll Setup */
+        html.lenis { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            cursor: none; /* Custom cursor */
+        }
+
+        /* --- Noise Texture --- */
+        .noise {
+            position: fixed; inset: 0; pointer-events: none; z-index: 9000; opacity: 0.03;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        /* --- Cursor --- */
+        .cursor {
+            position: fixed; width: 12px; height: 12px; background: var(--accent);
+            border-radius: 50%; pointer-events: none; z-index: 9999;
+            mix-blend-mode: difference; transition: transform 0.2s ease-out;
+            transform: translate(-50%, -50%);
+        }
+        .cursor.hovered { transform: translate(-50%, -50%) scale(4); }
+
+        /* --- Typography Utils --- */
+        h1, h2, h3, h4 { font-family: var(--font-display); text-transform: uppercase; line-height: 1; }
+        a { text-decoration: none; color: inherit; cursor: none; }
+        
+        .tag {
+            display: inline-block; padding: 0.3rem 0.8rem; border: 1px solid var(--border);
+            border-radius: 100px; font-size: 0.75rem; text-transform: uppercase; color: var(--text-dim);
+            margin-bottom: 1rem; letter-spacing: 1px;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 var(--pad-x);
+            position: relative;
+        }
+        
+        .hero-eyebrow {
+            color: var(--accent);
+            font-family: var(--font-body);
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 12vw, 14rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-left: -0.5vw;
+        }
+        
+        .hero-title span { display: block; overflow: hidden; }
+        .hero-title .char { display: block; transform: translateY(100%); }
+
+        .hero-footer {
+            position: absolute; bottom: 3rem; width: 100%; left: 0;
+            padding: 0 var(--pad-x); display: flex; justify-content: space-between;
+            color: var(--text-dim); font-size: 0.85rem; text-transform: uppercase;
+        }
+
+        /* --- The "Persona" Layout (Sticky Sidebar) --- */
+        .persona-section {
+            display: flex;
+            border-top: 1px solid var(--border);
+        }
+        
+        .persona-sticky {
+            width: 35%;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 var(--pad-x);
+            border-right: 1px solid var(--border);
+            background: var(--bg);
+            z-index: 10;
+        }
+        
+        .persona-title {
+            font-size: clamp(3rem, 5vw, 6rem);
+            font-weight: 800;
+            color: var(--text);
+        }
+        .persona-subtitle {
+            color: var(--accent);
+            font-family: var(--font-body);
+            margin-top: 1rem;
+            max-width: 300px;
+        }
+
+        .persona-content {
+            width: 65%;
+            padding: var(--pad-y) var(--pad-x);
+        }
+
+        /* --- Developer Cards --- */
+        .award-highlight {
+            background: var(--surface);
+            border: 1px solid var(--accent);
+            padding: 3rem;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        .award-highlight::before {
+            content: '🏆 MAJOR RECOGNITION';
+            position: absolute; top: -12px; left: 2rem;
+            background: var(--accent); color: var(--bg);
+            font-size: 0.7rem; font-weight: bold; padding: 0.2rem 0.5rem;
+        }
+
+        .project-item {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            transition: opacity 0.3s;
+        }
+        .project-item:hover { opacity: 0.7; }
+        .project-title { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .project-link { font-size: 0.9rem; color: var(--accent); display: flex; align-items: center; gap: 0.5rem; }
+
+        /* --- Leader Timeline --- */
+        .timeline-node {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 5rem;
+            border-left: 2px solid var(--border);
+        }
+        .timeline-node::before {
+            content: ''; position: absolute; left: -6px; top: 0;
+            width: 10px; height: 10px; background: var(--bg); border: 2px solid var(--accent);
+            border-radius: 50%;
+        }
+        .t-role { font-size: 2rem; margin-bottom: 0.5rem; }
+        .t-org { color: var(--text-dim); font-size: 0.9rem; text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: 1px; }
+        .t-desc { line-height: 1.6; color: #bbb; max-width: 600px; }
+        .t-badge { 
+            display: inline-block; background: rgba(204, 255, 0, 0.1); color: var(--accent);
+            padding: 0.2rem 0.6rem; font-size: 0.8rem; margin-top: 1rem; margin-right: 0.5rem;
+        }
+
+        /* --- Achiever Grid --- */
+        .achiever-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        .achievement-card {
+            background: var(--surface);
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+        .achievement-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+        /* --- Photography Horizontal Scroll --- */
+        .photo-vault {
+            padding: var(--pad-y) 0;
+            border-top: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .vault-header { padding: 0 var(--pad-x); margin-bottom: 4rem; }
+        .vault-track {
+            display: flex;
+            gap: 2rem;
+            padding-left: var(--pad-x);
+            width: max-content;
+        }
+        .vault-img {
+            width: 400px;
+            height: 500px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.5s;
+        }
+        .vault-img:hover { filter: grayscale(0%); }
+
+        /* --- Footer --- */
+        .footer {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .footer-cta {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .persona-section { flex-direction: column; }
+            .persona-sticky { width: 100%; height: auto; position: relative; padding: 4rem var(--pad-x); border-right: none; border-bottom: 1px solid var(--border); }
+            .persona-content { width: 100%; }
+            .hero-title { font-size: 18vw; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="noise"></div>
+    <div class="cursor"></div>
+
+    <main>
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-eyebrow">/// THE PORTFOLIO OF SAQIN NOOR</div>
+            <h1 class="hero-title">
+                <span><span class="char">MULTI</span></span>
+                <span><span class="char">DISCIPLINARY</span></span>
+                <span><span class="char" style="color: var(--accent);">GENERATIONAL</span></span>
+            </h1>
+            
+            <div class="hero-footer">
+                <span>Based in Dhaka</span>
+                <span>Scroll for Evidence</span>
+            </div>
+        </section>
+
+        <!-- SECTION 1: THE DEVELOPER -->
+        <section class="persona-section">
+            <div class="persona-sticky">
+                <h2 class="persona-title">THE<br>DEV.</h2>
+                <p class="persona-subtitle">Architecting digital experiences with precision code.</p>
+            </div>
+            <div class="persona-content">
+                
+                <!-- Highlighted Award -->
+                <div class="award-highlight magnetic">
+                    <span class="tag">COMPETITIVE PROGRAMMING</span>
+                    <h3 style="font-size: 2rem; margin-bottom: 1rem;">1st Runners Up</h3>
+                    <p style="color: var(--text-dim); margin-bottom: 0.5rem;">2nd IAIT National IT Festival</p>
+                    <p style="color: var(--text);">Segment: <strong>Web Development</strong></p>
+                </div>
+
+                <!-- Projects -->
+                <div style="margin-top: 6rem;">
+                    <div class="tag">SELECTED WORKS</div>
+                    
+                    <div class="project-item magnetic">
+                        <h3 class="project-title">6th NELC Homepage</h3>
+                        <p style="color: var(--text-dim); margin-bottom: 1rem;">Official event portal for Ideal English Language Club.</p>
+                        <a href="https://saqinnoor.github.io/6th-NELC-Homepage" target="_blank" class="project-link">VISIT LIVE SITE &nearr;</a>
+                    </div>
+
+                    <div class="project-item magnetic">
+                        <h3 class="project-title">IELC Official Site</h3>
+                        <p style="color: var(--text-dim); margin-bottom: 1rem;">A proposed modern redesign for the institutional presence.</p>
+                        <a href="https://saqinnoor.github.io/IELC-Site" target="_blank" class="project-link">VISIT PROTOTYPE &nearr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE LEADER -->
+        <section class="persona-section">
+            <div class="persona-sticky">
+                <h2 class="persona-title">THE<br>LEADER.</h2>
+                <p class="persona-subtitle">Commanding teams, organizing logistics, and setting standards.</p>
+            </div>
+            <div class="persona-content">
+                
+                <div class="timeline-node">
+                    <span class="tag">BANGLADESH SCOUTS</span>
+                    <h3 class="t-role">Senior Patrol Leader</h3>
+                    <div class="t-org">Ideal School & College Unit</div>
+                    <p class="t-desc">Led a patrol of 50+ cadets through rigorous physical training and ceremonial drills.</p>
+                    <div style="margin-top: 1rem;">
+                        <span class="t-badge">CHAMPION 2024 (PARADE)</span>
+                        <span class="t-badge">RUNNERS UP 2025</span>
+                    </div>
+                </div>
+
+                <div class="timeline-node">
+                    <span class="tag">RED CRESCENT SOCIETY</span>
+                    <h3 class="t-role">Asst. Sub Team Leader</h3>
+                    <div class="t-org">Youth Unit</div>
+                    <p class="t-desc">Coordinated disaster management workshops and first-aid response teams for school events.</p>
+                </div>
+
+                <div class="timeline-node">
+                    <span class="tag">CAMPUS LEADERSHIP</span>
+                    <h3 class="t-role">Head Volunteer</h3>
+                    <div class="t-org">Ideal School</div>
+                    <p class="t-desc">Orchestrated the logistics for major annual functions, managing peer volunteers and ensuring operational fluidity.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: THE ACHIEVER -->
+        <section class="persona-section">
+            <div class="persona-sticky">
+                <h2 class="persona-title">THE<br>ACHIEVER.</h2>
+                <p class="persona-subtitle">Winning is a habit. Excellence is the standard.</p>
+            </div>
+            <div class="persona-content">
+                
+                <div class="achiever-grid">
+                    <div class="achievement-card magnetic">
+                        <div style="font-size: 2.5rem; margin-bottom: 1rem;">🥇</div>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Champion</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-dim);">8th Notre Dame National Earth & Space Summit</p>
+                        <p style="margin-top: 0.5rem; color: var(--accent);">Segment: Earth Science Olympiad</p>
+                    </div>
+
+                    <div class="achievement-card magnetic">
+                        <div style="font-size: 2.5rem; margin-bottom: 1rem;">🏆</div>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">1st Place</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-dim);">4th Viqarunnisa English Language Fiesta</p>
+                        <p style="margin-top: 0.5rem; color: var(--accent);">Segment: Spell Bee</p>
+                    </div>
+
+                    <div class="achievement-card magnetic">
+                        <div style="font-size: 2.5rem; margin-bottom: 1rem;">📷</div>
+                        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">1st Runners Up</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-dim);">6th National English Language Carnival</p>
+                        <p style="margin-top: 0.5rem; color: var(--accent);">Segment: Photography</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PHOTOGRAPHY VAULT -->
+        <section class="photo-vault">
+            <div class="vault-header">
+                <span class="tag">THE LENS</span>
+                <h2 style="font-size: clamp(2rem, 4vw, 3rem); margin-top: 1rem;">SHOT ON SONY DSC-W110</h2>
+            </div>
+            
+            <div class="vault-track">
+                <!-- Placeholders for your actual photos -->
+                <img src="https://images.unsplash.com/photo-1517502474097-f9b30659dadb?w=600&q=80" class="vault-img" alt="Photo 1">
+                <img src="https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=600&q=80" class="vault-img" alt="Photo 2">
+                <img src="https://images.unsplash.com/photo-1493514789931-586cb221d7a7?w=600&q=80" class="vault-img" alt="Photo 3">
+                <img src="https://images.unsplash.com/photo-1552168324-d612d77725e3?w=600&q=80" class="vault-img" alt="Photo 4">
+                <img src="https://images.unsplash.com/photo-1542259681-d4cd4a6377ba?w=600&q=80" class="vault-img" alt="Photo 5">
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div style="margin-bottom: 2rem; color: var(--text-dim);">NO JOKE. JUST IMPACT.</div>
+            <a href="mailto:contact@saqinnoor.com" class="footer-cta magnetic">GET IN TOUCH</a>
+            <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+                <a href="https://github.com/SaqinNoor" target="_blank" class="magnetic">GITHUB</a>
+                <a href="#" class="magnetic">LINKEDIN</a>
+            </div>
+            <div style="margin-top: 4rem; font-size: 0.8rem; color: var(--text-dim);">
+                &copy; 2024 SAQIN NOOR.
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <script>
+        // 1. Smooth Scrolling
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true
+        });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+
+        // 2. Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+        });
+        
+        document.querySelectorAll('a, .magnetic').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+        });
+
+        // 3. Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero Reveal
+        gsap.to('.char', {
+            y: 0,
+            duration: 1.5,
+            stagger: 0.1,
+            ease: 'power4.out',
+            delay: 0.2
+        });
+
+        // Horizontal Scroll for Photography
+        let vaultTrack = document.querySelector('.vault-track');
+        let vaultSection = document.querySelector('.photo-vault');
+        
+        // Calculate width difference
+        let getScrollAmount = () => {
+            let trackWidth = vaultTrack.scrollWidth;
+            return -(trackWidth - window.innerWidth);
+        };
+
+        const tween = gsap.to(vaultTrack, {
+            x: getScrollAmount,
+            ease: "none"
+        });
+
+        ScrollTrigger.create({
+            trigger: vaultSection,
+            start: "top 20%",
+            end: () => `+=${getScrollAmount() * -1}`,
+            pin: true,
+            animation: tween,
+            scrub: 1,
+            invalidateOnRefresh: true
+        });
+
+        // Sticky Titles Fade In
+        gsap.utils.toArray('.persona-title').forEach(title => {
+            gsap.from(title, {
+                opacity: 0,
+                y: 50,
+                scrollTrigger: {
+                    trigger: title,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
