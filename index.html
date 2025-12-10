@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saqin Noor — Digital Architect</title>
-    <meta name="description" content="Saqin Noor: Developer, Leader, Achiever.">
+    <title>Saqin Noor — DHK</title>
+    <meta name="description" content="Portfolio Website of Saqin Noor.">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,20 +77,90 @@
             inset: 0;
             z-index: 99999;
             background-color: var(--accent);
+            /* Brand Accent */
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            transform-origin: top;
+            overflow: hidden;
+            perspective: 1000px;
+            /* For 3D Grid Effect */
         }
 
-        .loader-text {
-            font-family: var(--font-display);
-            font-weight: 800;
-            font-size: 8vw;
+        /* Grid Overlay */
+        .loader-grid {
+            position: absolute;
+            inset: -50%;
+            pointer-events: none;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform-origin: center;
+            transform: rotateX(60deg) translateY(-20%);
+        }
+
+        .loader-scan {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, #000, transparent);
+            opacity: 0.1;
+            animation: scan 3s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes scan {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        .loader-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            mix-blend-mode: normal;
+        }
+
+        .loader-counter {
+            font-family: 'Space Grotesk', monospace;
+            font-size: clamp(4rem, 15vw, 15rem);
+            font-weight: 700;
             color: #000000;
+            line-height: 0.8;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: -5px;
+        }
+
+        .loader-status {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: rgba(0, 0, 0, 0.6);
+            /* DIM BLACK */
+            margin-top: 1rem;
             text-transform: uppercase;
-            line-height: 1;
-            opacity: 0;
+        }
+
+        .loader-line {
+            width: 0%;
+            height: 4px;
+            background: #000000;
+            /* BLACK LINE */
+            margin-top: 2rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
 
         /* --- UTILS --- */
@@ -567,16 +637,46 @@
             border-color: var(--accent);
         }
 
+        /* Icon Animation */
+        .achiever-row .ac-icon svg {
+            transition: transform 0.4s var(--ease-snap), stroke 0.3s;
+        }
+
+        .achiever-row:hover .ac-icon svg {
+            transform: scale(1.1);
+            stroke: var(--accent);
+        }
+
+        /* content Shift */
+        .ac-content {
+            transition: transform 0.4s var(--ease-snap);
+        }
+
+        .achiever-row:hover .ac-content {
+            transform: translateX(10px);
+        }
+
         .ac-content h3 {
             font-size: 2rem;
             margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .achiever-row:hover .ac-content h3 {
+            color: #fff;
         }
 
         .ac-content p {
             font-size: 0.9rem;
             color: var(--text-dim);
+            transition: color 0.3s;
         }
 
+        .achiever-row:hover .ac-content p {
+            color: #ccc;
+        }
+
+        /* Badge Pop */
         .ac-badge {
             font-size: 0.7rem;
             text-transform: uppercase;
@@ -585,6 +685,12 @@
             padding: 4px 8px;
             border-radius: 4px;
             letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .achiever-row:hover .ac-badge {
+            background: var(--accent);
+            color: #000;
         }
 
 
@@ -834,9 +940,14 @@
 <body>
 
     <!-- INVERSE LOADER -->
+    <!-- ARCHITECT'S GRID LOADER -->
     <div class="acid-loader">
+        <div class="loader-grid"></div>
+        <div class="loader-scan"></div>
         <div class="loader-content">
-            <h1 class="loader-text">INITIALIZING</h1>
+            <div class="loader-counter">00</div>
+            <div class="loader-status">INITIALIZING SYSTEM</div>
+            <div class="loader-line"></div>
         </div>
     </div>
 
@@ -857,7 +968,7 @@
                     <h1 class="hero-title accent"><span class="reveal-text">NOOR</span></h1>
                 </div>
                 <div class="hero-line">
-                    <h1 class="hero-title--sm"><span class="reveal-text">DEVELOPER</span></h1>
+                    <h1 class="hero-title--sm"><span class="reveal-text">ISC—27</span></h1>
                 </div>
             </div>
 
@@ -898,7 +1009,7 @@
                     <h2 class="persona-title">DEV</h2>
                 </div>
                 <div class="persona-subtitle">
-                    ARCHITECTING RESILIENT<br>DIGITAL SYSTEMS.
+                    CREATING INTERACTIVE<br>DIGITAL EXPERIENCES.
                 </div>
             </div>
             <div class="persona-content">
@@ -912,7 +1023,7 @@
                 </div>
 
                 <div style="margin-top: 6rem;">
-                    <div class="tag" style="margin-bottom: 2rem;">SELECTED WORKS</div>
+                    <div class="tag" style="margin-bottom: 2rem;">HIGHLIGHTED WORKS</div>
 
                     <!-- Project 1 -->
                     <div class="project-item magnetic">
@@ -957,7 +1068,7 @@
                     <h2 class="persona-title">LEADER</h2>
                 </div>
                 <div class="persona-subtitle">
-                    COMMANDING TEAMS.<br>SETTING STANDARDS.
+                    ROLE MODEL.<br>SETTING STANDARDS.
                 </div>
             </div>
             <div class="persona-content">
@@ -966,12 +1077,14 @@
                     <div class="tag">BANGLADESH SCOUTS</div>
                     <h3 class="t-role">Senior Patrol Leader</h3>
                     <span class="t-org">Ideal School & College Unit</span>
-                    <p style="line-height: 1.6; color: #bbb; margin-bottom: 1rem;">Led a patrol of 50+ cadets through
-                        rigorous physical training and ceremonial drills. Responsible for unit discipline and strategic
-                        parade formations.</p>
+                    <p style="line-height: 1.6; color: #bbb; margin-bottom: 1rem;">Leading a unit of 200+ Scouts and Cub
+                        Scouts through
+                        classes, camps, and events. Responsible for unit discipline and commanding parade team.</p>
                     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <div class="tag" style="border-color: var(--accent); color: var(--accent);">CHAMPION 2024</div>
-                        <div class="tag" style="border-color: var(--accent); color: var(--accent);">RUNNERS UP 2025
+                        <div class="tag" style="border-color: var(--accent); color: var(--accent);">PARADE CHAMPION 2024
+                        </div>
+                        <div class="tag" style="border-color: var(--accent); color: var(--accent);">PARADE RUNNERS UP
+                            2025
                         </div>
                     </div>
                 </div>
@@ -979,17 +1092,16 @@
                 <div class="timeline-node">
                     <div class="tag">RED CRESCENT SOCIETY</div>
                     <h3 class="t-role">Asst. Sub Team Leader</h3>
-                    <span class="t-org">Youth Unit</span>
-                    <p style="line-height: 1.6; color: #bbb;">Coordinated disaster management workshops and first-aid
-                        response teams for school events.</p>
+                    <span class="t-org">BEISC RCY Team</span>
                 </div>
 
                 <div class="timeline-node">
                     <div class="tag">CAMPUS LEADERSHIP</div>
                     <h3 class="t-role">Head Volunteer</h3>
-                    <span class="t-org">Ideal School</span>
-                    <p style="line-height: 1.6; color: #bbb;">Orchestrated the logistics for major annual functions,
-                        managing peer volunteers and ensuring operational fluidity across campus events.</p>
+                    <span class="t-org">Ideal School & College</span>
+                    <p style="line-height: 1.6; color: #bbb;">Working hard to ensure discipline among students and
+                        vetting their uniforms along with handling complex scenarios that arise during school time and
+                        events.</p>
                 </div>
 
             </div>
@@ -1087,12 +1199,15 @@
         <!-- FOOTER -->
         <footer class="footer">
             <div style="margin-bottom: 3rem; color: var(--text-dim); letter-spacing: 2px; font-size: 0.8rem;">READY TO
-                DEPLOY</div>
-            <a href="mailto:contact@saqinnoor.com" class="footer-cta magnetic">CONTACT</a>
+                COOPERATE</div>
+            <a href="mailto:akmsaqinnoor@gmail.com" class="footer-cta magnetic">CONTACT</a>
             <div style="display: flex; gap: 2rem; margin-top: 2rem;">
                 <a href="https://github.com/SaqinNoor" target="_blank" class="magnetic tag"
                     style="background: transparent;">GITHUB</a>
-                <a href="#" class="magnetic tag" style="background: transparent;">LINKEDIN</a>
+                <a href="https://www.instagram.com/saqin.jpg" target="_blank" class="magnetic tag"
+                    style="background: transparent;">INSTAGRAM</a>
+                <a href="https://www.facebook.com/saqin.noor" target="_blank" class="magnetic tag"
+                    style="background: transparent;">FACEBOOK</a>
             </div>
             <div style="margin-top: 6rem; font-size: 0.7rem; color: var(--line);">
                 &copy; 2025 SAQIN NOOR.
@@ -1130,34 +1245,102 @@
             });
         }
 
-        // --- 3. RAPID FIRE LOADER ---
-        const words = ["VISION", "PRECISION", "IMPACT", "SAQIN NOOR"];
-        const loaderText = document.querySelector('.loader-text');
-        let index = 0;
+        // --- 3. LOADER SEQUENCE ---
+        const counter = { val: 0 };
+        const counterEl = document.querySelector('.loader-counter');
+        const statusEl = document.querySelector('.loader-status');
 
-        const cycle = setInterval(() => {
-            loaderText.style.opacity = '1';
-            loaderText.innerText = words[index];
-            index++;
+        // Text Scramble Effect
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&";
 
-            if (index >= words.length) {
-                clearInterval(cycle);
-                setTimeout(loaderExit, 400);
-            }
-        }, 250);
+        function scrambleText(element, finalString) {
+            let iterations = 0;
+            const interval = setInterval(() => {
+                element.innerText = finalString
+                    .split("")
+                    .map((letter, index) => {
+                        if (index < iterations) return finalString[index];
+                        return chars[Math.floor(Math.random() * 26)];
+                    })
+                    .join("");
 
-        function loaderExit() {
-            const tl = gsap.timeline();
-            tl.to('.loader-text', { scale: 0.8, opacity: 0, duration: 0.5, ease: "power2.out" }, 'exit');
-            tl.to('.acid-loader', { yPercent: -100, duration: 1.2, ease: "power4.inOut" }, 'exit+=0.1');
-            tl.to('.reveal-text', { y: 0, duration: 1.5, stagger: 0.15, ease: "power4.out" }, '-=0.8');
-
-            // Set initial parallax center then fade in
-            tl.set('.hero-bg-text', { xPercent: -50, yPercent: -50 });
-            tl.to('.hero-bg-text', { opacity: 0.8, duration: 1 }, '-=1');
-
-            tl.from('.reveal-bio', { y: 30, opacity: 0, stagger: 0.1, duration: 1, ease: "power2.out" }, '-=0.5');
+                if (iterations >= finalString.length) clearInterval(interval);
+                iterations += 1 / 2;
+            }, 30);
         }
+
+        const tl = gsap.timeline();
+
+        // 3.1 Loading State
+        // Grid idle animation
+        gsap.to('.loader-grid', {
+            y: "20%", rotateX: 50, scale: 1.5,
+            duration: 3, ease: "none", repeat: -1, yoyo: true
+        });
+
+        tl.to(counter, {
+            val: 100,
+            duration: 3.5,
+            ease: "power4.inOut",
+            onUpdate: () => {
+                const val = Math.floor(counter.val);
+                counterEl.innerText = val.toString().padStart(2, '0');
+
+                // Trigger scramble on milestones
+                if (val === 15) scrambleText(statusEl, "LOADING CORE...");
+                if (val === 40) scrambleText(statusEl, "OPTIMIZING ASSETS...");
+                if (val === 75) scrambleText(statusEl, "ESTABLISHING UPLINK...");
+                if (val === 98) scrambleText(statusEl, "ACCESS GRANTED");
+            }
+        });
+
+        tl.to('.loader-line', { width: '100vw', duration: 3, ease: "expo.out" }, '<');
+
+        // 3.2 Exit Sequence
+
+        // Content Blur Fade
+        tl.to('.loader-content', {
+            filter: "blur(20px)",
+            opacity: 0,
+            scale: 0.9,
+            duration: 0.5,
+            ease: "power2.in"
+        });
+
+        // Background Transition
+        tl.to('.acid-loader', {
+            yPercent: -100,
+            duration: 1.2,
+            ease: "power4.inOut",
+        });
+
+        // 3.3 Hero Reveal
+        // Note: Maintain animated state (y: 0) vs CSS default (y: 110%)
+
+        tl.set('.hero-content, .hero-bg-text', { autoAlpha: 1 });
+
+        // Background Text
+        tl.fromTo('.hero-bg-text',
+            { scale: 1.5, opacity: 0 },
+            { scale: 1, opacity: 0.4, duration: 1.5, ease: "power4.out" },
+            "-=0.6"
+        );
+
+        // Main Titles (SAQIN, NOOR, ISC 2027)
+
+        tl.fromTo('.reveal-text',
+            { y: "110%" },
+            { y: "0%", duration: 1.2, stagger: 0.1, ease: "power4.out" },
+            "-=1.2"
+        );
+
+        // Bio Text
+        tl.fromTo('.reveal-bio',
+            { y: 30, opacity: 0 },
+            { y: 0, opacity: 1, stagger: 0.05, duration: 1, ease: "power2.out" },
+            "-=0.8"
+        );
+
 
         // --- 4. SCROLL TRIGGERS ---
         gsap.registerPlugin(ScrollTrigger);
