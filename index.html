@@ -386,7 +386,9 @@
 
         /* --- PERSONA LAYOUT --- */
         .persona-section {
+            min-height: 100vh;
             display: flex;
+            align-items: stretch;
             border-top: 1px solid var(--line);
             position: relative;
         }
@@ -395,7 +397,7 @@
             width: var(--sidebar-width);
             height: 100vh;
             position: sticky;
-            top: var(--nav-height);
+            top: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -440,6 +442,10 @@
         .persona-content {
             width: calc(100% - var(--sidebar-width));
             padding: var(--pad-y) var(--pad-x);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         /* --- DEV SECTION --- */
@@ -989,7 +995,7 @@
                 <div class="id-meta">
                     <span class="reveal-bio">BATCH 27</span>
                     <span class="reveal-bio">DHAKA, BANGLADESH</span>
-                    <span class="reveal-bio" style="color: var(--text);">DEFINED BY THREE DIMENSIONS.</span>
+                    <span class="reveal-bio" style="color: var(--text);">DEFINED BY THREE IDENTITIES.</span>
                 </div>
             </div>
         </section>
