@@ -24,4 +24,4 @@ A digital archive of development, leadership, and achievements.
 
 ---
 
-&copy; 2025 Saqin Noor.
+&copy; 2026 Saqin Noor.
