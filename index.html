@@ -1030,6 +1030,20 @@
                 stroke: var(--text);
             }
         }
+
+        /* Dotted Surface */
+        #dotted-surface {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        #dotted-surface canvas {
+            display: block;
+        }
     </style>
 </head>
 
@@ -1051,8 +1065,9 @@
     <div class="cursor"></div>
 
     <main>
-        <!-- HERO -->
+        <!-- Hero -->
         <section class="hero">
+            <div id="dotted-surface"></div>
             <div class="hero-bg-text" data-speed="-0.2">ARCHITECT</div>
 
             <div class="hero-content">
@@ -1407,6 +1422,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
     <script>
         // 1. Lenis Smooth Scroll
@@ -1616,6 +1632,83 @@
                 lenis.scrollTo(targetId);
             });
         });
+
+        // 6. Dotted Surface (Three.js wave)
+        (function initDottedSurface() {
+            const container = document.getElementById('dotted-surface');
+            if (!container) return;
+
+            const SEPARATION = 110, AMOUNTX = 55, AMOUNTY = 65;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.set(0, 280, 900);
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+
+            const geometry = new THREE.BufferGeometry();
+            const positions = [];
+            const colors = [];
+
+            for (let ix = 0; ix < AMOUNTX; ix++) {
+                for (let iy = 0; iy < AMOUNTY; iy++) {
+                    positions.push(
+                        ix * SEPARATION - (AMOUNTX * SEPARATION) / 2,
+                        0,
+                        iy * SEPARATION - (AMOUNTY * SEPARATION) / 2
+                    );
+                    colors.push(0.22, 0.22, 0.22);
+                }
+            }
+
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+
+            const material = new THREE.PointsMaterial({
+                size: 6,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.55,
+                sizeAttenuation: true,
+            });
+
+            const points = new THREE.Points(geometry, material);
+            scene.add(points);
+
+            let count = 0;
+
+            function animateDots() {
+                requestAnimationFrame(animateDots);
+                const pos = geometry.attributes.position.array;
+                let i = 0;
+                for (let ix = 0; ix < AMOUNTX; ix++) {
+                    for (let iy = 0; iy < AMOUNTY; iy++) {
+                        pos[i * 3 + 1] =
+                            Math.sin((ix + count) * 0.3) * 50 +
+                            Math.sin((iy + count) * 0.5) * 50;
+                        i++;
+                    }
+                }
+                geometry.attributes.position.needsUpdate = true;
+                renderer.render(scene, camera);
+                count += 0.03;
+            }
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            animateDots();
+
+            // Fade in after loader
+            setTimeout(() => { container.style.opacity = '1'; }, 4500);
+        })();
 
     </script>
 </body>
