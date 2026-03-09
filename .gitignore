@@ -2,3 +2,6 @@
 .idea/modules.xml
 .idea/Portfolio Remake.iml
 .idea/vcs.xml
+bun.lock
+node_modules/
+dist/
