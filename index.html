@@ -22,7 +22,6 @@
             --text: #E6E6E6;
             --text-dim: #525252;
             --accent: #CCFF00;
-            /* Acid Lime */
             --line: rgba(255, 255, 255, 0.15);
 
             /* Dimensions */
@@ -71,23 +70,21 @@
             cursor: none;
         }
 
-        /* --- LOADER --- */
+        /* Loader */
         .acid-loader {
             position: fixed;
             inset: 0;
             z-index: 99999;
             background-color: var(--accent);
-            /* Brand Accent */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             perspective: 1000px;
-            /* For 3D Grid Effect */
         }
 
-        /* Grid Overlay */
+        /* Loader Grid Overlay */
         .loader-grid {
             position: absolute;
             inset: -50%;
@@ -149,7 +146,6 @@
             font-size: 0.8rem;
             letter-spacing: 2px;
             color: rgba(0, 0, 0, 0.6);
-            /* DIM BLACK */
             margin-top: 1rem;
             text-transform: uppercase;
         }
@@ -158,12 +154,11 @@
             width: 0%;
             height: 4px;
             background: #000000;
-            /* BLACK LINE */
             margin-top: 2rem;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
 
-        /* --- UTILS --- */
+        /* Utilities */
         .noise {
             position: fixed;
             inset: 0;
@@ -235,7 +230,7 @@
             border-color: var(--accent);
         }
 
-        /* --- HERO --- */
+        /* Hero Section */
         .hero {
             height: 100vh;
             width: 100%;
@@ -310,7 +305,7 @@
             letter-spacing: 1px;
         }
 
-        /* --- IDENTITY / BIO --- */
+        /* Identity Section */
         .identity-section {
             min-height: 80vh;
             display: flex;
@@ -350,7 +345,7 @@
             padding-left: 2rem;
         }
 
-        /* --- STICKY NAVIGATION --- */
+        /* Navigation */
         .dimension-nav {
             display: flex;
             justify-content: space-between;
@@ -384,7 +379,7 @@
         }
 
 
-        /* --- PERSONA LAYOUT --- */
+        /* Persona Layout */
         .persona-section {
             min-height: 100vh;
             display: flex;
@@ -448,7 +443,7 @@
             justify-content: center;
         }
 
-        /* --- DEV SECTION --- */
+        /* Developer Section */
         .award-highlight {
             background: var(--surface);
             border: 1px solid var(--line);
@@ -563,7 +558,7 @@
         }
 
 
-        /* --- LEADER SECTION --- */
+        /* Leader Section */
         .timeline-node {
             position: relative;
             padding-left: 3rem;
@@ -597,7 +592,7 @@
         }
 
 
-        /* --- ACHIEVER SECTION --- */
+        /* Achiever Section */
         .achiever-list {
             display: flex;
             flex-direction: column;
@@ -653,7 +648,7 @@
             stroke: var(--accent);
         }
 
-        /* content Shift */
+        /* Content Shift */
         .ac-content {
             transition: transform 0.4s var(--ease-snap);
         }
@@ -682,7 +677,7 @@
             color: #ccc;
         }
 
-        /* Badge Pop */
+        /* Badge Animation */
         .ac-badge {
             font-size: 0.7rem;
             text-transform: uppercase;
@@ -700,7 +695,7 @@
         }
 
 
-        /* --- VAULT (Vertical Centered Horizontal Scroll) --- */
+        /* Vault Section */
         .photo-vault {
             height: 100vh;
             padding: 0;
@@ -734,7 +729,7 @@
             border-color: var(--accent);
         }
 
-        /* --- FOOTER --- */
+        /* Footer */
         .footer {
             height: 80vh;
             display: flex;
@@ -758,13 +753,12 @@
             color: var(--accent);
         }
 
-        /* --- RESPONSIVE --- */
+        /* Responsive Design */
         @media (max-width: 1024px) {
             :root {
                 --pad-x: 6vw;
                 --pad-y: 80px;
                 --nav-height: 60px;
-                /* Reduced to match tighter mobile nav */
             }
 
             .cursor {
@@ -783,22 +777,18 @@
                 flex-direction: column;
             }
 
-            /* Sticky Positioning Fix: Set top to 0 so it flush mounts against the nav */
-            /* Ensure the nav itself overlays correctly or we offset by nav height if nav is sticky */
+            /* Sticky Positioning Fix */
             .persona-sticky {
                 width: 100%;
                 height: auto;
                 position: sticky;
                 top: 59px;
-                /* Just under the solid nav */
                 padding: 1.5rem var(--pad-x);
                 border-right: none;
                 border-bottom: 1px solid var(--line);
                 background: rgba(5, 5, 5, 0.95);
-                /* Ensure opacity covers content */
                 z-index: 90;
                 margin-top: -1px;
-                /* Remove partial pixel gaps */
             }
 
             .persona-title {
@@ -847,23 +837,18 @@
                 opacity: 0.4;
             }
 
-            /* Reduced from 40vw to prevent blowout */
             .hero-title {
                 font-size: 15vw;
             }
 
-            /* Reduced from 18vw */
             .hero-title--sm {
                 font-size: 11vw;
             }
 
-            /* Reduced from 14vw */
             .hero-content {
                 width: 100%;
                 overflow: hidden;
             }
-
-            /* Contain overflow */
 
             .id-grid {
                 grid-template-columns: 1fr;
@@ -882,7 +867,6 @@
                 overflow-x: auto;
                 white-space: nowrap;
                 gap: 1.5rem;
-                /* Reduced gap */
                 -webkit-overflow-scrolling: touch;
             }
 
@@ -890,7 +874,6 @@
                 font-size: 0.9rem;
             }
 
-            /* Reduced font size */
             .dimension-nav::-webkit-scrollbar {
                 display: none;
             }
@@ -918,7 +901,7 @@
                 font-size: 12vw;
             }
 
-            /* Loader Fix */
+            /* Loader Responsive Adjustments */
             .loader-text {
                 font-size: 12vw;
                 width: 100%;
@@ -945,8 +928,7 @@
 
 <body>
 
-    <!-- INVERSE LOADER -->
-    <!-- ARCHITECT'S GRID LOADER -->
+    <!-- Loader -->
     <div class="acid-loader">
         <div class="loader-grid"></div>
         <div class="loader-scan"></div>
@@ -957,7 +939,7 @@
         </div>
     </div>
 
-    <!-- EFFECTS -->
+    <!-- Overlay Effects -->
     <div class="noise-overlay"></div>
     <div class="cursor"></div>
 
@@ -986,7 +968,7 @@
             </div>
         </section>
 
-        <!-- IDENTITY / BIO -->
+        <!-- Identity Section -->
         <section class="identity-section">
             <div class="id-grid">
                 <div class="id-bio">
@@ -1001,14 +983,14 @@
             </div>
         </section>
 
-        <!-- STICKY DIMENSION NAV -->
+        <!-- Sticky Navigation -->
         <nav class="dimension-nav">
             <a href="#dev" class="dim-link magnetic" data-target="#dev">01 / DEV</a>
             <a href="#leader" class="dim-link magnetic" data-target="#leader">02 / LEADER</a>
             <a href="#achiever" class="dim-link magnetic" data-target="#achiever">03 / ACHIEVER</a>
         </nav>
 
-        <!-- THE DEVELOPER -->
+        <!-- Developer Section -->
         <section id="dev" class="persona-section">
             <div class="persona-sticky">
                 <div class="persona-group">
@@ -1067,7 +1049,7 @@
             </div>
         </section>
 
-        <!-- THE LEADER -->
+        <!-- Leader Section -->
         <section id="leader" class="persona-section">
             <div class="persona-sticky">
                 <div class="persona-group">
@@ -1117,7 +1099,7 @@
             </div>
         </section>
 
-        <!-- THE ACHIEVER -->
+        <!-- Achiever Section -->
         <section id="achiever" class="persona-section">
             <div class="persona-sticky">
                 <div class="persona-group">
@@ -1228,7 +1210,7 @@
             </div>
         </section>
 
-        <!-- VAULT -->
+        <!-- Vault Section -->
         <section class="photo-vault">
             <div class="vault-track">
                 <div class="vault-header" style="margin-right: 4rem; min-width: 300px;">
@@ -1273,12 +1255,12 @@
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
     <script>
-        // --- 1. LENIS SMOOTH SCROLL ---
+        // 1. Lenis Smooth Scroll
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // --- 2. CUSTOM CURSOR & HIT TESTING ---
+        // 2. Custom Cursor
         const cursor = document.querySelector('.cursor');
         let mouseX = 0, mouseY = 0;
         const isTouch = window.matchMedia("(hover: none)").matches;
@@ -1296,12 +1278,12 @@
             });
         }
 
-        // --- 3. LOADER SEQUENCE ---
+        // 3. Loader Sequence
         const counter = { val: 0 };
         const counterEl = document.querySelector('.loader-counter');
         const statusEl = document.querySelector('.loader-status');
 
-        // Text Scramble Effect
+        // Scramble Effect for Loader Text
         const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&";
 
         function scrambleText(element, finalString) {
@@ -1322,8 +1304,7 @@
 
         const tl = gsap.timeline();
 
-        // 3.1 Loading State
-        // Grid idle animation
+        // Loader Timeline
         gsap.to('.loader-grid', {
             y: "20%", rotateX: 50, scale: 1.5,
             duration: 3, ease: "none", repeat: -1, yoyo: true
@@ -1337,7 +1318,7 @@
                 const val = Math.floor(counter.val);
                 counterEl.innerText = val.toString().padStart(2, '0');
 
-                // Trigger scramble on milestones
+                // Trigger text scramble at milestones
                 if (val === 15) scrambleText(statusEl, "LOADING CORE...");
                 if (val === 40) scrambleText(statusEl, "OPTIMIZING ASSETS...");
                 if (val === 75) scrambleText(statusEl, "ESTABLISHING UPLINK...");
@@ -1347,9 +1328,7 @@
 
         tl.to('.loader-line', { width: '100vw', duration: 3, ease: "expo.out" }, '<');
 
-        // 3.2 Exit Sequence
-
-        // Content Blur Fade
+        // Loader Exit Sequence
         tl.to('.loader-content', {
             filter: "blur(20px)",
             opacity: 0,
@@ -1358,26 +1337,22 @@
             ease: "power2.in"
         });
 
-        // Background Transition
         tl.to('.acid-loader', {
             yPercent: -100,
             duration: 1.2,
             ease: "power4.inOut",
         });
 
-        // 3.3 Hero Reveal
+        // Hero Reveal Sequence
         // Note: Maintain animated state (y: 0) vs CSS default (y: 110%)
 
         tl.set('.hero-content, .hero-bg-text', { autoAlpha: 1 });
 
-        // Background Text
         tl.fromTo('.hero-bg-text',
             { scale: 1.5, opacity: 0 },
             { scale: 1, opacity: 0.4, duration: 1.5, ease: "power4.out" },
             "-=0.6"
         );
-
-        // Main Titles (SAQIN, NOOR, ISC 2027)
 
         tl.fromTo('.reveal-text',
             { y: "110%" },
@@ -1385,7 +1360,6 @@
             "-=1.2"
         );
 
-        // Bio Text
         tl.fromTo('.reveal-bio',
             { y: 30, opacity: 0 },
             { y: 0, opacity: 1, stagger: 0.05, duration: 1, ease: "power2.out" },
@@ -1393,15 +1367,15 @@
         );
 
 
-        // --- 4. SCROLL TRIGGERS ---
+        // 4. Scroll Triggers
         gsap.registerPlugin(ScrollTrigger);
 
         gsap.to('.hero-bg-text', {
-            yPercent: -30, // Move up slightly
+            yPercent: -30,
             scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
         });
 
-        // Vault Scroll with HIT TESTING
+        // Vault Scroll and Hover Effects
         let vaultTrack = document.querySelector('.vault-track');
         let vaultSection = document.querySelector('.photo-vault');
 
@@ -1418,10 +1392,8 @@
             const elements = document.elementsFromPoint(mouseX, mouseY);
             const vaultImgs = document.querySelectorAll('.vault-img');
 
-            // Reset all
             vaultImgs.forEach(img => img.classList.remove('active'));
 
-            // Find if we are over an image
             const img = elements.find(el => el.classList.contains('vault-img'));
             if (img) {
                 img.classList.add('active');
@@ -1431,7 +1403,7 @@
         let scrollTween = gsap.to(vaultTrack, {
             x: getScrollAmount,
             ease: "none",
-            onUpdate: checkVaultHover // Check on every frame of the scroll
+            onUpdate: checkVaultHover
         });
 
         ScrollTrigger.create({
@@ -1459,7 +1431,7 @@
             });
         });
 
-        // --- 5. NAVIGATION SCROLL SPY ---
+        // 5. Navigation Scroll Spy
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.dim-link');
 
