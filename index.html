@@ -550,6 +550,12 @@
             color: #333;
         }
 
+        .project-item:hover .tag {
+            color: #000;
+            border-color: #000;
+        }
+
+
         .p-arrow {
             width: 50px;
             height: 50px;
@@ -730,6 +736,9 @@
 
         /* Icon Animation */
         .achiever-row .ac-icon svg {
+            width: 2.5rem;
+            height: 2.5rem;
+            stroke-width: 1.5px;
             transition: transform 0.4s var(--ease-snap), stroke 0.3s;
         }
 
@@ -737,6 +746,7 @@
             transform: scale(1.1);
             stroke: var(--accent);
         }
+
 
         /* Content Shift */
         .ac-content {
@@ -1127,6 +1137,16 @@
 
                 <div class="award-highlight magnetic">
                     <div class="award-label">MAJOR RECOGNITION</div>
+                    <div class="tag tag--accent">FRONT-END DEVELOPMENT</div>
+                    <h3 style="font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.1;">Runners up</h3>
+                    <p style="color: var(--text-dim); margin-bottom: 0.5rem;">INIT 6.0 by Notre Dame Information and
+                        Technology Club</p>
+                    <p style="color: var(--text);">Segment: <strong>Web Design</strong></p>
+                </div>
+
+                <div class="award-highlight magnetic">
+
+                    <div class="award-label">MAJOR RECOGNITION</div>
                     <div class="tag tag--accent">COMPETITIVE PROGRAMMING</div>
                     <h3 style="font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.1;">1st Runners Up</h3>
                     <p style="color: var(--text-dim); margin-bottom: 0.5rem;">2nd IAIT National IT Festival</p>
@@ -1136,12 +1156,33 @@
                 <div style="margin-top: 6rem;">
                     <div class="tag tag--accent" style="margin-bottom: 2rem;">HIGHLIGHTED WORKS</div>
 
+                    <!-- Project 0 (INIT 6.0 Winner) -->
+                    <div class="project-item magnetic">
+                        <div class="project-overlay"></div>
+                        <div class="p-left">
+                            <div class="tag tag--accent"
+                                style="position: relative; z-index: 2; font-size: 0.6rem; margin-bottom: 1.5rem; transform: translateY(-10px);">
+                                INIT 6.0 WINNER</div>
+                            <h3>The Nervous System of the Earth</h3>
+
+                            <p>3D visualization of global subsea cables using Three.js and GeoJSON data.</p>
+                        </div>
+                        <a href="https://saqinnoor.github.io/INIT-6.0" target="_blank" class="p-arrow">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="7" y1="17" x2="17" y2="7"></line>
+                                <polyline points="7 7 17 7 17 17"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+
                     <!-- Project 1 -->
+
                     <div class="project-item magnetic">
                         <div class="project-overlay"></div>
                         <div class="p-left">
                             <h3>6th NELC Homepage</h3>
-                            <p>Official event portal for Ideal English Language Club.</p>
+                            <p>Official event portal for Ideal English Language Club's 6th national fest.</p>
                         </div>
                         <a href="https://saqinnoor.github.io/6th-NELC-Homepage" target="_blank" class="p-arrow">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -1285,11 +1326,33 @@
                     <!-- Row 1 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
-                            <svg class="icon-svg" viewBox="0 0 24 24">
-                                <polygon
-                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                </polygon>
-                            </svg>
+                            <i data-lucide="telescope"></i>
+                        </div>
+                        <div class="ac-content">
+                            <h3>Champion</h3>
+                            <p>9th Notre Dame National Earth & Space Summit<br><span
+                                    style="font-size: 0.85em; opacity: 0.8;">Notre Dame College</span></p>
+                        </div>
+                        <div class="ac-badge">ASTRO & ECO IDEATION</div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="achiever-row magnetic">
+                        <div class="ac-icon">
+                            <i data-lucide="book-open"></i>
+                        </div>
+                        <div class="ac-content">
+                            <h3>Champion</h3>
+                            <p>9th Notre Dame National English Carnival<br><span
+                                    style="font-size: 0.85em; opacity: 0.8;">Notre Dame College</span></p>
+                        </div>
+                        <div class="ac-badge">BOOK BASED QUIZ</div>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="achiever-row magnetic">
+                        <div class="ac-icon">
+                            <i data-lucide="mountain"></i>
                         </div>
                         <div class="ac-content">
                             <h3>Champion</h3>
@@ -1299,17 +1362,24 @@
                         <div class="ac-badge">EARTH SCIENCE OLYMPIAD</div>
                     </div>
 
-                    <!-- Row 2 -->
+                    <!-- Row 4 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
-                            <svg class="icon-svg" viewBox="0 0 24 24">
-                                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-                                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-                                <path d="M4 22h16"></path>
-                                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
-                                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
-                                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
-                            </svg>
+                            <i data-lucide="briefcase"></i>
+                        </div>
+                        <div class="ac-content">
+                            <h3>Champion</h3>
+                            <p>2nd Notre Dame Virtual Business Combat 2025<br><span
+                                    style="font-size: 0.85em; opacity: 0.8;">Notre
+                                    Dame College</span></p>
+                        </div>
+                        <div class="ac-badge">BUSINESS</div>
+                    </div>
+
+                    <!-- Row 5 -->
+                    <div class="achiever-row magnetic">
+                        <div class="ac-icon">
+                            <i data-lucide="languages"></i>
                         </div>
                         <div class="ac-content">
                             <h3>1st Place</h3>
@@ -1320,15 +1390,10 @@
                         <div class="ac-badge">SPELL BEE</div>
                     </div>
 
-                    <!-- Row 3 -->
+                    <!-- Row 6 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
-                            <svg class="icon-svg" viewBox="0 0 24 24">
-                                <path
-                                    d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z">
-                                </path>
-                                <circle cx="12" cy="13" r="3"></circle>
-                            </svg>
+                            <i data-lucide="camera"></i>
                         </div>
                         <div class="ac-content">
                             <h3>1st Runners Up</h3>
@@ -1338,17 +1403,36 @@
                         <div class="ac-badge">PHOTOGRAPHY</div>
                     </div>
 
-                    <!-- Row 4 -->
+                    <!-- Row 7 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
-                            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="m14 13-7.5 7.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L11 10" />
-                                <path d="m16 16 6-6" />
-                                <path d="m8 8 6-6" />
-                                <path d="m9 7 8 8" />
-                                <path d="m21 11-8-8" />
-                            </svg>
+                            <i data-lucide="feather"></i>
+                        </div>
+                        <div class="ac-content">
+                            <h3>Runner up</h3>
+                            <p>9th Notre Dame National Earth & Space Summit<br><span
+                                    style="font-size: 0.85em; opacity: 0.8;">Notre Dame College</span></p>
+                        </div>
+                        <div class="ac-badge">SCI-FI STORY WRITING</div>
+                    </div>
+
+                    <!-- Row 8 -->
+                    <div class="achiever-row magnetic">
+                        <div class="ac-icon">
+                            <i data-lucide="message-square"></i>
+                        </div>
+                        <div class="ac-content">
+                            <h3>2nd Runner up</h3>
+                            <p>9th Notre Dame National English Carnival<br><span
+                                    style="font-size: 0.85em; opacity: 0.8;">Notre Dame College</span></p>
+                        </div>
+                        <div class="ac-badge">REVIEW SUBMISSION</div>
+                    </div>
+
+                    <!-- Row 9 -->
+                    <div class="achiever-row magnetic">
+                        <div class="ac-icon">
+                            <i data-lucide="landmark"></i>
                         </div>
                         <div class="ac-content">
                             <h3>Special Mention 1</h3>
@@ -1356,23 +1440,6 @@
                                     style="font-size: 0.85em; opacity: 0.8;">Delegate of Oman — GA6 (Legal)</span></p>
                         </div>
                         <div class="ac-badge">MUN</div>
-                    </div>
-
-                    <!-- Row 5 -->
-                    <div class="achiever-row magnetic">
-                        <div class="ac-icon">
-                            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                            </svg>
-                        </div>
-                        <div class="ac-content">
-                            <h3>Champion</h3>
-                            <p>2nd Virtual Business Combat 2025<br><span style="font-size: 0.85em; opacity: 0.8;">Notre
-                                    Dame College</span></p>
-                        </div>
-                        <div class="ac-badge">BUSINESS</div>
                     </div>
                 </div>
 
@@ -1423,8 +1490,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
         // 1. Lenis Smooth Scroll
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
