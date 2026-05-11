@@ -535,12 +535,21 @@
             transform: scaleY(1);
         }
 
-        .project-item h3,
+        .project-item h3 {
+            transition: color 0.3s;
+            position: relative;
+            z-index: 2;
+            font-size: 2rem;
+        }
+
         .project-item p {
             transition: color 0.3s;
             position: relative;
             z-index: 2;
+            margin-top: 1rem;
+            opacity: 0.8;
         }
+
 
         .project-item:hover h3 {
             color: #000;
