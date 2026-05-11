@@ -949,7 +949,22 @@
                 position: absolute;
                 top: 2rem;
                 right: 1.5rem;
+                width: 36px;
+                height: 36px;
             }
+
+            .p-arrow svg {
+                width: 14px;
+            }
+
+            .p-arrow::after {
+                transform: scale(0.77) translate(-150%, 150%);
+            }
+
+            .project-item:hover .p-arrow::after {
+                transform: scale(0.77) translate(0, 0);
+            }
+
 
             .achiever-row {
                 grid-template-columns: 1fr;
