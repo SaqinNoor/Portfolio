@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <defs>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="10" result="blur" />
+            <feMerge>
+                <feMergeNode />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+    </defs>
+    <rect width="512" height="512" fill="#050505" rx="120"/>
+    
+    <!-- Subtle Grid Background -->
+    <path d="M0 128 H512 M0 256 H512 M0 384 H512 M128 0 V512 M256 0 V512 M384 0 V512" 
+          stroke="#CCFF00" stroke-width="2" opacity="0.1"/>
+
+    <!-- Frame Elements -->
+    <path d="M64 128 V64 H128" fill="none" stroke="#CCFF00" stroke-width="16" stroke-linecap="square"/>
+    <path d="M384 64 H448 V128" fill="none" stroke="#CCFF00" stroke-width="16" stroke-linecap="square"/>
+    <path d="M448 384 V448 H384" fill="none" stroke="#CCFF00" stroke-width="16" stroke-linecap="square"/>
+    <path d="M128 448 H64 V384" fill="none" stroke="#CCFF00" stroke-width="16" stroke-linecap="square"/>
+
+    <!-- Status Indicators -->
+    <circle cx="256" cy="48" r="8" fill="#CCFF00" opacity="0.8"/>
+    <circle cx="256" cy="464" r="8" fill="#CCFF00" opacity="0.8"/>
+
+    <!-- Optimized Central S Mark with Glow -->
+    <g filter="url(#glow)">
+        <path d="M150 150H362V210H210V256H362V362H150V302H302V256H150V150Z" fill="#CCFF00"/>
+    </g>
+</svg>
