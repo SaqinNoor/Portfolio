@@ -2,7 +2,7 @@
 
 A digital archive of development, leadership, and achievements.
 
-**Live Site**: [saqinnoor.github.io/Portfolio](https://saqinnoor.github.io/Portfolio)
+**Live Site**: [saqins-portfolio.vercel.app](https://saqins-portfolio.vercel.app)
 
 ---
 
