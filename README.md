@@ -1,27 +1,59 @@
-# Saqin Noor — Portfolio
+# Saqin Noor - Portfolio
 
 A digital archive of development, leadership, and achievements.
 
-**Live Site**: [saqins-portfolio.vercel.app](https://saqins-portfolio.vercel.app)
-
----
+Live Site: https://saqins-portfolio.vercel.app
 
 ## Overview
 
--   **Design**: Neon, monochromatic aesthetic with brutalism elements.
--   **Tech**: Built with pure HTML, CSS, and Vanilla JavaScript.
--   **Performance**: Optimized for speed with no heavy frameworks.
+A portfolio website designed with a monochromatic aesthetic, incorporating elements of brutalism and glassmorphism. It focuses on fluid interactions and high performance without relying on heavy frontend frameworks.
+
+## Technologies
+
+- **Frontend**: HTML, CSS, JavaScript
+- **Build Tool**: Vite
+- **Animation**: GSAP
+- **Scroll Engine**: Lenis
 
 ## Key Features
 
--   **Loader**: Custom 3D startup sequence.
--   **Smooth Interactions**: Powered by GSAP and Lenis Scroll.
+- **Custom Loader**: A startup sequence with text scramble effects.
+- **Interactive Photo Gallery**: A stacked card layout that expands into a full-screen, justified flexbox grid. The layout automatically calculates and preserves the exact aspect ratios of all photographs.
+- **Magnetic Cursor**: Custom cursor interactions that apply magnetic pulling effects to specific interface elements.
+- **Responsive Design**: Adapts across all device sizes using CSS Grid and Flexbox.
 
-## Tech Stack
+## Development Setup
 
--   **Core**: HTML5, CSS3, ES6+ JavaScript
--   **Libraries**: GSAP (Animation), Lenis (Smooth Scroll)
+### Prerequisites
+- Node.js and pnpm
+- uv (for running Python utilities)
+
+### Instructions
+
+1. Install Node dependencies:
+   ```bash
+   pnpm install
+   ```
+
+2. Start the local development server:
+   ```bash
+   pnpm run dev
+   ```
+
+3. Build for production:
+   ```bash
+   pnpm run build
+   ```
+
+### Image Optimization
+
+The project includes Python utilities to automate image optimization. These scripts convert raw images to WebP format and apply appropriate loading attributes to HTML tags.
+
+To run the utilities:
+```bash
+uv run convert_to_webp.py
+uv run optimize_html_images.py
+```
 
 ---
-
-&copy; 2026 Saqin Noor.
+Copyright 2026 Saqin Noor.
