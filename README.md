@@ -47,12 +47,12 @@ A portfolio website designed with a monochromatic aesthetic, incorporating eleme
 
 ### Image Optimization
 
-The project includes Python utilities to automate image optimization. These scripts convert raw images to WebP format and apply appropriate loading attributes to HTML tags.
+The project includes Python utilities to automate image optimization. These scripts convert unoptimized images to WebP format, update references and apply appropriate loading attributes to HTML tags.
 
 To run the utilities:
 ```bash
 uv run convert_to_webp.py
-uv run optimize_html_images.py
+uv run update_references.py
 ```
 
 ---
