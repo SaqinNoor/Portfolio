@@ -8,8 +8,7 @@
     <meta name="description" content="Portfolio Website of Saqin Noor.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-
-    <!-- Fonts -->
+    <!-- SECTION: FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -18,7 +17,6 @@
 
     <style>
         :root {
-            /* Palette */
             --bg: #050505;
             --surface: #0a0a0a;
             --text: #E6E6E6;
@@ -26,17 +24,14 @@
             --accent: #CCFF00;
             --line: rgba(255, 255, 255, 0.15);
 
-            /* Dimensions */
             --pad-x: 5vw;
             --pad-y: 120px;
             --sidebar-width: 35%;
             --nav-height: 80px;
 
-            /* Fonts */
             --font-display: 'Syne', sans-serif;
             --font-body: 'Space Grotesk', sans-serif;
 
-            /* Curves */
             --ease-lux: cubic-bezier(0.65, 0, 0.35, 1);
             --ease-snap: cubic-bezier(0.22, 1, 0.36, 1);
         }
@@ -73,7 +68,6 @@
             cursor: none;
         }
 
-        /* Loader */
         .acid-loader {
             position: fixed;
             inset: 0;
@@ -87,7 +81,6 @@
             perspective: 1000px;
         }
 
-        /* Loader Grid Overlay */
         .loader-grid {
             position: absolute;
             inset: -50%;
@@ -161,7 +154,6 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         }
 
-        /* Utilities */
         .noise {
             position: fixed;
             inset: 0;
@@ -178,7 +170,7 @@
             background: var(--accent);
             border-radius: 50%;
             pointer-events: none;
-            z-index: 9999;
+            z-index: 99999;
             mix-blend-mode: difference;
             transition: width 0.3s, height 0.3s;
             transform: translate(-50%, -50%);
@@ -263,7 +255,6 @@
             transform: scaleX(1);
         }
 
-        /* Hero Section */
         .hero {
             height: 100vh;
             width: 100%;
@@ -338,7 +329,6 @@
             letter-spacing: 1px;
         }
 
-        /* Identity Section */
         .identity-section {
             min-height: 80vh;
             display: flex;
@@ -378,7 +368,6 @@
             padding-left: 2rem;
         }
 
-        /* Navigation */
         .dimension-nav {
             display: flex;
             justify-content: space-between;
@@ -411,8 +400,6 @@
             color: var(--accent);
         }
 
-
-        /* Persona Layout */
         .persona-section {
             min-height: 100vh;
             display: flex;
@@ -476,7 +463,6 @@
             justify-content: center;
         }
 
-        /* Developer Section */
         .award-highlight {
             background: var(--surface);
             border: 1px solid var(--line);
@@ -552,7 +538,6 @@
             opacity: 0.8;
         }
 
-
         .project-item:hover h3 {
             color: #000;
         }
@@ -565,7 +550,6 @@
             color: #000;
             border-color: #000;
         }
-
 
         .p-arrow {
             width: 50px;
@@ -605,8 +589,6 @@
             transform: translate(0, 0);
         }
 
-
-        /* Leader Section */
         .timeline-node {
             position: relative;
             padding-left: 3rem;
@@ -639,8 +621,6 @@
             display: block;
         }
 
-
-        /* Role Progression Component (Red Crescent) */
         .rcy-progression {
             display: flex;
             flex-direction: column;
@@ -699,7 +679,6 @@
             margin: 0.25rem 0;
         }
 
-        /* Achiever Section */
         .achiever-list {
             display: flex;
             flex-direction: column;
@@ -745,7 +724,6 @@
             border-color: var(--accent);
         }
 
-        /* Icon Animation */
         .achiever-row .ac-icon svg {
             width: 2.5rem;
             height: 2.5rem;
@@ -758,8 +736,6 @@
             stroke: var(--accent);
         }
 
-
-        /* Content Shift */
         .ac-content {
             transition: transform 0.4s var(--ease-snap);
         }
@@ -788,7 +764,6 @@
             color: #ccc;
         }
 
-        /* Badge Animation */
         .ac-badge {
             font-size: 0.7rem;
             text-transform: uppercase;
@@ -805,42 +780,162 @@
             color: #000;
         }
 
-
-        /* Vault Section */
         .photo-vault {
-            height: 100vh;
-            padding: 0;
+            min-height: 100vh;
+            padding: var(--pad-y) var(--pad-x);
             border-top: 1px solid var(--line);
-            overflow: hidden;
             background: var(--bg);
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            overflow: hidden;
         }
 
-        .vault-track {
-            display: flex;
-            gap: 2rem;
-            padding-left: var(--pad-x);
-            width: max-content;
-            will-change: transform;
+        .vault-header {
+            flex: 1;
+            max-width: 400px;
         }
 
-        .vault-img {
-            width: 500px;
-            height: 65vh;
+        .vault-stack-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            flex-shrink: 0;
+            margin: 0 auto;
+        }
+
+        .vault-stack-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            filter: grayscale(100%) contrast(1.1);
-            transition: filter 0.5s, border-color 0.5s;
+            border: 12px solid #e8e8e8;
+            border-bottom-width: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s ease, filter 0.6s ease;
+            transform-origin: bottom center;
+            will-change: transform;
+            filter: grayscale(80%) sepia(20%);
+        }
+
+        .vault-stack-img:nth-child(1) { transform: rotate(-8deg) translateZ(0); z-index: 1; }
+        .vault-stack-img:nth-child(2) { transform: rotate(-3deg) translateZ(10px); z-index: 2; }
+        .vault-stack-img:nth-child(3) { transform: rotate(2deg) translateZ(20px); z-index: 3; }
+        .vault-stack-img:nth-child(4) { transform: rotate(7deg) translateZ(30px); z-index: 4; }
+        .vault-stack-img:nth-child(5) { transform: rotate(-1deg) translateZ(40px); z-index: 5; }
+
+        .vault-stack-container:hover .vault-stack-img {
+            filter: grayscale(0%) sepia(0%);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .vault-stack-container:hover .vault-stack-img:nth-child(1) { transform: rotate(-16deg) translateX(-60px) translateY(10px) translateZ(0); }
+        .vault-stack-container:hover .vault-stack-img:nth-child(2) { transform: rotate(-8deg) translateX(-30px) translateY(5px) translateZ(10px); }
+        .vault-stack-container:hover .vault-stack-img:nth-child(3) { transform: rotate(0deg) translateY(-5px) translateZ(20px); }
+        .vault-stack-container:hover .vault-stack-img:nth-child(4) { transform: rotate(8deg) translateX(30px) translateY(5px) translateZ(30px); }
+        .vault-stack-container:hover .vault-stack-img:nth-child(5) { transform: rotate(16deg) translateX(60px) translateY(10px) translateZ(40px); }
+
+        .gallery-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(8, 8, 8, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            transition: opacity 0.5s ease;
+        }
+
+        .gallery-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .gallery-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
             border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            background: rgba(0,0,0,0.5);
+            transition: 0.3s;
+            color: var(--text);
+        }
+        .gallery-close:hover {
+            background: var(--accent);
+            color: #000;
         }
 
-        /* NOTE: :hover removed here, controlled by JS for accuracy during scroll */
-        .vault-img.active {
-            filter: grayscale(0%) contrast(1);
-            border-color: var(--accent);
+        .gallery-close svg {
+            width: 20px;
+            height: 20px;
         }
 
-        /* Footer */
+        .gallery-scroll-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 6rem var(--pad-x) 4rem var(--pad-x);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .gallery-scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            transform: translateY(40px);
+            opacity: 0;
+            transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            flex-grow: var(--ratio);
+            flex-shrink: var(--ratio);
+            flex-basis: calc(var(--ratio) * 280px);
+            max-height: 80vh;
+        }
+
+        .gallery-item.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.7s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
         .footer {
             height: 80vh;
             display: flex;
@@ -864,7 +959,6 @@
             color: var(--accent);
         }
 
-        /* Responsive Design */
         @media (max-width: 1024px) {
             :root {
                 --pad-x: 6vw;
@@ -888,7 +982,6 @@
                 flex-direction: column;
             }
 
-            /* Sticky Positioning Fix */
             .persona-sticky {
                 width: 100%;
                 height: auto;
@@ -967,14 +1060,12 @@
                 transform: scale(0.77) translate(0, 0);
             }
 
-
             .achiever-row {
                 grid-template-columns: 1fr;
                 gap: 1rem;
                 padding: 3rem 1rem;
             }
 
-            /* Hero Overflow Fix */
             .hero-bg-text {
                 font-size: 25vw;
                 opacity: 0.4;
@@ -1002,7 +1093,6 @@
                 font-size: 2rem;
             }
 
-            /* Navbar Overflow Fix */
             .dimension-nav {
                 padding: 0 var(--pad-x);
                 height: var(--nav-height);
@@ -1021,30 +1111,58 @@
                 display: none;
             }
 
-            /* Vault adjustments for mobile */
             .photo-vault {
-                height: 70vh;
-            }
-
-            .vault-img {
-                width: 85vw;
-                height: 45vh;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                gap: 3rem;
+                height: auto;
+                padding-top: 6rem;
+                padding-bottom: 6rem;
             }
 
             .vault-header {
-                margin-right: 1.5rem;
-                min-width: 200px;
+                margin-right: 0;
+                max-width: 100%;
             }
 
             .vault-header h2 {
                 font-size: 3rem !important;
             }
 
+            .vault-stack-container {
+                width: 75vw;
+                height: 90vw;
+                max-height: 400px;
+                max-width: 320px;
+            }
+
+            .gallery-grid {
+                gap: 1rem;
+            }
+            .gallery-item {
+                flex-basis: calc(var(--ratio) * 200px);
+            }
+            .gallery-scroll-container {
+                padding-top: 5rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery-grid {
+                display: flex;
+                flex-direction: column;
+            }
+            .gallery-item {
+                flex-basis: auto;
+                height: 350px;
+                width: 100%;
+            }
+
             .footer-cta {
                 font-size: 12vw;
             }
 
-            /* Loader Responsive Adjustments */
             .loader-text {
                 font-size: 12vw;
                 width: 100%;
@@ -1067,7 +1185,6 @@
             }
         }
 
-        /* Dotted Surface */
         #dotted-surface {
             position: absolute;
             inset: 0;
@@ -1085,7 +1202,7 @@
 
 <body>
 
-    <!-- Loader -->
+    <!-- SECTION: LOADER -->
     <div class="acid-loader">
         <div class="loader-grid"></div>
         <div class="loader-scan"></div>
@@ -1096,12 +1213,12 @@
         </div>
     </div>
 
-    <!-- Overlay Effects -->
+    <!-- SECTION: OVERLAY EFFECTS -->
     <div class="noise-overlay"></div>
     <div class="cursor"></div>
 
     <main>
-        <!-- Hero -->
+        <!-- SECTION: HERO -->
         <section class="hero">
             <div id="dotted-surface"></div>
             <div class="hero-bg-text" data-speed="-0.2">ARCHITECT</div>
@@ -1126,7 +1243,7 @@
             </div>
         </section>
 
-        <!-- Identity Section -->
+        <!-- SECTION: IDENTITY -->
         <section class="identity-section">
             <div class="id-grid">
                 <div class="id-bio">
@@ -1141,14 +1258,14 @@
             </div>
         </section>
 
-        <!-- Sticky Navigation -->
+        <!-- SECTION: NAVIGATION -->
         <nav class="dimension-nav">
             <a href="#dev" class="dim-link magnetic" data-target="#dev">01 / DEV</a>
             <a href="#leader" class="dim-link magnetic" data-target="#leader">02 / LEADER</a>
             <a href="#achiever" class="dim-link magnetic" data-target="#achiever">03 / ACHIEVER</a>
         </nav>
 
-        <!-- Developer Section -->
+        <!-- SECTION: DEVELOPER -->
         <section id="dev" class="persona-section">
             <div class="persona-sticky">
                 <div class="persona-group">
@@ -1181,8 +1298,6 @@
 
                 <div style="margin-top: 6rem;">
                     <div class="tag tag--accent" style="margin-bottom: 2rem;">HIGHLIGHTED WORKS</div>
-
-                    <!-- Project 0 (INIT 6.0 Winner) -->
                     <div class="project-item magnetic">
                         <div class="project-overlay"></div>
                         <div class="p-left">
@@ -1202,8 +1317,6 @@
                         </a>
                     </div>
 
-                    <!-- Project 1 -->
-
                     <div class="project-item magnetic">
                         <div class="project-overlay"></div>
                         <div class="p-left">
@@ -1218,8 +1331,6 @@
                             </svg>
                         </a>
                     </div>
-
-                    <!-- Project 2 -->
                     <div class="project-item magnetic">
                         <div class="project-overlay"></div>
                         <div class="p-left">
@@ -1238,7 +1349,7 @@
             </div>
         </section>
 
-        <!-- Leader Section -->
+        <!-- SECTION: LEADER -->
         <section id="leader" class="persona-section">
             <div class="persona-sticky">
                 <div class="persona-group">
@@ -1335,7 +1446,7 @@
             </div>
         </section>
 
-        <!-- Achiever Section -->
+        <!-- SECTION: ACHIEVER -->
         <section id="achiever" class="persona-section">
             <div class="persona-sticky">
                 <div class="persona-group">
@@ -1349,7 +1460,6 @@
             <div class="persona-content">
 
                 <div class="achiever-list">
-                    <!-- Row 1 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
                             <i data-lucide="telescope"></i>
@@ -1361,8 +1471,6 @@
                         </div>
                         <div class="ac-badge">ASTRO & ECO IDEATION</div>
                     </div>
-
-                    <!-- Row 2 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
                             <i data-lucide="book-open"></i>
@@ -1374,8 +1482,6 @@
                         </div>
                         <div class="ac-badge">BOOK BASED QUIZ</div>
                     </div>
-
-                    <!-- Row 3 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
                             <i data-lucide="mountain"></i>
@@ -1387,8 +1493,6 @@
                         </div>
                         <div class="ac-badge">EARTH SCIENCE OLYMPIAD</div>
                     </div>
-
-                    <!-- Row 4 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
                             <i data-lucide="briefcase"></i>
@@ -1401,8 +1505,6 @@
                         </div>
                         <div class="ac-badge">BUSINESS</div>
                     </div>
-
-                    <!-- Row 5 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
                             <i data-lucide="languages"></i>
@@ -1415,8 +1517,6 @@
                         </div>
                         <div class="ac-badge">SPELL BEE</div>
                     </div>
-
-                    <!-- Row 6 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
                             <i data-lucide="camera"></i>
@@ -1428,8 +1528,6 @@
                         </div>
                         <div class="ac-badge">PHOTOGRAPHY</div>
                     </div>
-
-                    <!-- Row 7 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
                             <i data-lucide="feather"></i>
@@ -1441,8 +1539,6 @@
                         </div>
                         <div class="ac-badge">SCI-FI STORY WRITING</div>
                     </div>
-
-                    <!-- Row 8 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
                             <i data-lucide="message-square"></i>
@@ -1454,8 +1550,6 @@
                         </div>
                         <div class="ac-badge">REVIEW SUBMISSION</div>
                     </div>
-
-                    <!-- Row 9 -->
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
                             <i data-lucide="landmark"></i>
@@ -1472,29 +1566,46 @@
             </div>
         </section>
 
-        <!-- Vault Section -->
+        <!-- SECTION: PHOTO VAULT -->
         <section class="photo-vault">
-            <div class="vault-track">
-                <div class="vault-header" style="margin-right: 4rem; min-width: 300px;">
-                    <div class="tag">THE LENS</div>
-                    <h2
-                        style="font-size: 4rem; font-family: var(--font-display); font-weight: 800; line-height: 1; margin-top: 1rem;">
-                        SONY<br>DSC-W110</h2>
-                </div>
-                <img decoding="async" loading="lazy" src="Photographs/1.webp" class="vault-img" alt="DSC W110 Photo 1">
-                <img decoding="async" loading="lazy" src="Photographs/2.webp" class="vault-img" alt="DSC W110 Photo 2">
-                <img decoding="async" loading="lazy" src="Photographs/3.webp" class="vault-img" alt="DSC W110 Photo 3">
-                <img decoding="async" loading="lazy" src="Photographs/4.webp" class="vault-img" alt="DSC W110 Photo 4">
-                <img decoding="async" loading="lazy" src="Photographs/5.webp" class="vault-img" alt="DSC W110 Photo 5">
-                <img decoding="async" loading="lazy" src="Photographs/6.webp" class="vault-img" alt="DSC W110 Photo 6">
-                <img decoding="async" loading="lazy" src="Photographs/7.webp" class="vault-img" alt="DSC W110 Photo 7">
-                <img decoding="async" loading="lazy" src="Photographs/8.webp" class="vault-img" alt="DSC W110 Photo 8">
-                <img decoding="async" loading="lazy" src="Photographs/9.webp" class="vault-img" alt="DSC W110 Photo 9">
-                <img decoding="async" loading="lazy" src="Photographs/10.webp" class="vault-img" alt="DSC W110 Photo 10">
+            <div class="vault-header">
+                <div class="tag">THE LENS</div>
+                <h2 style="font-size: 4rem; font-family: var(--font-display); font-weight: 800; line-height: 1; margin-top: 1rem;">
+                    SONY<br>DSC-W110
+                </h2>
+                <p style="margin-top: 1.5rem; color: var(--text-dim); font-size: 0.9rem; letter-spacing: 2px;">CLICK TO VIEW GALLERY</p>
+            </div>
+            <div class="vault-stack-container magnetic">
+                <img decoding="async" src="Photographs/1.webp" class="vault-stack-img" alt="DSC W110 Photo 1">
+                <img decoding="async" src="Photographs/2.webp" class="vault-stack-img" alt="DSC W110 Photo 2">
+                <img decoding="async" src="Photographs/3.webp" class="vault-stack-img" alt="DSC W110 Photo 3">
+                <img decoding="async" src="Photographs/4.webp" class="vault-stack-img" alt="DSC W110 Photo 4">
+                <img decoding="async" src="Photographs/5.webp" class="vault-stack-img" alt="DSC W110 Photo 5">
             </div>
         </section>
 
-        <!-- FOOTER -->
+        <!-- SECTION: GALLERY OVERLAY -->
+        <div class="gallery-overlay">
+            <div class="gallery-close magnetic">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </div>
+            <div class="gallery-scroll-container" data-lenis-prevent>
+                <div class="gallery-grid" id="gallery-grid">
+                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.00s"><img src="Photographs/1.webp" alt="DSC W110 Photo 1"></div>
+                    <div class="gallery-item" style="--ratio: 0.56; transition-delay: 0.05s"><img src="Photographs/2.webp" alt="DSC W110 Photo 2"></div>
+                    <div class="gallery-item" style="--ratio: 0.75; transition-delay: 0.10s"><img src="Photographs/3.webp" alt="DSC W110 Photo 3"></div>
+                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.15s"><img src="Photographs/4.webp" alt="DSC W110 Photo 4"></div>
+                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.20s"><img src="Photographs/5.webp" alt="DSC W110 Photo 5"></div>
+                    <div class="gallery-item" style="--ratio: 0.75; transition-delay: 0.25s"><img src="Photographs/6.webp" alt="DSC W110 Photo 6"></div>
+                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.30s"><img src="Photographs/7.webp" alt="DSC W110 Photo 7"></div>
+                    <div class="gallery-item" style="--ratio: 0.56; transition-delay: 0.35s"><img src="Photographs/8.webp" alt="DSC W110 Photo 8"></div>
+                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.40s"><img src="Photographs/9.webp" alt="DSC W110 Photo 9"></div>
+                    <div class="gallery-item" style="--ratio: 0.56; transition-delay: 0.45s"><img src="Photographs/10.webp" alt="DSC W110 Photo 10"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: FOOTER -->
         <footer class="footer">
             <div style="margin-bottom: 3rem; color: var(--text-dim); letter-spacing: 2px; font-size: 0.8rem;">READY TO
                 COLLABORATE</div>
@@ -1514,7 +1625,7 @@
 
     </main>
 
-    <!-- Scripts -->
+    <!-- SECTION: SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
@@ -1522,15 +1633,12 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
-        // Initialize Lucide icons
         lucide.createIcons();
 
-        // 1. Lenis Smooth Scroll
         const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 2. Custom Cursor
         const cursor = document.querySelector('.cursor');
         let mouseX = 0, mouseY = 0;
         const isTouch = window.matchMedia("(hover: none)").matches;
@@ -1548,12 +1656,10 @@
             });
         }
 
-        // 3. Loader Sequence
         const counter = { val: 0 };
         const counterEl = document.querySelector('.loader-counter');
         const statusEl = document.querySelector('.loader-status');
 
-        // Scramble Effect for Loader Text
         const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&";
 
         function scrambleText(element, finalString) {
@@ -1574,7 +1680,6 @@
 
         const tl = gsap.timeline();
 
-        // Loader Timeline
         gsap.to('.loader-grid', {
             y: "20%", rotateX: 50, scale: 1.5,
             duration: 3, ease: "none", repeat: -1, yoyo: true
@@ -1588,7 +1693,6 @@
                 const val = Math.floor(counter.val);
                 counterEl.innerText = val.toString().padStart(2, '0');
 
-                // Trigger text scramble at milestones
                 if (val === 15) scrambleText(statusEl, "LOADING CORE...");
                 if (val === 40) scrambleText(statusEl, "OPTIMIZING ASSETS...");
                 if (val === 75) scrambleText(statusEl, "ESTABLISHING UPLINK...");
@@ -1598,7 +1702,6 @@
 
         tl.to('.loader-line', { width: '100vw', duration: 3, ease: "expo.out" }, '<');
 
-        // Loader Exit Sequence
         tl.to('.loader-content', {
             filter: "blur(20px)",
             opacity: 0,
@@ -1612,9 +1715,6 @@
             duration: 1.2,
             ease: "power4.inOut",
         });
-
-        // Hero Reveal Sequence
-        // Note: Maintain animated state (y: 0) vs CSS default (y: 110%)
 
         tl.set('.hero-content, .hero-bg-text', { autoAlpha: 1 });
 
@@ -1636,8 +1736,6 @@
             "-=0.8"
         );
 
-
-        // 4. Scroll Triggers
         gsap.registerPlugin(ScrollTrigger);
 
         gsap.to('.hero-bg-text', {
@@ -1645,54 +1743,27 @@
             scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
         });
 
-        // Vault Scroll and Hover Effects
-        let vaultTrack = document.querySelector('.vault-track');
-        let vaultSection = document.querySelector('.photo-vault');
+        const vaultStack = document.querySelector('.vault-stack-container');
+        const galleryOverlay = document.querySelector('.gallery-overlay');
+        const galleryClose = document.querySelector('.gallery-close');
 
-        function getScrollAmount() {
-            let trackWidth = vaultTrack.scrollWidth;
-            return -(trackWidth - window.innerWidth);
-        }
-
-        // Function to manually check hover state during scroll
-        // ONLY RUN ON DESKTOP
-        function checkVaultHover() {
-            if (isTouch) return;
-
-            const elements = document.elementsFromPoint(mouseX, mouseY);
-            const vaultImgs = document.querySelectorAll('.vault-img');
-
-            vaultImgs.forEach(img => img.classList.remove('active'));
-
-            const img = elements.find(el => el.classList.contains('vault-img'));
-            if (img) {
-                img.classList.add('active');
-            }
-        }
-
-        let scrollTween = gsap.to(vaultTrack, {
-            x: getScrollAmount,
-            ease: "none",
-            onUpdate: checkVaultHover
+        vaultStack.addEventListener('click', () => {
+            galleryOverlay.classList.add('active');
+            lenis.stop(); 
+            setTimeout(() => {
+                document.querySelectorAll('.gallery-item').forEach(item => {
+                    item.classList.add('visible');
+                });
+            }, 50); 
         });
 
-        ScrollTrigger.create({
-            trigger: vaultSection,
-            start: "top top",
-            end: () => `+=${Math.abs(getScrollAmount())}`,
-            pin: true,
-            animation: scrollTween,
-            scrub: 1,
-            invalidateOnRefresh: true,
-            anticipatePin: 1 // smoothen pinning on mobile
+        galleryClose.addEventListener('click', () => {
+            galleryOverlay.classList.remove('active');
+            lenis.start(); 
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.classList.remove('visible');
+            });
         });
-
-        // Add standard listeners for when not scrolling
-        document.querySelectorAll('.vault-img').forEach(img => {
-            img.addEventListener('mouseenter', () => img.classList.add('active'));
-            img.addEventListener('mouseleave', () => img.classList.remove('active'));
-        });
-
 
         gsap.utils.toArray('.persona-title').forEach(title => {
             gsap.from(title, {
@@ -1701,7 +1772,6 @@
             });
         });
 
-        // 5. Navigation Scroll Spy
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.dim-link');
 
@@ -1733,7 +1803,6 @@
             });
         });
 
-        // 6. Dotted Surface (Three.js wave)
         (function initDottedSurface() {
             const container = document.getElementById('dotted-surface');
             if (!container) return;
@@ -1806,7 +1875,6 @@
 
             animateDots();
 
-            // Fade in after loader
             setTimeout(() => { container.style.opacity = '1'; }, 4500);
         })();
 
