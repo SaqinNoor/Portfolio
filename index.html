@@ -792,6 +792,21 @@
             overflow: hidden;
         }
 
+        .tag.tag--lens-highlight {
+            color: #000 !important;
+            background: var(--accent) !important;
+            border-color: var(--accent) !important;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(204, 255, 0, 0.45);
+            text-shadow: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tag.tag--lens-highlight:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(204, 255, 0, 0.75);
+        }
+
         .vault-header {
             flex: 1;
             max-width: 400px;
@@ -799,8 +814,8 @@
 
         .vault-stack-container {
             position: relative;
-            width: 400px;
-            height: 500px;
+            width: 460px;
+            height: 580px;
             perspective: 1000px;
             transform-style: preserve-3d;
             flex-shrink: 0;
@@ -814,9 +829,9 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border: 12px solid #e8e8e8;
-            border-bottom-width: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            border: 14px solid #e8e8e8;
+            border-bottom-width: 52px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.55);
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.6s ease, filter 0.6s ease;
             transform-origin: bottom center;
             will-change: transform;
@@ -1569,7 +1584,7 @@
         <!-- SECTION: PHOTO VAULT -->
         <section class="photo-vault">
             <div class="vault-header">
-                <div class="tag">THE LENS</div>
+                <div class="tag tag--lens-highlight">THE LENS</div>
                 <h2 style="font-size: 4rem; font-family: var(--font-display); font-weight: 800; line-height: 1; margin-top: 1rem;">
                     SONY<br>DSC-W110
                 </h2>
@@ -1745,9 +1760,13 @@
 
         const vaultStack = document.querySelector('.vault-stack-container');
         const galleryOverlay = document.querySelector('.gallery-overlay');
+        const galleryScrollContainer = document.querySelector('.gallery-scroll-container');
         const galleryClose = document.querySelector('.gallery-close');
 
         vaultStack.addEventListener('click', () => {
+            if (galleryScrollContainer) {
+                galleryScrollContainer.scrollTop = 0;
+            }
             galleryOverlay.classList.add('active');
             lenis.stop(); 
             setTimeout(() => {
@@ -1757,7 +1776,9 @@
             }, 50); 
         });
 
-        galleryClose.addEventListener('click', () => {
+        galleryOverlay.addEventListener('click', (e) => {
+            if (e.target.closest('.gallery-item')) return;
+            
             galleryOverlay.classList.remove('active');
             lenis.start(); 
             document.querySelectorAll('.gallery-item').forEach(item => {
