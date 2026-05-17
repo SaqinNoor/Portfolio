@@ -5,3 +5,9 @@
 bun.lock
 node_modules/
 dist/
+convert_to_webp.py
+update_references.py
+optimize_html_images.py
+pyproject.toml
+uv.lock
+.venv/
