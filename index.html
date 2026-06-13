@@ -213,6 +213,7 @@
             font-family: var(--font-body);
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             padding: 6px 12px;
             border: 1px solid var(--line);
             font-size: 0.7rem;
@@ -221,6 +222,7 @@
             color: var(--text-dim);
             margin-bottom: 1rem;
             transition: 0.3s;
+            white-space: nowrap;
         }
 
         .tag:hover {
@@ -564,6 +566,7 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .p-arrow svg {
@@ -1192,6 +1195,23 @@
                 text-align: center;
                 margin: 0;
             }
+
+            .footer-social {
+                flex-wrap: wrap !important;
+                justify-content: center;
+                padding: 0 var(--pad-x);
+            }
+
+            .footer-social .tag {
+                flex-basis: calc(33.333% - 1.35rem);
+                text-align: center;
+            }
+
+            .footer-social .tag:last-child {
+                flex-basis: calc(33.333% - 1.35rem);
+                margin-left: auto;
+                margin-right: auto;
+            }
         }
 
         @media (hover: none) {
@@ -1633,7 +1653,7 @@
             <div style="margin-bottom: 3rem; color: var(--text-dim); letter-spacing: 2px; font-size: 0.8rem;">READY TO
                 COLLABORATE</div>
             <a href="mailto:saqin@saqinnoor.dpdns.org" class="footer-cta magnetic">CONTACT</a>
-            <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+            <div class="footer-social" style="display: flex; gap: 2rem; margin-top: 2rem;">
                 <a href="https://saqinnoor.dpdns.org/github" target="_blank" class="magnetic tag"
                     style="background: transparent;">GITHUB</a>
                 <a href="https://saqinnoor.dpdns.org/instagram" target="_blank" class="magnetic tag"
