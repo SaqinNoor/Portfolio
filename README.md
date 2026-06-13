@@ -2,7 +2,7 @@
 
 A digital archive of development, leadership, and achievements.
 
-Live Site: https://saqins-portfolio.vercel.app
+Live Site: https://saqinnoor.dpdns.org
 
 ## Overview
 
