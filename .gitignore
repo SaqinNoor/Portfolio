@@ -6,3 +6,4 @@ bun.lock
 node_modules/
 dist/
 .venv/
+AGENTS.md

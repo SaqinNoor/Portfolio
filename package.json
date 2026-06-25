@@ -4,7 +4,7 @@
   "description": "Portfolio Website of Saqin Noor",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-sitemap.mjs",
     "preview": "vite preview"
   },
   "devDependencies": {
