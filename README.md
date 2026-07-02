@@ -2,7 +2,7 @@
 
 A digital archive of development, leadership, and achievements.
 
-Live Site: https://saqinnoor.dpdns.org
+Live Site: https://saqinnoor.vercel.app
 
 ## Overview
 
