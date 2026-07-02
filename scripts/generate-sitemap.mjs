@@ -12,6 +12,7 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
   <url>
     <loc>${SITE_URL}/</loc>
     <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 </urlset>`;
