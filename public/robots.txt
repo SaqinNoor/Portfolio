@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://saqinnoor.vercel.app/sitemap.xml
+Sitemap: https://saqin.is-a.dev/sitemap.xml

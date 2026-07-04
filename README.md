@@ -2,7 +2,7 @@
 
 A digital archive of development, leadership, and achievements.
 
-Live Site: https://saqinnoor.vercel.app
+Live Site: https://saqin.is-a.dev
 
 ## Overview
 

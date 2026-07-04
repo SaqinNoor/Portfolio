@@ -3,7 +3,7 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const SITE_URL = 'https://saqinnoor.vercel.app';
+const SITE_URL = 'https://saqin.is-a.dev';
 const outDir = resolve(__dirname, '../dist');
 const today = new Date().toISOString().split('T')[0];
 
