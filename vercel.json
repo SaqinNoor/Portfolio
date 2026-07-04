@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "saqinnoor.vercel.app"
+        }
+      ],
+      "destination": "https://saqin.is-a.dev/:path*",
+      "statusCode": 301
+    }
+  ]
+}
