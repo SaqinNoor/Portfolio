@@ -1,18 +1,43 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
   <rect width="512" height="512" fill="#050505" rx="120"/>
-  <circle cx="256" cy="256" r="190" fill="none" stroke="#CCFF00" stroke-width="1.5" opacity="0.04"/>
-  <circle cx="256" cy="256" r="150" fill="none" stroke="#CCFF00" stroke-width="2" opacity="0.07"/>
-  <circle cx="256" cy="256" r="140" fill="none" stroke="#E6E6E6" stroke-width="3" opacity="0.35"/>
-  <line x1="256" y1="80" x2="256" y2="432" stroke="#CCFF00" stroke-width="5" stroke-linecap="round"/>
-  <line x1="80" y1="256" x2="432" y2="256" stroke="#E6E6E6" stroke-width="1.5" opacity="0.12" stroke-linecap="round"/>
-  <path d="M238 96 L256 74 L274 96 Z" fill="#CCFF00"/>
-  <line x1="238" y1="96" x2="274" y2="96" stroke="#CCFF00" stroke-width="4" stroke-linecap="round"/>
-  <path d="M238 416 L256 438 L274 416 Z" fill="#CCFF00"/>
-  <line x1="238" y1="416" x2="274" y2="416" stroke="#CCFF00" stroke-width="4" stroke-linecap="round"/>
+  <path d="M0 128 H512 M0 256 H512 M0 384 H512 M128 0 V512 M256 0 V512 M384 0 V512" stroke="#CCFF00" stroke-width="1.2" opacity="0.04"/>
+  <circle cx="256" cy="256" r="193" fill="none" stroke="#CCFF00" stroke-width="1.5" opacity="0.04"/>
+  <circle cx="256" cy="256" r="158" fill="none" stroke="#CCFF00" stroke-width="1.5" opacity="0.05"/>
+  <circle cx="256" cy="256" r="125" fill="none" stroke="#CCFF00" stroke-width="2" opacity="0.09"/>
+  <circle cx="256" cy="256" r="113" fill="none" stroke="#E6E6E6" stroke-width="2" opacity="0.3"/>
+  <circle cx="256" cy="256" r="110" fill="none" stroke="#CCFF00" stroke-width="0.8" opacity="0.12"/>
+  <line x1="256" y1="101" x2="256" y2="113" stroke="#E6E6E6" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="256" y1="399" x2="256" y2="411" stroke="#E6E6E6" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="101" y1="256" x2="113" y2="256" stroke="#E6E6E6" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="399" y1="256" x2="411" y2="256" stroke="#E6E6E6" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+  <line x1="220.1" y1="176.1" x2="233.2" y2="181.7" stroke="#E6E6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+  <line x1="176.1" y1="220.1" x2="181.7" y2="233.2" stroke="#E6E6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+  <line x1="291.9" y1="176.1" x2="278.8" y2="181.7" stroke="#E6E6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+  <line x1="335.9" y1="220.1" x2="330.3" y2="233.2" stroke="#E6E6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+  <line x1="291.9" y1="335.9" x2="278.8" y2="330.3" stroke="#E6E6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+  <line x1="335.9" y1="291.9" x2="330.3" y2="278.8" stroke="#E6E6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+  <line x1="220.1" y1="335.9" x2="233.2" y2="330.3" stroke="#E6E6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+  <line x1="176.1" y1="291.9" x2="181.7" y2="278.8" stroke="#E6E6E6" stroke-width="1.5" stroke-linecap="round" opacity="0.25"/>
+  <line x1="256" y1="107" x2="256" y2="408" stroke="#CCFF00" stroke-width="4" stroke-linecap="round"/>
+  <line x1="80" y1="256" x2="432" y2="256" stroke="#E6E6E6" stroke-width="0.8" opacity="0.06" stroke-linecap="round"/>
+  <text x="256" y="91" font-family="'Space Grotesk','Arial',sans-serif" font-size="66" font-weight="700" fill="#CCFF00" text-anchor="middle" letter-spacing="-1">S</text>
+  <text x="256" y="472" font-family="'Space Grotesk','Arial',sans-serif" font-size="64" font-weight="700" fill="#CCFF00" text-anchor="middle" letter-spacing="-1">N</text>
+  <g filter="url(#glow)">
+    <path d="M236 141 L256 107 L276 141 Z" fill="#CCFF00"/>
+    <path d="M236 374 L256 408 L276 374 Z" fill="#CCFF00"/>
+  </g>
+  <line x1="236" y1="141" x2="276" y2="141" stroke="#CCFF00" stroke-width="3" stroke-linecap="round"/>
+  <line x1="236" y1="374" x2="276" y2="374" stroke="#CCFF00" stroke-width="3" stroke-linecap="round"/>
   <circle cx="256" cy="256" r="14" fill="#CCFF00"/>
   <circle cx="256" cy="256" r="6" fill="#050505"/>
-  <path d="M80 160V80h76" stroke="#E6E6E6" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M432 160V80h-76" stroke="#E6E6E6" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M80 352v80h76" stroke="#E6E6E6" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M432 352v80h-76" stroke="#CCFF00" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M80 160V80h76" stroke="#E6E6E6" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M432 160V80h-76" stroke="#E6E6E6" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M80 352v80h76" stroke="#E6E6E6" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M432 352v80h-76" stroke="#CCFF00" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
