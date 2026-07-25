@@ -1484,6 +1484,8 @@
             flex-direction: column;
             align-items: center;
             gap: 1px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .radar-overlay-label.val-left {
@@ -1640,9 +1642,8 @@
 
         .terminal:focus-within {
             box-shadow:
-                0 0 32px rgba(204, 255, 0, 0.10),
-                0 0 60px rgba(204, 255, 0, 0.04),
-                inset 0 1px 0 rgba(204, 255, 0, 0.08);
+                0 0 20px rgba(204, 255, 0, 0.06),
+                inset 0 1px 0 rgba(204, 255, 0, 0.04);
         }
 
         .terminal-header {
@@ -3341,7 +3342,10 @@
                         dot.setAttribute('opacity', t > 0.3 ? '1' : '0');
                         if (val) {
                             val.textContent = Math.round(d.value * t);
-                            val.style.opacity = t > 0.5 ? '1' : '0';
+                        }
+                        const label = val && val.parentElement;
+                        if (label) {
+                            label.style.opacity = Math.min(1, Math.max(0, (t - 0.35) * 4));
                         }
                     });
                 },
