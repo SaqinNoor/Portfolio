@@ -1611,7 +1611,7 @@
             color: var(--accent);
             text-decoration: underline;
             text-underline-offset: 3px;
-            cursor: pointer;
+            cursor: none;
         }
 
         .terminal-link:hover {
@@ -1663,7 +1663,7 @@
 
         .github-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         .github-header-tag {
@@ -1683,6 +1683,205 @@
             margin-top: 0.5rem;
         }
 
+        .gh-stats {
+            display: flex;
+            gap: 2rem;
+            margin: 0 auto 4rem;
+            max-width: 700px;
+            width: 100%;
+        }
+
+        .gh-stat-card {
+            flex: 1;
+            text-align: center;
+            cursor: none;
+        }
+
+        .gh-stat-label {
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.4rem;
+        }
+
+        .gh-stat-number {
+            font-family: var(--font-body);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .gh-stat-card:hover .gh-stat-number {
+            opacity: 0.6;
+        }
+
+        .gh-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+            width: 100%;
+        }
+
+        .gh-panel {
+            background: #000;
+            border: 1px solid rgba(204, 255, 0, 0.15);
+            box-shadow: 0 0 20px rgba(204, 255, 0, 0.06), inset 0 1px 0 rgba(204, 255, 0, 0.04);
+            overflow: hidden;
+        }
+
+        .gh-panel-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #0a0a0a;
+            border-bottom: 1px solid rgba(204, 255, 0, 0.08);
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .gh-panel-dots {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .gh-panel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .gh-panel-dot--red { background: #FF5F57; }
+        .gh-panel-dot--yellow { background: #FFBD2E; }
+        .gh-panel-dot--green { background: #28C840; }
+
+        .gh-panel-body {
+            padding: 1.5rem;
+        }
+
+        .gh-lang-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 0;
+            cursor: none;
+        }
+
+        .gh-lang-name {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            color: #666;
+            min-width: 80px;
+            text-align: right;
+            transition: color 0.2s ease;
+        }
+
+        .gh-lang-row:hover .gh-lang-name {
+            color: var(--text);
+        }
+
+        .gh-lang-bar-track {
+            flex: 1;
+            height: 6px;
+            background: rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gh-lang-bar-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 1.2s var(--ease-snap);
+        }
+
+        .gh-lang-count {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            color: #444;
+            min-width: 18px;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        .gh-repo-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            cursor: none;
+            transition: all 0.2s ease;
+        }
+
+        .gh-repo-item:last-child {
+            border-bottom: none;
+        }
+
+        .gh-repo-item:hover {
+            padding-left: 8px;
+        }
+
+        .gh-repo-rank {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #444;
+            min-width: 24px;
+            line-height: 1;
+            transition: color 0.2s ease;
+        }
+
+        .gh-repo-rank.top1 { color: var(--accent); }
+        .gh-repo-rank.top2 { color: #999; }
+        .gh-repo-rank.top3 { color: #666; }
+
+        .gh-repo-item:hover .gh-repo-rank {
+            color: var(--accent);
+        }
+
+        .gh-repo-lang-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .gh-repo-name {
+            flex: 1;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .gh-repo-name a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .gh-repo-name a:hover {
+            color: var(--accent);
+        }
+
+        .gh-repo-stars {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
         .github-feed {
             max-width: 700px;
             width: 100%;
@@ -1692,16 +1891,18 @@
         .github-event {
             display: flex;
             gap: 16px;
-            padding-bottom: 8px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            cursor: none;
+            transition: all 0.2s ease;
         }
 
-        .github-event-graph {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 20px;
-            flex-shrink: 0;
-            position: relative;
+        .github-event:last-child {
+            border-bottom: none;
+        }
+
+        .github-event:hover {
+            padding-left: 8px;
         }
 
         .github-event-dot {
@@ -1710,104 +1911,59 @@
             border-radius: 50%;
             background: var(--accent);
             flex-shrink: 0;
-            z-index: 1;
-            margin-top: 6px;
+            margin-top: 5px;
         }
 
-        .github-event-dot.star {
-            background: #ffd700;
-            box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
-        }
-
-        .github-event-dot.fork {
-            background: #888;
-        }
-
-        .github-event-dot.pr {
-            background: #2ea043;
-        }
-
-        .github-event-dot.issue {
-            background: #d29922;
-        }
-
-        .github-event-dot.push {
-            background: var(--accent);
-        }
-
-        .github-event-line {
-            flex: 1;
-            width: 1px;
-            background: rgba(255, 255, 255, 0.08);
-            min-height: 16px;
-        }
-
-        .github-event:last-child .github-event-line {
-            display: none;
-        }
+        .github-event-dot.push { background: var(--accent); }
+        .github-event-dot.star { background: #ffd700; }
+        .github-event-dot.fork { background: #999; }
+        .github-event-dot.pr { background: #2ea043; }
+        .github-event-dot.issue { background: #d29922; }
 
         .github-event-body {
             flex: 1;
-            padding-bottom: 20px;
             min-width: 0;
         }
 
         .github-event-top {
             display: flex;
-            align-items: center;
-            gap: 8px;
+            align-items: baseline;
+            gap: 10px;
+            flex-wrap: wrap;
             margin-bottom: 2px;
         }
 
         .github-event-badge {
-            font-size: 0.6rem;
             font-family: var(--font-body);
-            letter-spacing: 1px;
+            font-size: 0.5rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            padding: 1px 6px;
-            border-radius: 3px;
-            border: 1px solid rgba(204, 255, 0, 0.2);
             color: var(--accent);
             flex-shrink: 0;
-            line-height: 1.4;
+            transition: color 0.2s ease;
         }
 
-        .github-event-badge.star {
-            border-color: rgba(255, 215, 0, 0.3);
-            color: #ffd700;
-        }
-
-        .github-event-badge.fork {
-            border-color: rgba(255, 255, 255, 0.15);
-            color: #888;
-        }
-
-        .github-event-badge.pr {
-            border-color: rgba(46, 160, 67, 0.4);
-            color: #2ea043;
-        }
-
-        .github-event-badge.issue {
-            border-color: rgba(210, 153, 34, 0.4);
-            color: #d29922;
-        }
+        .github-event-badge.star { color: #ffd700; }
+        .github-event-badge.fork { color: #999; }
+        .github-event-badge.pr { color: #2ea043; }
+        .github-event-badge.issue { color: #d29922; }
 
         .github-event-repo {
             font-family: var(--font-body);
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            white-space: nowrap;
+            font-size: 0.7rem;
+            color: #555;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .github-event-message {
             font-family: var(--font-body);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text);
             line-height: 1.5;
             word-break: break-word;
-            margin-bottom: 2px;
         }
 
         .github-event-message a {
@@ -1822,36 +1978,37 @@
         .github-event-meta {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
+            margin-top: 4px;
         }
 
         .github-event-time {
-            font-size: 0.7rem;
-            color: #555;
+            font-size: 0.65rem;
+            color: #444;
             font-family: var(--font-body);
         }
 
         .github-event-branch {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             color: var(--accent);
             font-family: var(--font-body);
             letter-spacing: 1px;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         .github-commit-list {
-            margin-top: 4px;
+            margin-top: 8px;
             padding-left: 0;
             list-style: none;
         }
 
         .github-commit-item {
-            font-size: 0.8rem;
-            color: #999;
+            font-size: 0.75rem;
+            color: #666;
             font-family: var(--font-body);
             line-height: 1.6;
-            padding-left: 12px;
+            padding-left: 16px;
             position: relative;
         }
 
@@ -1859,27 +2016,30 @@
             content: '—';
             position: absolute;
             left: 0;
-            color: #555;
+            color: #444;
         }
 
         .github-commit-item a {
-            color: #999;
+            color: #666;
             text-decoration: none;
+            transition: color 0.2s ease;
         }
 
         .github-commit-item a:hover {
             color: var(--accent);
-            text-decoration: underline;
         }
 
         .github-commit-more {
             font-family: var(--font-body);
-            font-size: 0.75rem;
-            color: #555;
-            padding-left: 12px;
+            font-size: 0.7rem;
+            color: #444;
+            padding-left: 16px;
+            margin-top: 4px;
         }
 
-        .github-loading {
+        .github-loading,
+        .github-error,
+        .github-empty {
             text-align: center;
             color: #555;
             font-family: var(--font-body);
@@ -1898,59 +2058,40 @@
             50% { opacity: 0; }
         }
 
-        .github-error {
-            text-align: center;
-            color: #555;
-            font-family: var(--font-body);
-            font-size: 0.85rem;
-            padding: 4rem 0;
-        }
-
         .github-error button {
             background: transparent;
             border: 1px solid rgba(204, 255, 0, 0.2);
             color: var(--accent);
-            padding: 6px 18px;
+            padding: 8px 24px;
             font-family: var(--font-body);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            cursor: pointer;
-            margin-top: 12px;
-            border-radius: 4px;
-            transition: background 0.3s ease;
+            cursor: none;
+            margin-top: 16px;
+            transition: all 0.3s ease;
         }
 
         .github-error button:hover {
-            background: rgba(204, 255, 0, 0.1);
-        }
-
-        .github-empty {
-            text-align: center;
-            color: #555;
-            font-family: var(--font-body);
-            font-size: 0.85rem;
-            padding: 4rem 0;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            background: rgba(204, 255, 0, 0.08);
+            border-color: var(--accent);
         }
 
         .github-load-more-wrap {
             text-align: center;
-            padding: 2rem 0 1rem;
+            padding: 1.5rem 0 1rem;
         }
 
         .github-load-more {
             background: transparent;
-            border: 1px solid rgba(204, 255, 0, 0.2);
+            border: 1px solid rgba(204, 255, 0, 0.15);
             color: var(--accent);
-            padding: 10px 28px;
+            padding: 10px 32px;
             font-family: var(--font-body);
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 4px;
+            cursor: none;
             transition: all 0.3s ease;
         }
 
@@ -1961,18 +2102,33 @@
 
         .github-load-more:disabled {
             opacity: 0.3;
-            cursor: not-allowed;
+            cursor: none;
+        }
+
+        .github-load-more.loading {
+            animation: gh-load-pulse 0.8s ease-in-out infinite;
+            letter-spacing: 6px;
+        }
+
+        @keyframes gh-load-pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
         }
 
         @media (max-width: 768px) {
-            .github-event-graph {
-                width: 14px;
+            .gh-stats {
+                gap: 1.5rem;
+                flex-wrap: wrap;
             }
 
-            .github-event-dot {
-                width: 8px;
-                height: 8px;
-                margin-top: 5px;
+            .gh-stat-card {
+                flex: 1 1 40%;
+                min-width: 100px;
+            }
+
+            .gh-dashboard {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .github-event-message {
@@ -1984,177 +2140,6 @@
             .terminal-body {
                 padding: 10px 12px;
                 min-height: 200px;
-            }
-        }
-
-        /* SECTION: GITHUB DASHBOARD */
-        .gh-stats {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin: 0 auto 2.5rem;
-            max-width: 700px;
-        }
-
-        .gh-stat-card {
-            flex: 1;
-            min-width: 110px;
-            max-width: 160px;
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 6px;
-            padding: 1.2rem 1rem;
-            text-align: center;
-        }
-
-        .gh-stat-number {
-            font-family: var(--font-display);
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 800;
-            color: var(--accent);
-            line-height: 1;
-        }
-
-        .gh-stat-label {
-            font-family: var(--font-body);
-            font-size: 0.65rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 0.4rem;
-        }
-
-        .gh-dashboard {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            max-width: 700px;
-            margin: 0 auto 2.5rem;
-        }
-
-        .gh-panel {
-            background: var(--surface);
-            border: 1px solid var(--line);
-            border-radius: 6px;
-            padding: 1.5rem;
-        }
-
-        .gh-panel-title {
-            font-family: var(--font-body);
-            font-size: 0.6rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 1rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 1px solid var(--line);
-        }
-
-        .gh-lang-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-        }
-
-        .gh-lang-name {
-            font-family: var(--font-body);
-            font-size: 0.75rem;
-            color: var(--text);
-            min-width: 70px;
-            text-align: right;
-        }
-
-        .gh-lang-bar-track {
-            flex: 1;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .gh-lang-bar-fill {
-            height: 100%;
-            background: var(--accent);
-            border-radius: 4px;
-            width: 0%;
-            transition: width 1s var(--ease-snap);
-        }
-
-        .gh-lang-count {
-            font-family: var(--font-body);
-            font-size: 0.7rem;
-            color: var(--accent);
-            min-width: 20px;
-            text-align: right;
-            font-weight: 600;
-        }
-
-        .gh-repo-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .gh-repo-item:last-child {
-            border-bottom: none;
-        }
-
-        .gh-repo-rank {
-            font-family: var(--font-body);
-            font-size: 0.6rem;
-            color: #444;
-            min-width: 20px;
-            font-weight: 700;
-        }
-
-        .gh-repo-name {
-            flex: 1;
-            font-family: var(--font-body);
-            font-size: 0.8rem;
-        }
-
-        .gh-repo-name a {
-            color: var(--text);
-            text-decoration: none;
-        }
-
-        .gh-repo-name a:hover {
-            color: var(--accent);
-        }
-
-        .gh-repo-stars {
-            font-family: var(--font-body);
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            white-space: nowrap;
-        }
-
-        .gh-repo-lang-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        @media (max-width: 768px) {
-            .gh-dashboard {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .gh-stat-card {
-                min-width: 80px;
-                max-width: 130px;
-                padding: 1rem 0.8rem;
-            }
-
-            .gh-stats {
-                gap: 0.6rem;
             }
         }
     </style>
@@ -2592,18 +2577,34 @@
         <section class="github-section">
 
             <div class="github-header">
-                <div class="github-header-tag">OPEN SOURCE</div>
-                <h2>GITHUB <span style="color: var(--accent);">ECOSYSTEM</span></h2>
+                <div class="github-header-tag">OPEN SOURCE ECOSYSTEM</div>
+                <h2>GITHUB <span style="color: var(--accent);">ACTIVITY</span></h2>
             </div>
 
             <div class="gh-stats" id="gh-stats"></div>
 
             <div class="gh-dashboard">
-                <div class="gh-panel" id="gh-languages">
-                    <div class="gh-panel-title">LANGUAGES</div>
+                <div class="gh-panel">
+                    <div class="gh-panel-header">
+                        <span class="gh-panel-dots">
+                            <span class="gh-panel-dot gh-panel-dot--red"></span>
+                            <span class="gh-panel-dot gh-panel-dot--yellow"></span>
+                            <span class="gh-panel-dot gh-panel-dot--green"></span>
+                        </span>
+                        LANGUAGES
+                    </div>
+                    <div class="gh-panel-body" id="gh-languages"></div>
                 </div>
-                <div class="gh-panel" id="gh-toprepos">
-                    <div class="gh-panel-title">TOP REPOS</div>
+                <div class="gh-panel">
+                    <div class="gh-panel-header">
+                        <span class="gh-panel-dots">
+                            <span class="gh-panel-dot gh-panel-dot--red"></span>
+                            <span class="gh-panel-dot gh-panel-dot--yellow"></span>
+                            <span class="gh-panel-dot gh-panel-dot--green"></span>
+                        </span>
+                        TOP REPOS
+                    </div>
+                    <div class="gh-panel-body" id="gh-toprepos"></div>
                 </div>
             </div>
 
@@ -3507,10 +3508,7 @@
             el.className = 'github-event';
 
             el.innerHTML = `
-                <div class="github-event-graph">
-                    <div class="github-event-dot ${icon}"></div>
-                    <div class="github-event-line"></div>
-                </div>
+                <div class="github-event-dot ${icon}"></div>
                 <div class="github-event-body">
                     <div class="github-event-top">
                         <span class="github-event-badge ${icon}">${badge}</span>
@@ -3519,6 +3517,7 @@
                     <div class="github-event-message">${message}</div>
                     <div class="github-event-meta">
                         <span class="github-event-time">${timeAgo(ev.timestamp)}</span>
+                        ${ev.payload.branch ? `<span class="github-event-branch">${ev.payload.branch}</span>` : ''}
                     </div>
                     ${ev.type === 'PushEvent' && ev.payload.commits && ev.payload.commits.length > 1 ? (() => {
                         const extra = ev.payload.commits.slice(1);
@@ -3569,11 +3568,10 @@
                 { num: stats.totalRepos, label: 'REPOSITORIES' },
                 { num: stats.totalStars, label: 'STARS' },
                 { num: stats.languageCount, label: 'LANGUAGES' },
-                { num: stats.totalForks, label: 'FORKS' },
             ].map(s => `
                 <div class="gh-stat-card">
-                    <div class="gh-stat-number">${s.num}</div>
                     <div class="gh-stat-label">${s.label}</div>
+                    <div class="gh-stat-number">${s.num}</div>
                 </div>
             `).join('');
         }
@@ -3601,7 +3599,7 @@
             }
             ghTopEl.innerHTML += repos.map((r, i) => `
                 <div class="gh-repo-item">
-                    <span class="gh-repo-rank">#${i + 1}</span>
+                    <span class="gh-repo-rank ${i === 0 ? 'top1' : i === 1 ? 'top2' : i === 2 ? 'top3' : ''}">#${i + 1}</span>
                     <span class="gh-repo-lang-dot" style="background:${langColors[r.language] || '#555'}"></span>
                     <span class="gh-repo-name"><a href="${r.url}" target="_blank">${r.name}</a></span>
                     <span class="gh-repo-stars">★ ${r.stars}</span>
@@ -3705,7 +3703,11 @@
                 wrap.className = 'github-load-more-wrap';
                 wrap.innerHTML = `<button class="github-load-more" id="gh-load-more">LOAD MORE</button>`;
                 githubFeed.appendChild(wrap);
-                document.getElementById('gh-load-more').addEventListener('click', () => {
+                document.getElementById('gh-load-more').addEventListener('click', (e) => {
+                    const btn = e.currentTarget;
+                    btn.textContent = '...';
+                    btn.disabled = true;
+                    btn.classList.add('loading');
                     ghPage++;
                     loadGithubEvents(ghPage);
                 });
@@ -3763,7 +3765,11 @@
                 wrap.className = 'github-load-more-wrap';
                 wrap.innerHTML = `<button class="github-load-more" id="gh-load-more">LOAD MORE</button>`;
                 githubFeed.appendChild(wrap);
-                document.getElementById('gh-load-more').addEventListener('click', () => {
+                document.getElementById('gh-load-more').addEventListener('click', (e) => {
+                    const btn = e.currentTarget;
+                    btn.textContent = '...';
+                    btn.disabled = true;
+                    btn.classList.add('loading');
                     ghPage++;
                     loadGithubEvents(ghPage);
                 });
