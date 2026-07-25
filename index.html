@@ -1535,7 +1535,7 @@
         }
 
         .terminal-line--output {
-            color: var(--text-dim);
+            color: var(--text);
         }
 
         .terminal-line--highlight {
@@ -1547,7 +1547,7 @@
         }
 
         .terminal-line--dim {
-            color: #333;
+            color: #666;
         }
 
         .terminal-cursor {
@@ -1592,6 +1592,17 @@
 
         .terminal-input::placeholder {
             color: #333;
+        }
+
+        .terminal-link {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            cursor: pointer;
+        }
+
+        .terminal-link:hover {
+            opacity: 0.7;
         }
 
         /* SECTION: BOOK SHELF */
@@ -1935,7 +1946,7 @@
 
                             <p>3D visualization of global subsea cables using Three.js and GeoJSON data.</p>
                         </div>
-                        <a href="https://init6.vercel.app" target="_blank" class="p-arrow">
+                        <a href="https://nsoe-project.vercel.app" target="_blank" class="p-arrow">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -2225,7 +2236,7 @@
                     <div class="terminal-output" id="terminal-output"></div>
                     <div class="terminal-input-line">
                         <span class="terminal-prompt">saqin:~$</span>
-                        <input type="text" class="terminal-input" id="terminal-input" placeholder="type --help" autocomplete="off" spellcheck="false">
+                        <input type="text" class="terminal-input" id="terminal-input" placeholder="type help" autocomplete="off" spellcheck="false">
                     </div>
                 </div>
 
@@ -2888,7 +2899,7 @@
         const termCommands = {
             help: {
                 desc: 'Available commands',
-                out: `  about       Who am I\n  skills      Skills & technologies\n  projects    Featured projects\n  contact     How to reach me\n  clear       Clear the terminal`
+                out: `  about       Who am I\n  skills      Skills & technologies\n  projects    Featured projects\n  contact     How to reach me\n  clear       Clear the terminal\n\n  Type <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands`
             },
             about: {
                 desc: 'About me',
@@ -2900,11 +2911,11 @@
             },
             projects: {
                 desc: 'Featured projects',
-                out: `  [1] Nervous System of the Earth\n      — 3D subsea cable viz (Three.js)\n      → https://init6.vercel.app\n  [2] 6th NELC Homepage\n      — Event portal for national fest\n      → https://6thnelc.vercel.app\n  [3] Metadata-Fixer\n      — Python EXIF utility (★16)\n      → https://github.com/SaqinNoor/Metadata-Fixer`
+                out: `  [1] The Nervous System of the Earth\n      — 3D subsea cable viz (Three.js)\n      → <a href="https://nsoe-project.vercel.app" target="_blank" class="terminal-link">nsoe-project.vercel.app</a>\n  [2] 6th NELC Homepage\n      — Event portal for national fest\n      → <a href="https://6thnelc.vercel.app" target="_blank" class="terminal-link">6thnelc.vercel.app</a>\n  [3] IELC Official Site\n      — Modern redesign for institutional presence\n      → <a href="https://ielc-homepage.vercel.app" target="_blank" class="terminal-link">ielc-homepage.vercel.app</a>`
             },
             contact: {
                 desc: 'Contact information',
-                out: `  Email:   contact@saqin.is-a.dev\n  GitHub:  github.com/SaqinNoor\n  Status:  Open for collaboration`
+                out: `  Email:   <a href="mailto:contact@saqin.is-a.dev" class="terminal-link">contact@saqin.is-a.dev</a>\n  GitHub:  <a href="https://github.com/SaqinNoor" target="_blank" class="terminal-link">github.com/SaqinNoor</a>\n  Status:  Open for collaboration`
             }
         };
 
@@ -2950,25 +2961,25 @@
                 addLine(command.out, 'terminal-line--output');
             } else {
                 addLine(`  Command not found: ${trimmed}`, 'terminal-line--dim');
-                addLine(`  Type --help for available commands`, 'terminal-line--dim');
+                addLine(`  Type <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands`, 'terminal-line--dim');
             }
         }
 
         async function runDemo() {
             isTyping = true;
             const lines = [
-                { text: 'saqin:~$ saqin --greet', cls: 'terminal-line--prompt', html: true },
+                { text: 'saqin:~$ greet', cls: 'terminal-line--prompt', html: true },
                 { text: '  Welcome. I\'m Saqin Noor.', cls: 'terminal-line--output' },
                 { text: '', cls: '' },
-                { text: 'saqin:~$ saqin --skills', cls: 'terminal-line--prompt', html: true },
+                { text: 'saqin:~$ skills', cls: 'terminal-line--prompt', html: true },
                 { text: '  Languages:     JavaScript, Python, HTML, CSS', cls: 'terminal-line--output' },
                 { text: '  Frameworks:    Three.js, GSAP', cls: 'terminal-line--output' },
                 { text: '  Tools:         Vite, Git, Vercel, Lenis, Lucide', cls: 'terminal-line--output' },
                 { text: '  Concepts:      WebGL, 3D Graphics, EXIF/Metadata, UI/UX', cls: 'terminal-line--output' },
                 { text: '', cls: '' },
-                { text: 'saqin:~$ saqin --status', cls: 'terminal-line--prompt', html: true },
+                { text: 'saqin:~$ status', cls: 'terminal-line--prompt', html: true },
                 { text: '  Status: Open for collaboration', cls: 'terminal-line--accent' },
-                { text: '  Type --help for available commands', cls: 'terminal-line--dim' },
+                { text: '  Type <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands', cls: 'terminal-line--dim', html: true },
             ];
 
             for (const line of lines) {
@@ -3004,6 +3015,18 @@
         terminalInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !isTyping) {
                 const cmd = terminalInput.value;
+                terminalInput.value = '';
+                processCommand(cmd);
+            }
+        });
+
+        // Click handler for terminal links
+        terminalOutput.addEventListener('click', (e) => {
+            const link = e.target.closest('.terminal-link');
+            if (!link) return;
+            const cmd = link.dataset.cmd;
+            if (cmd) {
+                e.preventDefault();
                 terminalInput.value = '';
                 processCommand(cmd);
             }
