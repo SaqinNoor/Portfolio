@@ -2267,6 +2267,58 @@
             50% { opacity: 0.7; }
         }
 
+        .gh-skeleton {
+            background: linear-gradient(90deg, #111 25%, #1c1c1c 50%, #111 75%);
+            background-size: 200% 100%;
+            animation: gh-skel-shimmer 1.8s ease-in-out infinite;
+            border-radius: 4px;
+        }
+
+        @keyframes gh-skel-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .gh-skeleton--stat {
+            width: 80px;
+            height: 44px;
+            margin: 0 auto;
+        }
+
+        .gh-skeleton--text {
+            height: 12px;
+            margin-bottom: 10px;
+        }
+
+        .gh-skeleton--text-sm {
+            height: 8px;
+            width: 55%;
+            margin-bottom: 14px;
+        }
+
+        .gh-skeleton--feed-row {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .gh-skeleton--feed-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 5px;
+        }
+
+        .gh-skeleton--feed-body {
+            flex: 1;
+        }
+
+        .gh-skeleton--feed-row:last-child {
+            border-bottom: none;
+        }
+
         @media (max-width: 768px) {
             .gh-stats {
                 gap: 1.5rem;
@@ -2733,7 +2785,11 @@
                 <h2>GITHUB <span style="color: var(--accent);">ACTIVITY</span></h2>
             </div>
 
-            <div class="gh-stats" id="gh-stats"></div>
+            <div class="gh-stats" id="gh-stats">
+                <div class="gh-stat-card"><div class="gh-skeleton gh-skeleton--stat"></div></div>
+                <div class="gh-stat-card"><div class="gh-skeleton gh-skeleton--stat"></div></div>
+                <div class="gh-stat-card"><div class="gh-skeleton gh-skeleton--stat"></div></div>
+            </div>
 
             <div class="gh-dashboard">
                 <div class="gh-panel">
@@ -2745,7 +2801,12 @@
                         </span>
                         LANGUAGES
                     </div>
-                    <div class="gh-panel-body" id="gh-languages"></div>
+                    <div class="gh-panel-body" id="gh-languages">
+                        <div class="gh-skeleton gh-skeleton--text" style="width:85%"></div>
+                        <div class="gh-skeleton gh-skeleton--text" style="width:65%"></div>
+                        <div class="gh-skeleton gh-skeleton--text" style="width:75%"></div>
+                        <div class="gh-skeleton gh-skeleton--text" style="width:55%"></div>
+                    </div>
                 </div>
                 <div class="gh-panel">
                     <div class="gh-panel-header">
@@ -2756,12 +2817,46 @@
                         </span>
                         TOP REPOS
                     </div>
-                    <div class="gh-panel-body" id="gh-toprepos"></div>
+                    <div class="gh-panel-body" id="gh-toprepos">
+                        <div class="gh-skeleton gh-skeleton--text" style="width:80%"></div>
+                        <div class="gh-skeleton gh-skeleton--text-sm"></div>
+                        <div class="gh-skeleton gh-skeleton--text" style="width:70%;margin-top:10px"></div>
+                        <div class="gh-skeleton gh-skeleton--text-sm"></div>
+                        <div class="gh-skeleton gh-skeleton--text" style="width:75%;margin-top:10px"></div>
+                        <div class="gh-skeleton gh-skeleton--text-sm"></div>
+                    </div>
                 </div>
             </div>
 
             <div class="github-feed" id="github-feed">
-                <div class="github-loading"><span class="blink">█</span> FETCHING ACTIVITY...</div>
+                <div class="gh-skeleton--feed-row">
+                    <div class="gh-skeleton gh-skeleton--feed-dot"></div>
+                    <div class="gh-skeleton--feed-body">
+                        <div class="gh-skeleton gh-skeleton--text" style="width:35%"></div>
+                        <div class="gh-skeleton gh-skeleton--text-sm" style="width:65%"></div>
+                    </div>
+                </div>
+                <div class="gh-skeleton--feed-row">
+                    <div class="gh-skeleton gh-skeleton--feed-dot"></div>
+                    <div class="gh-skeleton--feed-body">
+                        <div class="gh-skeleton gh-skeleton--text" style="width:40%"></div>
+                        <div class="gh-skeleton gh-skeleton--text-sm" style="width:70%"></div>
+                    </div>
+                </div>
+                <div class="gh-skeleton--feed-row">
+                    <div class="gh-skeleton gh-skeleton--feed-dot"></div>
+                    <div class="gh-skeleton--feed-body">
+                        <div class="gh-skeleton gh-skeleton--text" style="width:30%"></div>
+                        <div class="gh-skeleton gh-skeleton--text-sm" style="width:60%"></div>
+                    </div>
+                </div>
+                <div class="gh-skeleton--feed-row">
+                    <div class="gh-skeleton gh-skeleton--feed-dot"></div>
+                    <div class="gh-skeleton--feed-body">
+                        <div class="gh-skeleton gh-skeleton--text" style="width:45%"></div>
+                        <div class="gh-skeleton gh-skeleton--text-sm" style="width:55%"></div>
+                    </div>
+                </div>
             </div>
 
         </section>
@@ -3875,6 +3970,11 @@
         async function loadGithubDashboard() {
             const data = await fetchGithubFull();
             if (!data) return;
+
+            ghStatsEl.innerHTML = '';
+            ghLangsEl.innerHTML = '';
+            ghTopEl.innerHTML = '';
+            githubFeed.innerHTML = '';
 
             renderStats(data.stats);
             renderLanguages(data.languages);
