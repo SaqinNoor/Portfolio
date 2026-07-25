@@ -1649,6 +1649,337 @@
             }
         }
 
+        /* SECTION: GITHUB FEED */
+        .github-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--pad-y) var(--pad-x);
+            border-top: 1px solid var(--line);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .github-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .github-header-tag {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .github-header h2 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        .github-feed {
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .github-event {
+            display: flex;
+            gap: 16px;
+            padding-bottom: 8px;
+        }
+
+        .github-event-graph {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 20px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .github-event-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+            z-index: 1;
+            margin-top: 6px;
+        }
+
+        .github-event-dot.star {
+            background: #ffd700;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+        }
+
+        .github-event-dot.fork {
+            background: #888;
+        }
+
+        .github-event-dot.pr {
+            background: #2ea043;
+        }
+
+        .github-event-dot.issue {
+            background: #d29922;
+        }
+
+        .github-event-dot.push {
+            background: var(--accent);
+        }
+
+        .github-event-line {
+            flex: 1;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            min-height: 16px;
+        }
+
+        .github-event:last-child .github-event-line {
+            display: none;
+        }
+
+        .github-event-body {
+            flex: 1;
+            padding-bottom: 20px;
+            min-width: 0;
+        }
+
+        .github-event-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 2px;
+        }
+
+        .github-event-badge {
+            font-size: 0.6rem;
+            font-family: var(--font-body);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 1px 6px;
+            border-radius: 3px;
+            border: 1px solid rgba(204, 255, 0, 0.2);
+            color: var(--accent);
+            flex-shrink: 0;
+            line-height: 1.4;
+        }
+
+        .github-event-badge.star {
+            border-color: rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+        }
+
+        .github-event-badge.fork {
+            border-color: rgba(255, 255, 255, 0.15);
+            color: #888;
+        }
+
+        .github-event-badge.pr {
+            border-color: rgba(46, 160, 67, 0.4);
+            color: #2ea043;
+        }
+
+        .github-event-badge.issue {
+            border-color: rgba(210, 153, 34, 0.4);
+            color: #d29922;
+        }
+
+        .github-event-repo {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .github-event-message {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.5;
+            word-break: break-word;
+            margin-bottom: 2px;
+        }
+
+        .github-event-message a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .github-event-message a:hover {
+            color: var(--accent);
+        }
+
+        .github-event-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .github-event-time {
+            font-size: 0.7rem;
+            color: #555;
+            font-family: var(--font-body);
+        }
+
+        .github-event-branch {
+            font-size: 0.65rem;
+            color: var(--accent);
+            font-family: var(--font-body);
+            letter-spacing: 1px;
+            opacity: 0.6;
+        }
+
+        .github-commit-list {
+            margin-top: 4px;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .github-commit-item {
+            font-size: 0.8rem;
+            color: #999;
+            font-family: var(--font-body);
+            line-height: 1.6;
+            padding-left: 12px;
+            position: relative;
+        }
+
+        .github-commit-item::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: #555;
+        }
+
+        .github-commit-item a {
+            color: #999;
+            text-decoration: none;
+        }
+
+        .github-commit-item a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .github-commit-more {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            color: #555;
+            padding-left: 12px;
+        }
+
+        .github-loading {
+            text-align: center;
+            color: #555;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 4rem 0;
+        }
+
+        .github-loading .blink {
+            animation: gh-blink 1s step-end infinite;
+        }
+
+        @keyframes gh-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .github-error {
+            text-align: center;
+            color: #555;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            padding: 4rem 0;
+        }
+
+        .github-error button {
+            background: transparent;
+            border: 1px solid rgba(204, 255, 0, 0.2);
+            color: var(--accent);
+            padding: 6px 18px;
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 12px;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .github-error button:hover {
+            background: rgba(204, 255, 0, 0.1);
+        }
+
+        .github-empty {
+            text-align: center;
+            color: #555;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            padding: 4rem 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .github-load-more-wrap {
+            text-align: center;
+            padding: 2rem 0 1rem;
+        }
+
+        .github-load-more {
+            background: transparent;
+            border: 1px solid rgba(204, 255, 0, 0.2);
+            color: var(--accent);
+            padding: 10px 28px;
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .github-load-more:hover {
+            background: rgba(204, 255, 0, 0.08);
+            border-color: var(--accent);
+        }
+
+        .github-load-more:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .github-event-graph {
+                width: 14px;
+            }
+
+            .github-event-dot {
+                width: 8px;
+                height: 8px;
+                margin-top: 5px;
+            }
+
+            .github-event-message {
+                font-size: 0.8rem;
+            }
+        }
+
         @media (max-width: 480px) {
             .terminal-body {
                 padding: 10px 12px;
@@ -2084,6 +2415,20 @@
                 </div>
 
             </div>
+        </section>
+
+        <!-- SECTION: GITHUB FEED -->
+        <section class="github-section">
+
+            <div class="github-header">
+                <div class="github-header-tag">OPEN SOURCE</div>
+                <h2>GITHUB <span style="color: var(--accent);">ACTIVITY</span></h2>
+            </div>
+
+            <div class="github-feed" id="github-feed">
+                <div class="github-loading"><span class="blink">█</span> FETCHING ACTIVITY...</div>
+            </div>
+
         </section>
 
         <!-- SECTION: PHOTO VAULT -->
@@ -2818,7 +3163,314 @@
             }
         });
 
-        
+        // GitHub Activity Feed
+        const githubFeed = document.getElementById('github-feed');
+        let ghPage = 1;
+        let ghHasMore = true;
+        let ghLoading = false;
+
+        function timeAgo(dateStr) {
+            const now = Date.now();
+            const then = new Date(dateStr).getTime();
+            const sec = Math.floor((now - then) / 1000);
+            if (sec < 60) return 'just now';
+            const min = Math.floor(sec / 60);
+            if (min < 60) return `${min}m ago`;
+            const hr = Math.floor(min / 60);
+            if (hr < 24) return `${hr}h ago`;
+            const days = Math.floor(hr / 24);
+            if (days < 30) return `${days}d ago`;
+            const months = Math.floor(days / 30);
+            if (months < 12) return `${months}mo ago`;
+            return `${Math.floor(months / 12)}y ago`;
+        }
+
+        function extractPayload(ev) {
+            switch (ev.type) {
+                case 'PushEvent': {
+                    const rawCommits = ev.payload.commits || [];
+                    const commits = rawCommits
+                        .filter(c => c && c.message)
+                        .slice(0, 3)
+                        .map(c => ({
+                            message: c.message.split('\n')[0],
+                            url: `https://github.com/${ev.repo.name}/commit/${c.sha}`,
+                        }));
+                    const branch = (ev.payload.ref || '').replace('refs/heads/', '');
+                    return {
+                        action: 'pushed',
+                        count: ev.payload.size || 0,
+                        full: commits.length > 0,
+                        commits,
+                        branch,
+                        head: commits.length === 0 ? (ev.payload.head || '').slice(0, 7) : '',
+                    };
+                }
+                case 'WatchEvent':
+                    return { action: 'starred' };
+                case 'ForkEvent':
+                    return { action: 'forked', forkUrl: ev.payload.forkee?.html_url };
+                case 'PullRequestEvent': {
+                    const pr = ev.payload.pull_request;
+                    return {
+                        action: ev.payload.action,
+                        number: ev.payload.number,
+                        title: pr?.title,
+                        url: pr?.html_url,
+                        state: pr?.state,
+                        merged: pr?.merged,
+                    };
+                }
+                case 'IssuesEvent': {
+                    const issue = ev.payload.issue;
+                    return {
+                        action: ev.payload.action,
+                        number: ev.payload.number || issue?.number,
+                        title: issue?.title,
+                        url: issue?.html_url,
+                        state: issue?.state,
+                    };
+                }
+                case 'CreateEvent':
+                    return { action: 'created', refType: ev.payload.ref_type, ref: ev.payload.ref };
+                case 'DeleteEvent':
+                    return { action: 'deleted', refType: ev.payload.ref_type, ref: ev.payload.ref };
+                case 'ReleaseEvent':
+                    return { action: 'released', tag: ev.payload.release?.tag_name, url: ev.payload.release?.html_url };
+                default:
+                    return { action: ev.type };
+            }
+        }
+
+        function normalizeEvent(ev) {
+            return {
+                id: ev.id,
+                type: ev.type,
+                repo: ev.repo.name || ev.repo.full_name || ev.repo,
+                url: (ev.repo.url || '').replace('api.github.com/repos', 'github.com') || `https://github.com/${ev.repo.name}`,
+                timestamp: ev.created_at,
+                payload: extractPayload(ev),
+            };
+        }
+
+        function ghEventIcon(type) {
+            switch (type) {
+                case 'PushEvent': return 'push';
+                case 'WatchEvent': return 'star';
+                case 'ForkEvent': return 'fork';
+                case 'PullRequestEvent': return 'pr';
+                case 'IssuesEvent': return 'issue';
+                default: return 'push';
+            }
+        }
+
+        function ghBadgeText(type, payload) {
+            switch (type) {
+                case 'PushEvent': return `PUSH${payload.branch ? ` (${payload.branch})` : ''}`;
+                case 'WatchEvent': return 'STAR';
+                case 'ForkEvent': return 'FORK';
+                case 'PullRequestEvent': return payload.merged ? 'MERGE' : payload.action === 'closed' ? 'CLOSED' : 'PR';
+                case 'IssuesEvent': return payload.action === 'opened' ? 'OPEN' : 'CLOSED';
+                case 'CreateEvent': return `CREATE ${(payload.refType || '').toUpperCase()}`;
+                case 'DeleteEvent': return `DELETE ${(payload.refType || '').toUpperCase()}`;
+                case 'ReleaseEvent': return 'RELEASE';
+                case 'PublicEvent': return 'PUBLIC';
+                default: return type.replace('Event', '').toUpperCase();
+            }
+        }
+
+        function ghMessage(type, payload) {
+            switch (type) {
+                case 'PushEvent': {
+                    if (payload.full && payload.commits.length > 0) {
+                        const msgs = payload.commits.map(c => c.message);
+                        return msgs[0] + (msgs.length > 1 ? ` (+${payload.count - 1} more)` : '');
+                    }
+                    const pieces = [];
+                    if (payload.branch) pieces.push(payload.branch);
+                    if (payload.head) pieces.push(payload.head);
+                    if (payload.count > 0) pieces.push(`${payload.count} commit${payload.count > 1 ? 's' : ''}`);
+                    return pieces.length > 0 ? pieces.join(' @ ') : 'Pushed';
+                }
+                case 'WatchEvent': return 'Starred this repository';
+                case 'ForkEvent': return `Forked → <a href="${payload.forkUrl || '#'}" target="_blank">copy</a>`;
+                case 'PullRequestEvent': {
+                    const status = payload.merged ? 'Merged' : payload.action === 'closed' ? 'Closed' : 'Opened';
+                    const label = payload.title || (payload.number ? `PR #${payload.number}` : '(no title)');
+                    return `${status}: ${label}`;
+                }
+                case 'IssuesEvent': {
+                    const action = payload.action === 'opened' ? 'Opened' : 'Closed';
+                    const label = payload.title || (payload.number ? `Issue #${payload.number}` : '(no title)');
+                    return `${action}: ${label}`;
+                }
+                case 'CreateEvent': return `Created ${payload.refType || ''}${payload.ref ? ` — ${payload.ref}` : ''}`;
+                case 'DeleteEvent': return `Deleted ${payload.refType || ''}${payload.ref ? ` — ${payload.ref}` : ''}`;
+                case 'ReleaseEvent': return `Released ${payload.tag || ''}`;
+                case 'MemberEvent': return `Member ${payload.action || ''}: ${payload.member || ''}`;
+                case 'PublicEvent': return 'Made repository public';
+                default: return type;
+            }
+        }
+
+        function renderGHEvent(ev) {
+            const icon = ghEventIcon(ev.type);
+            const badge = ghBadgeText(ev.type, ev.payload);
+            const message = ghMessage(ev.type, ev.payload);
+
+            const el = document.createElement('div');
+            el.className = 'github-event';
+
+            el.innerHTML = `
+                <div class="github-event-graph">
+                    <div class="github-event-dot ${icon}"></div>
+                    <div class="github-event-line"></div>
+                </div>
+                <div class="github-event-body">
+                    <div class="github-event-top">
+                        <span class="github-event-badge ${icon}">${badge}</span>
+                        <span class="github-event-repo">${ev.repo}</span>
+                    </div>
+                    <div class="github-event-message">${message}</div>
+                    <div class="github-event-meta">
+                        <span class="github-event-time">${timeAgo(ev.timestamp)}</span>
+                    </div>
+                    ${ev.type === 'PushEvent' && ev.payload.commits && ev.payload.commits.length > 1 ? (() => {
+                        const extra = ev.payload.commits.slice(1);
+                        const shown = extra.length;
+                        const remaining = Math.max(0, ev.payload.count - shown - 1);
+                        return `
+                        <ul class="github-commit-list">
+                            ${extra.map(c => `
+                                <li class="github-commit-item"><a href="${c.url}" target="_blank">${c.message}</a></li>
+                            `).join('')}
+                        </ul>
+                        ${remaining > 0 ? `<div class="github-commit-more">… and ${remaining} more commit${remaining > 1 ? 's' : ''}</div>` : ''}
+                        `;
+                    })() : ''}
+                </div>
+            `;
+
+            return el;
+        }
+
+        function ghSetState(type, msg) {
+            githubFeed.innerHTML = '';
+            if (type === 'loading') {
+                githubFeed.innerHTML = `<div class="github-loading"><span class="blink">█</span> ${msg || 'FETCHING ACTIVITY...'}</div>`;
+            } else if (type === 'error') {
+                githubFeed.innerHTML = `
+                    <div class="github-error">
+                        <div>${msg || 'FAILED TO FETCH ACTIVITY'}</div>
+                        <button onclick="window._ghRetry()">RETRY</button>
+                    </div>
+                `;
+            } else if (type === 'empty') {
+                githubFeed.innerHTML = `<div class="github-empty">${msg || 'NO RECENT ACTIVITY'}</div>`;
+            }
+        }
+
+        async function fetchGithubEvents(page) {
+            if (ghLoading) return;
+            ghLoading = true;
+
+            const perPage = 15;
+
+            try {
+                const res = await fetch(`/api/github?page=${page}&per_page=${perPage}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    return data;
+                }
+            } catch {
+                // Vercel function unavailable (dev mode) — fall through
+            }
+
+            try {
+                const url = `https://api.github.com/users/SaqinNoor/events/public?page=${page}&per_page=${perPage}`;
+                const res = await fetch(url, {
+                    headers: { 'User-Agent': 'portfolio-github-feed/1.0' },
+                });
+                if (!res.ok) throw new Error(`GitHub API: HTTP ${res.status}`);
+                const raw = await res.json();
+                const events = raw.map(normalizeEvent);
+                const hasMore = raw.length === perPage;
+                return { events, page, hasMore };
+            } catch (err) {
+                if (page === 1) ghSetState('error', `FAILED TO FETCH: ${err.message}`);
+                return null;
+            } finally {
+                ghLoading = false;
+            }
+        }
+
+        async function loadGithubFeed(page) {
+            if (page === 1) ghSetState('loading');
+
+            const data = await fetchGithubEvents(page);
+            if (!data) return;
+
+            if (data.events.length === 0 && page === 1) {
+                ghSetState('empty');
+                return;
+            }
+
+            if (page === 1) githubFeed.innerHTML = '';
+            ghHasMore = data.hasMore;
+
+            const loadMoreWrap = githubFeed.querySelector('.github-load-more-wrap');
+            if (loadMoreWrap) loadMoreWrap.remove();
+
+            data.events.forEach(ev => {
+                githubFeed.appendChild(renderGHEvent(ev));
+            });
+
+            if (ghHasMore) {
+                const wrap = document.createElement('div');
+                wrap.className = 'github-load-more-wrap';
+                wrap.innerHTML = `<button class="github-load-more" id="gh-load-more">LOAD MORE</button>`;
+                githubFeed.appendChild(wrap);
+                document.getElementById('gh-load-more').addEventListener('click', () => {
+                    ghPage++;
+                    loadGithubFeed(ghPage);
+                });
+            }
+        }
+
+        window._ghRetry = function() {
+            ghPage = 1;
+            ghHasMore = true;
+            loadGithubFeed(1);
+        };
+
+        // GitHub feed entrance + trigger
+        const ghSection = document.querySelector('.github-section');
+        if (ghSection) {
+            gsap.fromTo('.github-feed', {
+                opacity: 0,
+                y: 40,
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.github-section',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse',
+                }
+            });
+
+            const ghObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !ghSection.dataset.triggered) {
+                        ghSection.dataset.triggered = 'true';
+                        loadGithubFeed(1);
+                    }
+                });
+            }, { threshold: 0.3 });
+            ghObserver.observe(ghSection);
+        }
     </script>
 </body>
 
