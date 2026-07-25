@@ -1,29 +1,53 @@
 import url from 'url';
-import handler from './github.mjs';
+import githubHandler from './github.mjs';
+import contactHandler from './contact.mjs';
+
+const routes = {
+  '/api/github': githubHandler,
+  '/api/contact': contactHandler,
+};
 
 export function createServer() {
   return async (req, res, next) => {
-    const parsed = url.parse(req.url, true);
+    const original = req.originalUrl || req.url;
+    const parsed = url.parse(original, true);
+    const pathname = parsed.pathname;
     req.query = parsed.query || {};
 
-    const originalJson = res.json;
+    if (req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH') {
+      try {
+        const buffers = [];
+        for await (const chunk of req) {
+          buffers.push(chunk);
+        }
+        const body = Buffer.concat(buffers).toString();
+        req.body = body ? JSON.parse(body) : {};
+      } catch {
+        req.body = {};
+      }
+    }
+
     res.json = function (body) {
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(body));
     };
 
-    const originalStatus = res.status;
     res.status = function (code) {
       res.statusCode = code;
       return res;
     };
 
     try {
-      await handler(req, res);
+      const handler = routes[pathname];
+      if (handler) {
+        await handler(req, res);
+      } else {
+        res.statusCode = 404;
+        res.json({ error: 'Not found' });
+      }
     } catch (err) {
       res.statusCode = 500;
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify({ error: 'Internal server error', detail: err.message }));
+      res.json({ error: 'Internal server error', detail: err.message });
     }
   };
 }
