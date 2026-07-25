@@ -985,26 +985,111 @@
         }
 
         .footer {
-            height: 80vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             border-top: 1px solid var(--line);
             text-align: center;
+            padding: var(--pad-y) var(--pad-x);
         }
 
-        .footer-cta {
-            font-size: clamp(3rem, 10vw, 12rem);
+        .contact-form {
+            width: 100%;
+            max-width: 500px;
+            margin: 2rem auto 3rem;
+        }
+
+        .contact-field {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .contact-field label {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-field input,
+        .contact-field textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--line);
+            padding: 0.75rem 0;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--text);
+            outline: none;
+            caret-color: var(--accent);
+            transition: border-color 0.3s ease;
+            resize: none;
+        }
+
+        .contact-field input:focus,
+        .contact-field textarea:focus {
+            border-bottom-color: var(--accent);
+        }
+
+        .contact-field input::placeholder,
+        .contact-field textarea::placeholder {
+            color: #333;
+        }
+
+        .contact-field textarea {
+            min-height: 80px;
+        }
+
+        .contact-submit {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 6vw, 5rem);
             font-weight: 800;
             color: var(--text);
-            transition: color 0.3s;
-            line-height: 0.8;
-            margin-bottom: 3rem;
+            background: none;
+            border: none;
+            cursor: none;
+            line-height: 1;
+            padding: 0;
+            margin-top: 2rem;
+            transition: color 0.3s ease;
         }
 
-        .footer-cta:hover {
+        .contact-submit:hover {
             color: var(--accent);
+        }
+
+        .contact-submit.loading {
+            opacity: 0.3;
+            animation: contact-pulse 0.8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes contact-pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        .contact-status {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            min-height: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-status.success {
+            color: var(--accent);
+        }
+
+        .contact-status.error {
+            color: #ff5f57;
         }
 
         @media (max-width: 1024px) {
@@ -2655,9 +2740,24 @@
 
         <!-- SECTION: FOOTER -->
         <footer class="footer">
-            <div style="margin-bottom: 3rem; color: var(--text-dim); letter-spacing: 2px; font-size: 0.8rem;">READY TO
+            <div style="margin-bottom: 2rem; color: var(--text-dim); letter-spacing: 2px; font-size: 0.8rem;">READY TO
                 COLLABORATE</div>
-            <a href="mailto:contact@saqin.is-a.dev" class="footer-cta magnetic">CONTACT</a>
+            <form class="contact-form" id="contact-form">
+                <div class="contact-field">
+                    <label for="cf-name">NAME</label>
+                    <input type="text" id="cf-name" name="name" placeholder="Your name" required autocomplete="name">
+                </div>
+                <div class="contact-field">
+                    <label for="cf-email">EMAIL</label>
+                    <input type="email" id="cf-email" name="email" placeholder="your@email.com" required autocomplete="email">
+                </div>
+                <div class="contact-field">
+                    <label for="cf-message">MESSAGE</label>
+                    <textarea id="cf-message" name="message" placeholder="What's on your mind?" required></textarea>
+                </div>
+                <button type="submit" class="contact-submit" id="contact-submit">SEND →</button>
+            </form>
+            <div class="contact-status" id="contact-status"></div>
             <div class="footer-social" style="display: flex; gap: 2rem; margin-top: 2rem;">
                 <a href="https://saqinnoor.dpdns.org/github" target="_blank" class="magnetic tag"
                     style="background: transparent;">GITHUB</a>
@@ -3808,6 +3908,47 @@
             }, { threshold: 0.3 });
             ghObserver.observe(ghSection);
         }
+
+        const contactForm = document.getElementById('contact-form');
+        const contactSubmit = document.getElementById('contact-submit');
+        const contactStatus = document.getElementById('contact-status');
+
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            contactSubmit.classList.add('loading');
+            contactSubmit.textContent = '...';
+            contactStatus.textContent = '';
+            contactStatus.className = 'contact-status';
+
+            const data = {
+                name: document.getElementById('cf-name').value.trim(),
+                email: document.getElementById('cf-email').value.trim(),
+                message: document.getElementById('cf-message').value.trim(),
+            };
+
+            try {
+                const res = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+                const body = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(body.error || 'Failed to send');
+                }
+
+                contactStatus.textContent = 'MESSAGE SENT';
+                contactStatus.className = 'contact-status success';
+                contactForm.reset();
+            } catch (err) {
+                contactStatus.textContent = err.message;
+                contactStatus.className = 'contact-status error';
+            } finally {
+                contactSubmit.classList.remove('loading');
+                contactSubmit.textContent = 'SEND →';
+            }
+        });
     </script>
 </body>
 
