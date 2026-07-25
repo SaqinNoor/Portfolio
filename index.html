@@ -1329,6 +1329,30 @@
             transform: translate(-50%, -50%);
             text-align: center;
             line-height: 1.2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+        }
+
+        .radar-overlay-label.val-left {
+            transform: translate(-100%, -50%);
+            text-align: right;
+            align-items: flex-end;
+        }
+
+        .radar-overlay-label.val-right {
+            transform: translate(0, -50%);
+            text-align: left;
+            align-items: flex-start;
+        }
+
+        .radar-overlay-label .val {
+            font-family: var(--font-body);
+            font-size: clamp(10px, 3vw, 16px);
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
         }
 
         .radar-overlay-label .name {
@@ -1349,15 +1373,7 @@
             margin-top: 1px;
         }
 
-        .radar-overlay-label.val-left {
-            transform: translate(-100%, -50%);
-            text-align: right;
-        }
 
-        .radar-overlay-label.val-right {
-            transform: translate(0, -50%);
-            text-align: left;
-        }
 
         .radar-grid {
             fill: none;
@@ -1366,7 +1382,7 @@
         }
 
         .radar-grid--accent {
-            stroke: rgba(204, 255, 0, 0.25);
+            stroke: var(--line);
             stroke-width: 1;
         }
 
@@ -1376,10 +1392,9 @@
         }
 
         .radar-data {
-            fill: var(--accent);
-            fill-opacity: 0.2;
+            fill: rgba(204, 255, 0, 0.06);
             stroke: var(--accent);
-            stroke-width: 3.5;
+            stroke-width: 2;
             stroke-linejoin: round;
             transition: opacity 0.6s ease;
         }
@@ -1391,23 +1406,7 @@
             transition: opacity 0.6s ease;
         }
 
-        .radar-val-overlay {
-            position: absolute;
-            font-family: var(--font-body);
-            font-size: clamp(9px, 2.8vw, 14px);
-            font-weight: 800;
-            color: var(--accent);
-            transform: translate(-50%, -50%);
-            text-shadow:
-                0 0 0 var(--bg),
-                0 0 2px var(--bg),
-                2px 0 0 var(--bg),
-                -2px 0 0 var(--bg),
-                0 2px 0 var(--bg),
-                0 -2px 0 var(--bg);
-            pointer-events: none;
-            line-height: 1;
-        }
+
 
         .radar-detail {
             flex: 1;
@@ -2766,30 +2765,25 @@
 
                 // HTML overlay label
                 const isLeft = d.angle > 90 && d.angle < 270;
-                let lo = polarToCartesian(d.angle, RADIUS + 34);
+                let lo = polarToCartesian(d.angle, RADIUS + 36);
                 const labelEl = document.createElement('div');
                 labelEl.className = 'radar-overlay-label' + (isLeft ? ' val-left' : d.angle === -90 || d.angle === 90 ? '' : ' val-right');
                 labelEl.style.left = `${((lo.x + 220) / 440) * 100}%`;
                 labelEl.style.top = `${((lo.y + 220) / 440) * 100}%`;
+                const valSpan = document.createElement('span');
+                valSpan.className = 'val';
+                valSpan.textContent = '0';
+                valSpan.id = `r-val-${d.label.toLowerCase().replace(/[^a-z]/g, '')}`;
                 const nameSpan = document.createElement('span');
                 nameSpan.className = 'name';
                 nameSpan.textContent = d.label;
                 const subSpan = document.createElement('span');
                 subSpan.className = 'sub';
                 subSpan.textContent = d.sub;
+                labelEl.appendChild(valSpan);
                 labelEl.appendChild(nameSpan);
                 labelEl.appendChild(subSpan);
                 overlay.appendChild(labelEl);
-
-                // Value overlay — fixed outside position
-                const valEl = document.createElement('div');
-                valEl.className = 'radar-val-overlay';
-                valEl.textContent = '0';
-                valEl.id = `r-val-${d.label.toLowerCase().replace(/[^a-z]/g, '')}`;
-                const vo = polarToCartesian(d.angle, RADIUS + 10);
-                valEl.style.left = `${((vo.x + 220) / 440) * 100}%`;
-                valEl.style.top = `${((vo.y + 220) / 440) * 100}%`;
-                overlay.appendChild(valEl);
             });
 
             const dataPoly = document.createElementNS(ns, 'polygon');
