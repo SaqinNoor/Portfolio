@@ -1256,6 +1256,405 @@
         #dotted-surface canvas {
             display: block;
         }
+
+        /* SECTION: SKILL RADAR */
+        .radar-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--pad-y) var(--pad-x);
+            border-top: 1px solid var(--line);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .radar-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .radar-header-tag {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .radar-header h2 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        .radar-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .radar-svg-container {
+            width: 100%;
+            max-width: 440px;
+            flex-shrink: 0;
+            position: relative;
+            aspect-ratio: 1;
+        }
+
+        .radar-svg-container svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            inset: 0;
+        }
+
+        .radar-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .radar-overlay-label {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            line-height: 1.2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1px;
+        }
+
+        .radar-overlay-label.val-left {
+            transform: translate(-100%, -50%);
+            text-align: right;
+            align-items: flex-end;
+        }
+
+        .radar-overlay-label.val-right {
+            transform: translate(0, -50%);
+            text-align: left;
+            align-items: flex-start;
+        }
+
+        .radar-overlay-label .val {
+            font-family: var(--font-body);
+            font-size: clamp(10px, 3vw, 16px);
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+        }
+
+        .radar-overlay-label .name {
+            font-family: var(--font-display);
+            font-size: clamp(6px, 1.8vw, 10px);
+            fill: none;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .radar-overlay-label .sub {
+            font-family: var(--font-body);
+            font-size: clamp(5px, 1.3vw, 8px);
+            color: #525252;
+            display: block;
+            margin-top: 1px;
+        }
+
+
+
+        .radar-grid {
+            fill: none;
+            stroke: var(--line);
+            stroke-width: 1.5;
+        }
+
+        .radar-grid--accent {
+            stroke: var(--line);
+            stroke-width: 1;
+        }
+
+        .radar-axis {
+            stroke: var(--line);
+            stroke-width: 1;
+        }
+
+        .radar-data {
+            fill: rgba(204, 255, 0, 0.06);
+            stroke: var(--accent);
+            stroke-width: 2;
+            stroke-linejoin: round;
+            transition: opacity 0.6s ease;
+        }
+
+        .radar-dot {
+            fill: var(--accent);
+            stroke: var(--bg);
+            stroke-width: 3;
+            transition: opacity 0.6s ease;
+        }
+
+
+
+        .radar-detail {
+            flex: 1;
+            min-width: 220px;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .radar-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .radar-bar-label {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            min-width: 110px;
+            text-align: right;
+        }
+
+        .radar-bar-track {
+            flex: 1;
+            height: 8px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .radar-bar-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            border-radius: 3px;
+            transition: width 1.2s var(--ease-snap);
+        }
+
+        .radar-bar-val {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--accent);
+            min-width: 30px;
+            text-align: right;
+            font-weight: 700;
+        }
+
+        /* SECTION: SKILL TERMINAL */
+        .terminal-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: var(--pad-y) var(--pad-x);
+            border-top: 1px solid var(--line);
+            background: var(--bg);
+        }
+
+        .terminal {
+            width: 100%;
+            max-width: 860px;
+            margin: 0 auto;
+            background: #000;
+            border: 1px solid rgba(204, 255, 0, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.95rem;
+            box-shadow:
+                0 0 20px rgba(204, 255, 0, 0.06),
+                inset 0 1px 0 rgba(204, 255, 0, 0.04);
+            transition: box-shadow 0.5s ease;
+        }
+
+        .terminal:focus-within {
+            box-shadow:
+                0 0 32px rgba(204, 255, 0, 0.10),
+                0 0 60px rgba(204, 255, 0, 0.04),
+                inset 0 1px 0 rgba(204, 255, 0, 0.08);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 24px;
+            background: #0a0a0a;
+            border-bottom: 1px solid rgba(204, 255, 0, 0.08);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot--red { background: #FF5F57; }
+        .terminal-dot--yellow { background: #FFBD2E; }
+        .terminal-dot--green { background: #28C840; }
+
+        .terminal-title {
+            margin-left: auto;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .terminal-body {
+            padding: 28px 32px;
+            min-height: 360px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .terminal-output {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 180px;
+        }
+
+        .terminal-line {
+            margin-bottom: 3px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .terminal-line--prompt {
+            color: var(--accent);
+        }
+
+        .terminal-line--output {
+            color: var(--text);
+        }
+
+        .terminal-line--highlight {
+            color: var(--text);
+        }
+
+        .terminal-line--accent {
+            color: var(--accent);
+        }
+
+        .terminal-line--dim {
+            color: #666;
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: term-blink 1s step-end infinite;
+            vertical-align: text-bottom;
+            border-radius: 1px;
+        }
+
+        @keyframes term-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(204, 255, 0, 0.1);
+        }
+
+        .terminal-prompt {
+            color: var(--accent);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.95rem;
+            caret-color: var(--accent);
+        }
+
+        .terminal-input::placeholder {
+            color: #333;
+        }
+
+        .terminal-link {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            cursor: pointer;
+        }
+
+        .terminal-link:hover {
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .radar-wrapper {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .radar-svg-container {
+                max-width: 320px;
+            }
+
+            .radar-detail {
+                min-width: unset;
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .radar-bar-label {
+                min-width: 80px;
+                font-size: 0.6rem;
+            }
+
+            .terminal-body {
+                padding: 14px 16px;
+                min-height: 240px;
+            }
+
+            .terminal {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .terminal-body {
+                padding: 10px 12px;
+                min-height: 200px;
+            }
+        }
     </style>
     <script type="application/ld+json">
     {
@@ -1390,7 +1789,7 @@
 
                             <p>3D visualization of global subsea cables using Three.js and GeoJSON data.</p>
                         </div>
-                        <a href="https://init6.vercel.app" target="_blank" class="p-arrow">
+                        <a href="https://nsoe-project.vercel.app" target="_blank" class="p-arrow">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                 stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -1648,6 +2047,45 @@
             </div>
         </section>
 
+        <!-- SECTION: SKILL RADAR -->
+        <section class="radar-section">
+
+            <div class="radar-header">
+                <div class="radar-header-tag">PROFICIENCY</div>
+                <h2>SKILL <span style="color: var(--accent);">RADAR</span></h2>
+            </div>
+
+            <div class="radar-wrapper">
+                <div class="radar-svg-container">
+                    <svg viewBox="-220 -220 440 440" id="radar-chart"></svg>
+                </div>
+                <div class="radar-detail" id="radar-detail"></div>
+            </div>
+        </section>
+
+        <!-- SECTION: SKILL TERMINAL -->
+        <section class="terminal-section">
+
+            <div class="terminal" id="skill-terminal">
+
+                <div class="terminal-header">
+                    <span class="terminal-dot terminal-dot--red"></span>
+                    <span class="terminal-dot terminal-dot--yellow"></span>
+                    <span class="terminal-dot terminal-dot--green"></span>
+                    <span class="terminal-title">SAQIN — TERMINAL</span>
+                </div>
+
+                <div class="terminal-body">
+                    <div class="terminal-output" id="terminal-output"></div>
+                    <div class="terminal-input-line">
+                        <span class="terminal-prompt">saqin:~$</span>
+                        <input type="text" class="terminal-input" id="terminal-input" placeholder="type help" autocomplete="off" spellcheck="false">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
         <!-- SECTION: PHOTO VAULT -->
         <section class="photo-vault">
             <div class="vault-header">
@@ -1725,7 +2163,7 @@
             Camera, 
             Feather, 
             MessageSquare, 
-            Landmark 
+            Landmark
         } from 'lucide';
 
         gsap.registerPlugin(ScrollTrigger);
@@ -2050,6 +2488,337 @@
             setTimeout(() => { container.style.opacity = '1'; }, 4500);
         })();
 
+        // Skill Radar Chart
+        const radarData = [
+            { label: 'FRONTEND', value: 85, angle: -90, sub: 'JS / HTML / CSS' },
+            { label: '3D & VISUAL', value: 75, angle: -30, sub: 'Three.js / WebGL / GSAP' },
+            { label: 'BACKEND', value: 60, angle: 30, sub: 'Python' },
+            { label: 'DEPLOY', value: 70, angle: 90, sub: 'Vercel' },
+            { label: 'TOOLS', value: 80, angle: 150, sub: 'Git / Vite / Lenis' },
+            { label: 'DESIGN', value: 65, angle: 210, sub: 'UI/UX / Lucide' },
+        ];
+        const RADIUS = 175;
+
+        function polarToCartesian(angle, radius) {
+            const rad = (angle * Math.PI) / 180;
+            return { x: radius * Math.cos(rad), y: radius * Math.sin(rad) };
+        }
+
+        function buildRadar() {
+            const svg = document.getElementById('radar-chart');
+            if (!svg) return;
+
+            const ns = 'http://www.w3.org/2000/svg';
+
+            [0.2, 0.4, 0.6, 0.8, 1.0].forEach(level => {
+                const pts = radarData.map(d => {
+                    const p = polarToCartesian(d.angle, RADIUS * level);
+                    return `${p.x},${p.y}`;
+                }).join(' ');
+                const poly = document.createElementNS(ns, 'polygon');
+                poly.setAttribute('points', pts);
+                poly.classList.add(level === 1.0 ? 'radar-grid' : 'radar-grid--accent');
+                svg.appendChild(poly);
+            });
+
+            const container = svg.parentElement;
+            const overlay = document.createElement('div');
+            overlay.className = 'radar-overlay';
+            container.appendChild(overlay);
+
+            radarData.forEach(d => {
+                const p = polarToCartesian(d.angle, RADIUS);
+                const line = document.createElementNS(ns, 'line');
+                line.setAttribute('x1', '0'); line.setAttribute('y1', '0');
+                line.setAttribute('x2', p.x); line.setAttribute('y2', p.y);
+                line.classList.add('radar-axis');
+                svg.appendChild(line);
+
+                const dot = document.createElementNS(ns, 'circle');
+                dot.setAttribute('cx', p.x); dot.setAttribute('cy', p.y);
+                dot.setAttribute('r', '5');
+                dot.setAttribute('opacity', '0');
+                dot.classList.add('radar-dot');
+                dot.id = `r-dot-${d.label.toLowerCase().replace(/[^a-z]/g, '')}`;
+                svg.appendChild(dot);
+
+                // HTML overlay label
+                const isLeft = d.angle > 90 && d.angle < 270;
+                let lo = polarToCartesian(d.angle, RADIUS + 36);
+                const labelEl = document.createElement('div');
+                labelEl.className = 'radar-overlay-label' + (isLeft ? ' val-left' : d.angle === -90 || d.angle === 90 ? '' : ' val-right');
+                labelEl.style.left = `${((lo.x + 220) / 440) * 100}%`;
+                labelEl.style.top = `${((lo.y + 220) / 440) * 100}%`;
+                const valSpan = document.createElement('span');
+                valSpan.className = 'val';
+                valSpan.textContent = '0';
+                valSpan.id = `r-val-${d.label.toLowerCase().replace(/[^a-z]/g, '')}`;
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'name';
+                nameSpan.textContent = d.label;
+                const subSpan = document.createElement('span');
+                subSpan.className = 'sub';
+                subSpan.textContent = d.sub;
+                labelEl.appendChild(valSpan);
+                labelEl.appendChild(nameSpan);
+                labelEl.appendChild(subSpan);
+                overlay.appendChild(labelEl);
+            });
+
+            const dataPoly = document.createElementNS(ns, 'polygon');
+            dataPoly.classList.add('radar-data');
+            dataPoly.setAttribute('points', radarData.map(() => '0,0').join(' '));
+            dataPoly.setAttribute('opacity', '0');
+            dataPoly.id = 'radar-data-poly';
+            svg.appendChild(dataPoly);
+
+            // Detail bars
+            const detail = document.getElementById('radar-detail');
+            radarData.forEach(d => {
+                const row = document.createElement('div');
+                row.className = 'radar-bar-row';
+
+                const lbl = document.createElement('span');
+                lbl.className = 'radar-bar-label';
+                lbl.textContent = d.label;
+
+                const track = document.createElement('div');
+                track.className = 'radar-bar-track';
+                const fill = document.createElement('div');
+                fill.className = 'radar-bar-fill';
+                fill.dataset.value = d.value;
+                track.appendChild(fill);
+
+                const val = document.createElement('span');
+                val.className = 'radar-bar-val';
+                val.textContent = '0';
+                val.dataset.target = d.value;
+
+                row.appendChild(lbl);
+                row.appendChild(track);
+                row.appendChild(val);
+                detail.appendChild(row);
+            });
+
+            // Animate on scroll
+            const proxy = { p: 0 };
+            gsap.to(proxy, {
+                p: 1,
+                duration: 1.4,
+                ease: 'power3.inOut',
+                scrollTrigger: {
+                    trigger: '.radar-section',
+                    start: 'top 75%',
+                    toggleActions: 'play none none reverse'
+                },
+                onUpdate: () => {
+                    const t = proxy.p;
+                    const pts = radarData.map(d => {
+                        const p = polarToCartesian(d.angle, RADIUS * (d.value / 100) * t);
+                        return `${p.x},${p.y}`;
+                    }).join(' ');
+                    dataPoly.setAttribute('points', pts);
+                    dataPoly.setAttribute('opacity', t > 0 ? '1' : '0');
+
+                    radarData.forEach(d => {
+                        const key = d.label.toLowerCase().replace(/[^a-z]/g, '');
+                        const dot = document.getElementById(`r-dot-${key}`);
+                        const val = document.getElementById(`r-val-${key}`);
+                        const p = polarToCartesian(d.angle, RADIUS * (d.value / 100) * t);
+                        dot.setAttribute('cx', p.x);
+                        dot.setAttribute('cy', p.y);
+                        dot.setAttribute('opacity', t > 0.3 ? '1' : '0');
+                        if (val) {
+                            val.textContent = Math.round(d.value * t);
+                            val.style.opacity = t > 0.5 ? '1' : '0';
+                        }
+                    });
+                },
+                onStart: () => {
+                    document.querySelectorAll('.radar-bar-fill').forEach((bar, i) => {
+                        setTimeout(() => {
+                            bar.style.width = `${bar.dataset.value}%`;
+                        }, 200 + i * 80);
+                    });
+                    document.querySelectorAll('.radar-bar-val').forEach((v, i) => {
+                        const target = parseInt(v.dataset.target);
+                        gsap.to({ val: 0 }, {
+                            val: target,
+                            duration: 0.8,
+                            delay: 0.3 + i * 0.08,
+                            ease: 'power2.out',
+                            onUpdate: function () {
+                                v.textContent = Math.round(this.targets()[0].val);
+                            }
+                        });
+                    });
+                }
+            });
+        }
+
+        buildRadar();
+
+        // Terminal
+        const terminalOutput = document.getElementById('terminal-output');
+        const terminalInput = document.getElementById('terminal-input');
+        let isTyping = false;
+        let typeQueue = [];
+
+        const termCommands = {
+            help: {
+                desc: 'Available commands',
+                out: `  about       Who am I\n  skills      Skills & technologies\n  projects    Featured projects\n  contact     How to reach me\n  clear       Clear the terminal\n\n  Type <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands`
+            },
+            about: {
+                desc: 'About me',
+                out: `  SAQIN NOOR — ISC—27\n  Student at Ideal School & College, Dhaka.\n  Developer. Leader. Achiever.\n  Building interactive experiences with code.`
+            },
+            skills: {
+                desc: 'Skills & technologies',
+                out: `  Languages:     JavaScript, Python, HTML, CSS\n  Frameworks:    Three.js, GSAP\n  Tools:         Vite, Git, Vercel, Lenis, Lucide\n  Concepts:      WebGL, 3D Graphics, EXIF/Metadata, UI/UX`
+            },
+            projects: {
+                desc: 'Featured projects',
+                out: `  [1] The Nervous System of the Earth\n      — 3D subsea cable viz (Three.js)\n      → <a href="https://nsoe-project.vercel.app" target="_blank" class="terminal-link">nsoe-project.vercel.app</a>\n  [2] 6th NELC Homepage\n      — Event portal for national fest\n      → <a href="https://6thnelc.vercel.app" target="_blank" class="terminal-link">6thnelc.vercel.app</a>\n  [3] IELC Official Site\n      — Modern redesign for institutional presence\n      → <a href="https://ielc-homepage.vercel.app" target="_blank" class="terminal-link">ielc-homepage.vercel.app</a>`
+            },
+            contact: {
+                desc: 'Contact information',
+                out: `  Email:   <a href="mailto:contact@saqin.is-a.dev" class="terminal-link">contact@saqin.is-a.dev</a>\n  GitHub:  <a href="https://github.com/SaqinNoor" target="_blank" class="terminal-link">github.com/SaqinNoor</a>\n  Status:  Open for collaboration`
+            }
+        };
+
+        function typeText(element, text, speed = 15) {
+            return new Promise(resolve => {
+                let i = 0;
+                element.textContent = '';
+                function type() {
+                    if (i < text.length) {
+                        element.textContent += text[i];
+                        i++;
+                        setTimeout(type, speed);
+                    } else {
+                        resolve();
+                    }
+                }
+                type();
+            });
+        }
+
+        function addLine(html, className = '') {
+            const line = document.createElement('div');
+            line.className = `terminal-line ${className}`;
+            line.innerHTML = html;
+            terminalOutput.appendChild(line);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            return line;
+        }
+
+        async function processCommand(cmd) {
+            const trimmed = cmd.trim().toLowerCase();
+            if (!trimmed) return;
+
+            addLine(`<span class="terminal-prompt">saqin:~$</span> ${cmd}`, 'terminal-line--prompt');
+
+            if (trimmed === 'clear') {
+                terminalOutput.innerHTML = '';
+                return;
+            }
+
+            const command = termCommands[trimmed];
+            if (command) {
+                addLine(command.out, 'terminal-line--output');
+            } else {
+                addLine(`  Command not found: ${trimmed}`, 'terminal-line--dim');
+                addLine(`  Type <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands`, 'terminal-line--dim');
+            }
+        }
+
+        async function runDemo() {
+            isTyping = true;
+            const lines = [
+                { text: 'saqin:~$ greet', cls: 'terminal-line--prompt', html: true },
+                { text: '  Welcome. I\'m Saqin Noor.', cls: 'terminal-line--output' },
+                { text: '', cls: '' },
+                { text: 'saqin:~$ skills', cls: 'terminal-line--prompt', html: true },
+                { text: '  Languages:     JavaScript, Python, HTML, CSS', cls: 'terminal-line--output' },
+                { text: '  Frameworks:    Three.js, GSAP', cls: 'terminal-line--output' },
+                { text: '  Tools:         Vite, Git, Vercel, Lenis, Lucide', cls: 'terminal-line--output' },
+                { text: '  Concepts:      WebGL, 3D Graphics, EXIF/Metadata, UI/UX', cls: 'terminal-line--output' },
+                { text: '', cls: '' },
+                { text: 'saqin:~$ status', cls: 'terminal-line--prompt', html: true },
+                { text: '  Status: Open for collaboration', cls: 'terminal-line--accent' },
+                { text: '  Type <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands', cls: 'terminal-line--dim', html: true },
+            ];
+
+            for (const line of lines) {
+                if (line.html) {
+                    addLine(line.text, line.cls);
+                } else if (line.text) {
+                    const el = addLine('', line.cls);
+                    await typeText(el, line.text);
+                } else {
+                    addLine('');
+                }
+                await new Promise(r => setTimeout(r, 120));
+            }
+            isTyping = false;
+            terminalInput.disabled = false;
+            terminalInput.focus();
+        }
+
+        // Terminal entrance animation
+        gsap.fromTo('.terminal', {
+            opacity: 0,
+            y: 40,
+            scale: 0.97
+        }, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: '.terminal-section',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+
+        // Start terminal demo when section scrolls into view
+        const termSection = document.querySelector('.terminal-section');
+        if (termSection) {
+            const termObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !termSection.dataset.triggered) {
+                        termSection.dataset.triggered = 'true';
+                        runDemo();
+                    }
+                });
+            }, { threshold: 0.3 });
+            termObserver.observe(termSection);
+        }
+
+        terminalInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !isTyping) {
+                const cmd = terminalInput.value;
+                terminalInput.value = '';
+                processCommand(cmd);
+            }
+        });
+
+        // Click handler for terminal links
+        terminalOutput.addEventListener('click', (e) => {
+            const link = e.target.closest('.terminal-link');
+            if (!link) return;
+            const cmd = link.dataset.cmd;
+            if (cmd) {
+                e.preventDefault();
+                terminalInput.value = '';
+                processCommand(cmd);
+            }
+        });
+
+        
     </script>
 </body>
 
