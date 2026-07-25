@@ -9,7 +9,8 @@ const routes = {
 
 export function createServer() {
   return async (req, res, next) => {
-    const parsed = url.parse(req.url, true);
+    const original = req.originalUrl || req.url;
+    const parsed = url.parse(original, true);
     const pathname = parsed.pathname;
     req.query = parsed.query || {};
 

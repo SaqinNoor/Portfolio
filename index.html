@@ -997,98 +997,164 @@
 
         .contact-form {
             width: 100%;
-            max-width: 500px;
+            max-width: 520px;
             margin: 2rem auto 3rem;
         }
 
-        .contact-field {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .contact-field label {
-            display: block;
-            font-family: var(--font-body);
-            font-size: 0.6rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-field input,
-        .contact-field textarea {
+        .contact-form .term-window {
             width: 100%;
+            background: #000;
+            border: 1px solid rgba(204, 255, 0, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(204, 255, 0, 0.06), inset 0 1px 0 rgba(204, 255, 0, 0.04);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .contact-form .term-window:focus-within {
+            box-shadow: 0 0 32px rgba(204, 255, 0, 0.10), 0 0 60px rgba(204, 255, 0, 0.04), inset 0 1px 0 rgba(204, 255, 0, 0.08);
+        }
+
+        .contact-form .term-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            background: #0a0a0a;
+            border-bottom: 1px solid rgba(204, 255, 0, 0.08);
+        }
+
+        .contact-form .term-dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        .contact-form .term-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+
+        .contact-form .term-dot--red { background: #FF5F57; }
+        .contact-form .term-dot--yellow { background: #FFBD2E; }
+        .contact-form .term-dot--green { background: #28C840; }
+
+        .contact-form .term-title {
+            margin-left: auto;
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .contact-form .term-body {
+            padding: 24px 24px 20px;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .contact-form .term-command {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-form .term-field {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 6px 0;
+        }
+
+        .contact-form .term-field-prompt {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            min-width: 70px;
+            flex-shrink: 0;
+        }
+
+        .contact-form .term-field input,
+        .contact-form .term-field textarea {
+            flex: 1;
             background: transparent;
             border: none;
-            border-bottom: 1px solid var(--line);
-            padding: 0.75rem 0;
-            font-family: var(--font-body);
-            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding: 6px 0 6px 8px;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.8rem;
             color: var(--text);
             outline: none;
             caret-color: var(--accent);
             transition: border-color 0.3s ease;
             resize: none;
+            min-width: 0;
         }
 
-        .contact-field input:focus,
-        .contact-field textarea:focus {
+        .contact-form .term-field input:focus,
+        .contact-form .term-field textarea:focus {
             border-bottom-color: var(--accent);
         }
 
-        .contact-field input::placeholder,
-        .contact-field textarea::placeholder {
+        .contact-form .term-field input::placeholder,
+        .contact-form .term-field textarea::placeholder {
             color: #333;
         }
 
-        .contact-field textarea {
-            min-height: 80px;
+        .contact-form .term-field textarea {
+            min-height: 60px;
         }
 
-        .contact-submit {
-            font-family: var(--font-display);
-            font-size: clamp(2rem, 6vw, 5rem);
-            font-weight: 800;
-            color: var(--text);
-            background: none;
+        .contact-form .term-send {
+            display: block;
+            width: 100%;
+            background: transparent;
             border: none;
+            border-top: 1px solid rgba(204, 255, 0, 0.08);
+            margin-top: 12px;
+            padding: 14px 0 0;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.85rem;
+            color: var(--text);
             cursor: none;
-            line-height: 1;
-            padding: 0;
-            margin-top: 2rem;
+            text-align: left;
             transition: color 0.3s ease;
+            letter-spacing: 0.5px;
         }
 
-        .contact-submit:hover {
+        .contact-form .term-send:hover {
             color: var(--accent);
         }
 
-        .contact-submit.loading {
-            opacity: 0.3;
-            animation: contact-pulse 0.8s ease-in-out infinite;
+        .contact-form .term-send.loading {
+            color: var(--text-dim);
+            animation: term-send-pulse 0.8s ease-in-out infinite;
             pointer-events: none;
         }
 
-        @keyframes contact-pulse {
+        @keyframes term-send-pulse {
             0%, 100% { opacity: 0.3; }
             50% { opacity: 0.7; }
         }
 
-        .contact-status {
-            font-family: var(--font-body);
-            font-size: 0.7rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            min-height: 1.5rem;
-            margin-bottom: 2rem;
+        .contact-form .term-status {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.75rem;
+            min-height: 1.2rem;
+            margin-top: 6px;
+            letter-spacing: 0.5px;
         }
 
-        .contact-status.success {
+        .contact-form .term-status.success {
             color: var(--accent);
         }
 
-        .contact-status.error {
+        .contact-form .term-status.error {
             color: #ff5f57;
         }
 
@@ -2743,21 +2809,36 @@
             <div style="margin-bottom: 2rem; color: var(--text-dim); letter-spacing: 2px; font-size: 0.8rem;">READY TO
                 COLLABORATE</div>
             <form class="contact-form" id="contact-form">
-                <div class="contact-field">
-                    <label for="cf-name">NAME</label>
-                    <input type="text" id="cf-name" name="name" placeholder="Your name" required autocomplete="name">
+                <div class="term-window">
+                    <div class="term-header">
+                        <div class="term-dots">
+                            <span class="term-dot term-dot--red"></span>
+                            <span class="term-dot term-dot--yellow"></span>
+                            <span class="term-dot term-dot--green"></span>
+                        </div>
+                        <span class="term-title">CONTACT</span>
+                    </div>
+                    <div class="term-body">
+                        <div class="term-command">$ contact --send</div>
+
+                        <div class="term-field">
+                            <span class="term-field-prompt">NAME</span>
+                            <input type="text" id="cf-name" placeholder="your name" required autocomplete="name">
+                        </div>
+                        <div class="term-field">
+                            <span class="term-field-prompt">EMAIL</span>
+                            <input type="email" id="cf-email" placeholder="your@email.com" required autocomplete="email">
+                        </div>
+                        <div class="term-field">
+                            <span class="term-field-prompt">MESSAGE</span>
+                            <textarea id="cf-message" placeholder="what's on your mind?" required></textarea>
+                        </div>
+
+                        <button type="submit" class="term-send" id="contact-submit">$ SEND →</button>
+                        <div class="term-status" id="contact-status"></div>
+                    </div>
                 </div>
-                <div class="contact-field">
-                    <label for="cf-email">EMAIL</label>
-                    <input type="email" id="cf-email" name="email" placeholder="your@email.com" required autocomplete="email">
-                </div>
-                <div class="contact-field">
-                    <label for="cf-message">MESSAGE</label>
-                    <textarea id="cf-message" name="message" placeholder="What's on your mind?" required></textarea>
-                </div>
-                <button type="submit" class="contact-submit" id="contact-submit">SEND →</button>
             </form>
-            <div class="contact-status" id="contact-status"></div>
             <div class="footer-social" style="display: flex; gap: 2rem; margin-top: 2rem;">
                 <a href="https://saqinnoor.dpdns.org/github" target="_blank" class="magnetic tag"
                     style="background: transparent;">GITHUB</a>
@@ -2767,6 +2848,8 @@
                     style="background: transparent;">FACEBOOK</a>
                 <a href="https://saqinnoor.dpdns.org/x" target="_blank" class="magnetic tag"
                     style="background: transparent;">X</a>
+                <a href="mailto:contact@saqin.is-a.dev" class="magnetic tag"
+                    style="background: transparent;">EMAIL</a>
             </div>
             <div style="margin-top: 6rem; font-size: 0.7rem; color: var(--line);">
                 &copy; 2026 SAQIN NOOR.
@@ -3916,9 +3999,9 @@
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             contactSubmit.classList.add('loading');
-            contactSubmit.textContent = '...';
+            contactSubmit.innerHTML = '$ SEND → <span style="opacity:0.5">…</span>';
             contactStatus.textContent = '';
-            contactStatus.className = 'contact-status';
+            contactStatus.className = 'term-status';
 
             const data = {
                 name: document.getElementById('cf-name').value.trim(),
@@ -3938,15 +4021,15 @@
                     throw new Error(body.error || 'Failed to send');
                 }
 
-                contactStatus.textContent = 'MESSAGE SENT';
-                contactStatus.className = 'contact-status success';
-                contactForm.reset();
+                contactStatus.textContent = '/msg sent ✔';
+                contactStatus.className = 'term-status success';
+
             } catch (err) {
-                contactStatus.textContent = err.message;
-                contactStatus.className = 'contact-status error';
+                contactStatus.textContent = '! error: ' + err.message;
+                contactStatus.className = 'term-status error';
             } finally {
                 contactSubmit.classList.remove('loading');
-                contactSubmit.textContent = 'SEND →';
+                contactSubmit.innerHTML = '$ SEND →';
             }
         });
     </script>
