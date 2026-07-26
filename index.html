@@ -34,7 +34,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
 
     <style>
@@ -1632,8 +1632,8 @@
             border: 1px solid rgba(204, 255, 0, 0.15);
             border-radius: 10px;
             overflow: hidden;
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.95rem;
+            font-family: 'JetBrains Mono', 'Space Mono', monospace;
+            font-size: 0.85rem;
             box-shadow:
                 0 0 20px rgba(204, 255, 0, 0.06),
                 inset 0 1px 0 rgba(204, 255, 0, 0.04);
@@ -1683,14 +1683,17 @@
         .terminal-output {
             flex: 1;
             overflow-y: auto;
+            overflow-x: hidden;
             min-height: 180px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .terminal-line {
             margin-bottom: 3px;
             line-height: 1.5;
             white-space: pre-wrap;
-            word-break: break-all;
+            word-break: break-word;
+            overflow-wrap: break-word;
         }
 
         .terminal-line--prompt {
@@ -1699,18 +1702,38 @@
 
         .terminal-line--output {
             color: var(--text);
+            padding-left: 2ch;
         }
 
         .terminal-line--highlight {
             color: var(--text);
+            padding-left: 2ch;
         }
 
         .terminal-line--accent {
             color: var(--accent);
+            padding-left: 2ch;
         }
 
         .terminal-line--dim {
             color: #666;
+            padding-left: 2ch;
+        }
+
+        .terminal-line--skill {
+            display: flex;
+            gap: 1ch;
+            padding-left: 2ch;
+        }
+
+        .terminal-line--skill .terminal-skill-label {
+            flex-shrink: 0;
+            width: 18ch;
+            color: var(--accent);
+        }
+
+        .terminal-line--skill .terminal-skill-items {
+            flex: 1;
         }
 
         .terminal-cursor {
@@ -1750,7 +1773,7 @@
             border: none;
             outline: none;
             color: var(--text);
-            font-family: 'Space Grotesk', monospace;
+            font-family: 'JetBrains Mono', 'Space Mono', monospace;
             font-size: 0.95rem;
             caret-color: var(--accent);
         }
@@ -3477,23 +3500,23 @@
         const termCommands = {
             help: {
                 desc: 'Available commands',
-                out: `  about       Who am I\n  skills      Skills & technologies\n  projects    Featured projects\n  contact     How to reach me\n  clear       Clear the terminal\n\n  Type <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands`
+                out: `about       Who am I\nskills      Skills & technologies\nprojects    Featured projects\ncontact     How to reach me\nclear       Clear the terminal\n\nType <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands`
             },
             about: {
                 desc: 'About me',
-                out: `  SAQIN NOOR — ISC—27\n  Student at Ideal School & College, Dhaka.\n  Developer. Leader. Achiever.\n  Building interactive experiences with code.`
+                out: `SAQIN NOOR — ISC—27\nStudent at Ideal School & College, Dhaka.\nDeveloper. Leader. Achiever.\nBuilding interactive experiences with code.`
             },
             skills: {
                 desc: 'Skills & technologies',
-                out: `  Languages:     JavaScript, Python, HTML, CSS\n  Frameworks:    Three.js, GSAP\n  Tools:         Vite, Git, Vercel, Lenis, Lucide\n  Concepts:      WebGL, 3D Graphics, EXIF/Metadata, UI/UX`
+                out: `  Languages:     JavaScript, Python, TypeScript, Rust, C++, Kotlin, HTML, CSS\n  Frameworks:    Three.js, GSAP, Express.js, Tailwind CSS\n  Databases:     MongoDB, PostgreSQL, Firebase\n  Tools:         Vite, Git, Vercel, Docker, Figma, Lenis, Lucide\n  Concepts:      WebGL, 3D Graphics, REST APIs, CI/CD, UI/UX`
             },
             projects: {
                 desc: 'Featured projects',
-                out: `  [1] The Nervous System of the Earth\n      — 3D subsea cable viz (Three.js)\n      → <a href="https://nsoe-project.vercel.app" target="_blank" class="terminal-link">nsoe-project.vercel.app</a>\n  [2] 6th NELC Homepage\n      — Event portal for national fest\n      → <a href="https://6thnelc.vercel.app" target="_blank" class="terminal-link">6thnelc.vercel.app</a>\n  [3] IELC Official Site\n      — Modern redesign for institutional presence\n      → <a href="https://ielc-homepage.vercel.app" target="_blank" class="terminal-link">ielc-homepage.vercel.app</a>`
+                out: `[1] The Nervous System of the Earth\n    — 3D subsea cable viz (Three.js)\n    → <a href="https://nsoe-project.vercel.app" target="_blank" class="terminal-link">nsoe-project.vercel.app</a>\n[2] 6th NELC Homepage\n    — Event portal for national fest\n    → <a href="https://6thnelc.vercel.app" target="_blank" class="terminal-link">6thnelc.vercel.app</a>\n[3] IELC Official Site\n    — Modern redesign for institutional presence\n    → <a href="https://ielc-homepage.vercel.app" target="_blank" class="terminal-link">ielc-homepage.vercel.app</a>`
             },
             contact: {
                 desc: 'Contact information',
-                out: `  Email:   <a href="mailto:contact@saqin.is-a.dev" class="terminal-link">contact@saqin.is-a.dev</a>\n  GitHub:  <a href="https://github.com/SaqinNoor" target="_blank" class="terminal-link">github.com/SaqinNoor</a>\n  Status:  Open for collaboration`
+                out: `Email:   <a href="mailto:contact@saqin.is-a.dev" class="terminal-link">contact@saqin.is-a.dev</a>\nGitHub:  <a href="https://github.com/SaqinNoor" target="_blank" class="terminal-link">github.com/SaqinNoor</a>\nStatus:  Open for collaboration`
             }
         };
 
@@ -3536,7 +3559,20 @@
 
             const command = termCommands[trimmed];
             if (command) {
-                addLine(command.out, 'terminal-line--output');
+                if (trimmed === 'skills') {
+                    [
+                        { label: 'Languages:', items: 'JavaScript, Python, TypeScript, Rust, C++, Kotlin, HTML, CSS' },
+                        { label: 'Frameworks:', items: 'Three.js, GSAP, Express.js, Tailwind CSS' },
+                        { label: 'Databases:', items: 'MongoDB, PostgreSQL, Firebase' },
+                        { label: 'Tools:', items: 'Vite, Git, Vercel, Docker, Figma, Lenis, Lucide' },
+                        { label: 'Concepts:', items: 'WebGL, 3D Graphics, REST APIs, CI/CD, UI/UX' },
+                    ].forEach(s => addLine(
+                        `<span class="terminal-skill-label">${s.label}</span><span class="terminal-skill-items">${s.items}</span>`,
+                        'terminal-line--skill'
+                    ));
+                } else {
+                    addLine(command.out, 'terminal-line--output');
+                }
             } else {
                 addLine(`  Command not found: ${trimmed}`, 'terminal-line--dim');
                 addLine(`  Type <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands`, 'terminal-line--dim');
@@ -3547,17 +3583,18 @@
             isTyping = true;
             const lines = [
                 { text: 'saqin:~$ greet', cls: 'terminal-line--prompt', html: true },
-                { text: '  Welcome. I\'m Saqin Noor.', cls: 'terminal-line--output' },
+                { text: 'Welcome. I\'m Saqin Noor.', cls: 'terminal-line--output' },
                 { text: '', cls: '' },
                 { text: 'saqin:~$ skills', cls: 'terminal-line--prompt', html: true },
-                { text: '  Languages:     JavaScript, Python, HTML, CSS', cls: 'terminal-line--output' },
-                { text: '  Frameworks:    Three.js, GSAP', cls: 'terminal-line--output' },
-                { text: '  Tools:         Vite, Git, Vercel, Lenis, Lucide', cls: 'terminal-line--output' },
-                { text: '  Concepts:      WebGL, 3D Graphics, EXIF/Metadata, UI/UX', cls: 'terminal-line--output' },
+                { text: '<span class="terminal-skill-label">Languages:</span><span class="terminal-skill-items">JavaScript, Python, TypeScript, Rust, C++, Kotlin, HTML, CSS</span>', cls: 'terminal-line--skill', html: true },
+                { text: '<span class="terminal-skill-label">Frameworks:</span><span class="terminal-skill-items">Three.js, GSAP, Express.js, Tailwind CSS</span>', cls: 'terminal-line--skill', html: true },
+                { text: '<span class="terminal-skill-label">Databases:</span><span class="terminal-skill-items">MongoDB, PostgreSQL, Firebase</span>', cls: 'terminal-line--skill', html: true },
+                { text: '<span class="terminal-skill-label">Tools:</span><span class="terminal-skill-items">Vite, Git, Vercel, Docker, Figma, Lenis, Lucide</span>', cls: 'terminal-line--skill', html: true },
+                { text: '<span class="terminal-skill-label">Concepts:</span><span class="terminal-skill-items">WebGL, 3D Graphics, REST APIs, CI/CD, UI/UX</span>', cls: 'terminal-line--skill', html: true },
                 { text: '', cls: '' },
                 { text: 'saqin:~$ status', cls: 'terminal-line--prompt', html: true },
-                { text: '  Status: Open for collaboration', cls: 'terminal-line--accent' },
-                { text: '  Type <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands', cls: 'terminal-line--dim', html: true },
+                { text: 'Status: Open for collaboration', cls: 'terminal-line--accent' },
+                { text: 'Type <a href="#" class="terminal-link" data-cmd="help">help</a> for available commands', cls: 'terminal-line--dim', html: true },
             ];
 
             for (const line of lines) {
