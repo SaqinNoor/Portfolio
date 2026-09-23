@@ -941,12 +941,14 @@
         }
 
         .gallery-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
+            columns: 3;
+            column-gap: 1.5rem;
+            column-fill: balance;
             width: 100%;
             max-width: 1400px;
             margin: 0 auto;
+            display: block;
+            height: auto;
         }
 
         .gallery-item {
@@ -956,10 +958,11 @@
             transform: translateY(40px);
             opacity: 0;
             transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            flex-grow: var(--ratio);
-            flex-shrink: var(--ratio);
-            flex-basis: calc(var(--ratio) * 280px);
-            max-height: 80vh;
+            width: 100%;
+            aspect-ratio: var(--ratio);
+            display: block;
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
         }
 
         .gallery-item.visible {
@@ -1337,10 +1340,12 @@
             }
 
             .gallery-grid {
-                gap: 1rem;
+                columns: 2;
+                column-gap: 1rem;
+                column-fill: balance;
             }
             .gallery-item {
-                flex-basis: calc(var(--ratio) * 200px);
+                margin-bottom: 1rem;
             }
             .gallery-scroll-container {
                 padding-top: 5rem;
@@ -1349,13 +1354,13 @@
 
         @media (max-width: 600px) {
             .gallery-grid {
-                display: flex;
-                flex-direction: column;
+                columns: 1;
+                column-gap: 0;
+                column-fill: balance;
             }
             .gallery-item {
-                flex-basis: auto;
-                height: 350px;
                 width: 100%;
+                margin-bottom: 1rem;
             }
 
             .footer-cta {
@@ -2909,16 +2914,17 @@
             </div>
             <div class="gallery-scroll-container" data-lenis-prevent>
                 <div class="gallery-grid" id="gallery-grid">
-                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.00s"><img src="Photographs/1_thumb.webp" loading="lazy" alt="DSC W110 Photo 1"></div>
-                    <div class="gallery-item" style="--ratio: 0.56; transition-delay: 0.05s"><img src="Photographs/2_thumb.webp" loading="lazy" alt="DSC W110 Photo 2"></div>
-                    <div class="gallery-item" style="--ratio: 0.75; transition-delay: 0.10s"><img src="Photographs/3_thumb.webp" loading="lazy" alt="DSC W110 Photo 3"></div>
-                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.15s"><img src="Photographs/4_thumb.webp" loading="lazy" alt="DSC W110 Photo 4"></div>
-                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.20s"><img src="Photographs/5_thumb.webp" loading="lazy" alt="DSC W110 Photo 5"></div>
-                    <div class="gallery-item" style="--ratio: 0.75; transition-delay: 0.25s"><img src="Photographs/6_thumb.webp" loading="lazy" alt="DSC W110 Photo 6"></div>
+                    <div class="gallery-item" style="--ratio: 0.54; transition-delay: 0.00s"><img src="Photographs/2_thumb.webp" loading="lazy" alt="DSC W110 Photo 2"></div>
+                    <div class="gallery-item" style="--ratio: 0.54; transition-delay: 0.05s"><img src="Photographs/11_thumb.webp" loading="lazy" alt="DSC W110 Photo 11 — Sylvan Sanctuary"></div>
+                    <div class="gallery-item" style="--ratio: 1.63; transition-delay: 0.10s"><img src="Photographs/5_thumb.webp" loading="lazy" alt="DSC W110 Photo 5"></div>
+                    <div class="gallery-item" style="--ratio: 0.75; transition-delay: 0.15s"><img src="Photographs/6_thumb.webp" loading="lazy" alt="DSC W110 Photo 6"></div>
+                    <div class="gallery-item" style="--ratio: 0.56; transition-delay: 0.20s"><img src="Photographs/10_thumb.webp" loading="lazy" alt="DSC W110 Photo 10"></div>
+                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.25s"><img src="Photographs/9_thumb.webp" loading="lazy" alt="DSC W110 Photo 9"></div>
                     <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.30s"><img src="Photographs/7_thumb.webp" loading="lazy" alt="DSC W110 Photo 7"></div>
-                    <div class="gallery-item" style="--ratio: 0.56; transition-delay: 0.35s"><img src="Photographs/8_thumb.webp" loading="lazy" alt="DSC W110 Photo 8"></div>
-                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.40s"><img src="Photographs/9_thumb.webp" loading="lazy" alt="DSC W110 Photo 9"></div>
-                    <div class="gallery-item" style="--ratio: 0.56; transition-delay: 0.45s"><img src="Photographs/10_thumb.webp" loading="lazy" alt="DSC W110 Photo 10"></div>
+                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.35s"><img src="Photographs/1_thumb.webp" loading="lazy" alt="DSC W110 Photo 1"></div>
+                    <div class="gallery-item" style="--ratio: 0.75; transition-delay: 0.40s"><img src="Photographs/3_thumb.webp" loading="lazy" alt="DSC W110 Photo 3"></div>
+                    <div class="gallery-item" style="--ratio: 0.56; transition-delay: 0.45s"><img src="Photographs/8_thumb.webp" loading="lazy" alt="DSC W110 Photo 8"></div>
+                    <div class="gallery-item" style="--ratio: 1.78; transition-delay: 0.50s"><img src="Photographs/4_thumb.webp" loading="lazy" alt="DSC W110 Photo 4"></div>
                 </div>
             </div>
         </div>
