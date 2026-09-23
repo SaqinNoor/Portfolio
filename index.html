@@ -997,6 +997,28 @@
             padding: var(--pad-y) var(--pad-x);
         }
 
+        .contact-header {
+            text-align: center;
+            margin-bottom: 2.4rem;
+        }
+
+        .contact-header-tag {
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            letter-spacing: 3.2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .contact-header h2 {
+            font-size: clamp(2rem, 4.8vw, 4rem);
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+            text-transform: uppercase;
+            margin-top: 0.4rem;
+        }
+
         .contact-form {
             width: 100%;
             max-width: 416px;
@@ -1015,6 +1037,23 @@
 
         .contact-form .term-window:focus-within {
             box-shadow: 0 0 25.6px rgba(204, 255, 0, 0.10), 0 0 48px rgba(204, 255, 0, 0.04), inset 0 1px 0 rgba(204, 255, 0, 0.08);
+        }
+
+        .contact-form .term-command {
+            min-height: 1.2em;
+        }
+
+        .contact-form .term-field {
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .contact-form .term-field-prompt {
+            display: inline-block;
+            min-width: 70px;
+        }
+
+        #contact-submit {
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
 
         .contact-form .term-header {
@@ -2928,8 +2967,10 @@
 
         <!-- SECTION: FOOTER -->
         <footer class="footer">
-            <div style="margin-bottom: 2rem; color: var(--text-dim); letter-spacing: 2px; font-size: 0.8rem;">READY TO
-                COLLABORATE</div>
+            <div class="contact-header">
+                <div class="contact-header-tag">GET IN TOUCH</div>
+                <h2>CONTACT <span style="color: var(--accent);">TERMINAL</span></h2>
+            </div>
             <form class="contact-form" id="contact-form">
                 <div class="term-window">
                     <div class="term-header">
@@ -3633,6 +3674,92 @@
                 toggleActions: 'play none none reverse'
             }
         });
+
+        // Contact terminal entrance animation (same as terminal)
+        gsap.fromTo('.contact-header', {
+            opacity: 0,
+            y: 20
+        }, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: '.footer',
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+
+        gsap.fromTo('.contact-form .term-window', {
+            opacity: 0,
+            y: 40,
+            scale: 0.97
+        }, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1,
+            ease: 'power3.out',
+            scrollTrigger: {
+                trigger: '.footer',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            }
+        });
+
+        // Contact typeout reveal (1-1 with terminal)
+        const contactCommandEl = document.querySelector('.contact-form .term-command');
+        const contactFieldRows = document.querySelectorAll('.contact-form .term-field');
+        const contactSubmitEl = document.getElementById('contact-submit');
+        let contactTyping = false;
+
+        // initial hidden state for typeout (prevent flash) - no slide, just hidden
+        if (contactCommandEl) contactCommandEl.textContent = '';
+        contactFieldRows.forEach(row => {
+            const promptEl = row.querySelector('.term-field-prompt');
+            if (promptEl) promptEl.textContent = '';
+            row.style.opacity = '0';
+        });
+        if (contactSubmitEl) contactSubmitEl.style.opacity = '0';
+
+        async function runContactDemo() {
+            if (contactTyping) return;
+            contactTyping = true;
+            const origCommand = '$ contact --send';
+            const origPrompts = ['NAME', 'EMAIL', 'MESSAGE'];
+            // type command (same speed 15 as terminal)
+            await typeText(contactCommandEl, origCommand, 15);
+            await new Promise(r => setTimeout(r, 120));
+            // reveal fields one by one with prompt typeout (no fade/slide, same as terminal)
+            for (let i = 0; i < contactFieldRows.length; i++) {
+                const row = contactFieldRows[i];
+                const promptEl = row.querySelector('.term-field-prompt');
+                const orig = origPrompts[i];
+                row.style.opacity = '1';
+                if (promptEl) {
+                    await typeText(promptEl, orig, 15);
+                }
+                await new Promise(r => setTimeout(r, 120));
+            }
+            if (contactSubmitEl) {
+                contactSubmitEl.style.opacity = '1';
+            }
+            contactTyping = false;
+        }
+
+        const footerSection = document.querySelector('.footer');
+        if (footerSection) {
+            const contactObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !footerSection.dataset.contactTriggered) {
+                        footerSection.dataset.contactTriggered = 'true';
+                        runContactDemo();
+                    }
+                });
+            }, { threshold: 0.3 });
+            contactObserver.observe(footerSection);
+        }
 
         // Start terminal demo when section scrolls into view
         const termSection = document.querySelector('.terminal-section');
