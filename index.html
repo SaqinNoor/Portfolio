@@ -3886,72 +3886,70 @@
             return `${Math.floor(months / 12)}y ago`;
         }
 
-        function extractPayload(ev) {
-            switch (ev.type) {
-                case 'PushEvent': {
-                    const rawCommits = ev.payload.commits || [];
-                    const commits = rawCommits
-                        .filter(c => c && c.message)
-                        .slice(0, 3)
-                        .map(c => ({
-                            message: c.message.split('\n')[0],
-                            url: `https://github.com/${ev.repo.name}/commit/${c.sha}`,
-                        }));
-                    const branch = (ev.payload.ref || '').replace('refs/heads/', '');
-                    return {
-                        action: 'pushed',
-                        count: ev.payload.size || 0,
-                        full: commits.length > 0,
-                        commits,
-                        branch,
-                        head: commits.length === 0 ? (ev.payload.head || '').slice(0, 7) : '',
-                    };
-                }
-                case 'WatchEvent':
-                    return { action: 'starred' };
-                case 'ForkEvent':
-                    return { action: 'forked', forkUrl: ev.payload.forkee?.html_url };
-                case 'PullRequestEvent': {
-                    const pr = ev.payload.pull_request;
-                    return {
-                        action: ev.payload.action,
-                        number: ev.payload.number,
-                        title: pr?.title,
-                        url: pr?.html_url,
-                        state: pr?.state,
-                        merged: pr?.merged,
-                    };
-                }
-                case 'IssuesEvent': {
-                    const issue = ev.payload.issue;
-                    return {
-                        action: ev.payload.action,
-                        number: ev.payload.number || issue?.number,
-                        title: issue?.title,
-                        url: issue?.html_url,
-                        state: issue?.state,
-                    };
-                }
-                case 'CreateEvent':
-                    return { action: 'created', refType: ev.payload.ref_type, ref: ev.payload.ref };
-                case 'DeleteEvent':
-                    return { action: 'deleted', refType: ev.payload.ref_type, ref: ev.payload.ref };
-                case 'ReleaseEvent':
-                    return { action: 'released', tag: ev.payload.release?.tag_name, url: ev.payload.release?.html_url };
-                default:
-                    return { action: ev.type };
-            }
+        function ghEsc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
 
-        function normalizeEvent(ev) {
+        // Feed items are built from sources that keep working despite the
+        // Events API being empty for this account: the Search API (PRs,
+        // issues) and per-repo commit history (pushes).
+        function feedItemFromSearchPr(it) {
+            const repo = (it.repository_url || '').replace('https://api.github.com/repos/', '');
             return {
-                id: ev.id,
-                type: ev.type,
-                repo: ev.repo.name || ev.repo.full_name || ev.repo,
-                url: (ev.repo.url || '').replace('api.github.com/repos', 'github.com') || `https://github.com/${ev.repo.name}`,
-                timestamp: ev.created_at,
-                payload: extractPayload(ev),
+                id: `pr-${it.id}`,
+                type: 'PullRequestEvent',
+                repo,
+                url: it.html_url,
+                timestamp: it.created_at,
+                payload: {
+                    action: it.state === 'closed' ? 'closed' : 'opened',
+                    number: it.number,
+                    title: it.title,
+                    url: it.html_url,
+                    merged: !!(it.pull_request && it.pull_request.merged_at),
+                },
             };
+        }
+
+        function feedItemFromSearchIssue(it) {
+            const repo = (it.repository_url || '').replace('https://api.github.com/repos/', '');
+            return {
+                id: `issue-${it.id}`,
+                type: 'IssuesEvent',
+                repo,
+                url: it.html_url,
+                timestamp: it.created_at,
+                payload: {
+                    action: it.state === 'closed' ? 'closed' : 'opened',
+                    number: it.number,
+                    title: it.title,
+                    url: it.html_url,
+                },
+            };
+        }
+
+        function feedItemFromCommit(c, repoFullName) {
+            return {
+                id: `commit-${c.sha}`,
+                type: 'CommitEvent',
+                repo: repoFullName,
+                url: `https://github.com/${repoFullName}`,
+                timestamp: c.commit.author.date,
+                payload: {
+                    message: (c.commit.message || '').split('\n')[0],
+                    url: c.html_url,
+                    sha: (c.sha || '').slice(0, 7),
+                },
+            };
+        }
+
+        function mergeFeed(items) {
+            return items
+                .filter(ev => ev && ev.timestamp)
+                .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+                .slice(0, 60);
         }
 
         function ghEventIcon(type) {
@@ -3960,6 +3958,7 @@
                 case 'WatchEvent': return 'star';
                 case 'ForkEvent': return 'fork';
                 case 'PullRequestEvent': return 'pr';
+                case 'CommitEvent': return 'push';
                 case 'IssuesEvent': return 'issue';
                 default: return 'push';
             }
@@ -3971,6 +3970,7 @@
                 case 'WatchEvent': return 'STAR';
                 case 'ForkEvent': return 'FORK';
                 case 'PullRequestEvent': return payload.merged ? 'MERGE' : payload.action === 'closed' ? 'CLOSED' : 'PR';
+                case 'CommitEvent': return 'COMMIT';
                 case 'IssuesEvent': return payload.action === 'opened' ? 'OPEN' : 'CLOSED';
                 case 'CreateEvent': return `CREATE ${(payload.refType || '').toUpperCase()}`;
                 case 'DeleteEvent': return `DELETE ${(payload.refType || '').toUpperCase()}`;
@@ -3994,16 +3994,20 @@
                     return pieces.length > 0 ? pieces.join(' @ ') : 'Pushed';
                 }
                 case 'WatchEvent': return 'Starred this repository';
-                case 'ForkEvent': return `Forked → <a href="${payload.forkUrl || '#'}" target="_blank">copy</a>`;
+                case 'ForkEvent': return `Forked → <a href="${ghEsc(payload.forkUrl || '#')}" target="_blank">copy</a>`;
                 case 'PullRequestEvent': {
                     const status = payload.merged ? 'Merged' : payload.action === 'closed' ? 'Closed' : 'Opened';
-                    const label = payload.title || (payload.number ? `PR #${payload.number}` : '(no title)');
-                    return `${status}: ${label}`;
+                    const label = ghEsc(payload.title || (payload.number ? `PR #${payload.number}` : '(no title)'));
+                    return `${status}: <a href="${ghEsc(payload.url || '#')}" target="_blank">${label}</a>`;
                 }
                 case 'IssuesEvent': {
                     const action = payload.action === 'opened' ? 'Opened' : 'Closed';
-                    const label = payload.title || (payload.number ? `Issue #${payload.number}` : '(no title)');
-                    return `${action}: ${label}`;
+                    const label = ghEsc(payload.title || (payload.number ? `Issue #${payload.number}` : '(no title)'));
+                    return `${action}: <a href="${ghEsc(payload.url || '#')}" target="_blank">${label}</a>`;
+                }
+                case 'CommitEvent': {
+                    const label = ghEsc(payload.message || payload.sha || 'commit');
+                    return `<a href="${ghEsc(payload.url || '#')}" target="_blank">${label}</a>`;
                 }
                 case 'CreateEvent': return `Created ${payload.refType || ''}${payload.ref ? ` — ${payload.ref}` : ''}`;
                 case 'DeleteEvent': return `Deleted ${payload.refType || ''}${payload.ref ? ` — ${payload.ref}` : ''}`;
@@ -4137,10 +4141,10 @@
             }
 
             try {
-                const [reposRes, eventsRes] = await Promise.all([
-                    fetch('https://api.github.com/users/SaqinNoor/repos?per_page=100&sort=pushed', { headers: { 'User-Agent': 'portfolio/1.0' } }),
-                    fetch('https://api.github.com/users/SaqinNoor/events/public?per_page=15', { headers: { 'User-Agent': 'portfolio/1.0' } }),
-                ]);
+                const ghHeaders = { headers: { 'User-Agent': 'portfolio/1.0' } };
+                const since = new Date(Date.now() - 90 * 86400000).toISOString();
+
+                const reposRes = await fetch('https://api.github.com/users/SaqinNoor/repos?per_page=100&sort=pushed', ghHeaders);
 
                 if (!reposRes.ok) {
                     const status = reposRes.status;
@@ -4152,14 +4156,26 @@
                     }
                     throw new Error(`Repos API: HTTP ${status}${text ? ' — ' + text.slice(0, 80) : ''}`);
                 }
-                if (!eventsRes.ok) {
-                    const status = eventsRes.status;
-                    const text = await eventsRes.text().catch(() => '');
-                    throw new Error(`Events API: HTTP ${status}${text ? ' — ' + text.slice(0, 80) : ''}`);
+
+                const repos = await reposRes.json();
+
+                const commitRepos = repos.filter(r => !r.fork && !r.archived).slice(0, 4);
+                const [prsRes, issuesRes, ...commitResList] = await Promise.all([
+                    fetch('https://api.github.com/search/issues?q=author:SaqinNoor+type:pr&sort=created&order=desc&per_page=30', ghHeaders),
+                    fetch('https://api.github.com/search/issues?q=author:SaqinNoor+type:issue&sort=created&order=desc&per_page=30', ghHeaders),
+                    ...commitRepos.map(r => fetch(`https://api.github.com/repos/${r.full_name}/commits?author=SaqinNoor&per_page=15&since=${since}`, ghHeaders)),
+                ]);
+
+                if (!prsRes.ok || !issuesRes.ok) {
+                    const bad = prsRes.ok ? issuesRes : prsRes;
+                    const status = bad.status;
+                    const text = await bad.text().catch(() => '');
+                    throw new Error(`Search API: HTTP ${status}${text ? ' — ' + text.slice(0, 80) : ''}`);
                 }
 
-                const [repos, events] = await Promise.all([
-                    reposRes.json(), eventsRes.json(),
+                const [prs, issues, ...commitLists] = await Promise.all([
+                    prsRes.json(), issuesRes.json(),
+                    ...commitResList.map(r => r.ok ? r.json() : []),
                 ]);
 
                 const totalStars = repos.reduce((s, r) => s + (r.stargazers_count || 0), 0);
@@ -4180,15 +4196,25 @@
                     .slice(0, 5)
                     .map(r => ({ name: r.name, stars: r.stargazers_count || 0, forks: r.forks_count || 0, language: r.language, url: r.html_url }));
 
-                const normalizedEvents = events.map(normalizeEvent);
-                const hasMore = events.length === 15;
+                const items = [
+                    ...(prs.items || []).map(feedItemFromSearchPr),
+                    ...(issues.items || []).map(feedItemFromSearchIssue),
+                ];
+                commitResList.forEach((_, i) => {
+                    const repoFullName = commitRepos[i].full_name;
+                    (Array.isArray(commitLists[i]) ? commitLists[i] : []).forEach(c => {
+                        if (c && c.commit && c.commit.author && c.commit.author.date) {
+                            items.push(feedItemFromCommit(c, repoFullName));
+                        }
+                    });
+                });
 
                 const result = {
                     stats: { totalRepos: repos.length, totalStars, totalForks, languageCount: languages.length },
                     languages,
                     topRepos,
-                    events: normalizedEvents,
-                    hasMore,
+                    events: mergeFeed(items),
+                    hasMore: false,
                 };
 
                 try { sessionStorage.setItem(cacheKey, JSON.stringify(result)); } catch { /* ignore */ }
