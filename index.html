@@ -2516,6 +2516,17 @@
 
                 <div class="award-highlight magnetic">
                     <div class="award-label">MAJOR RECOGNITION</div>
+                    <div class="tag tag--accent">WEB DEVELOPMENT</div>
+                    <h3 style="font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.1;">Champion</h3>
+                    <p style="color: var(--text-dim); margin-bottom: 0.5rem;">3rd IAIT National IT Fest 2026</p>
+                    <p style="color: var(--text);">Segment: <strong>Web Development</strong></p>
+                    <p style="color: var(--text-dim); margin-top: 0.5rem;">Winning entry: <a
+                            href="https://nsoe-project.vercel.app" target="_blank" class="terminal-link">The Nervous
+                            System of the Earth</a></p>
+                </div>
+
+                <div class="award-highlight magnetic">
+                    <div class="award-label">MAJOR RECOGNITION</div>
                     <div class="tag tag--accent">FRONT-END DEVELOPMENT</div>
                     <h3 style="font-size: 2.5rem; margin-bottom: 1rem; line-height: 1.1;">Runners up</h3>
                     <p style="color: var(--text-dim); margin-bottom: 0.5rem;">INIT 6.0 by Notre Dame Information and
@@ -2537,9 +2548,13 @@
                     <div class="project-item magnetic">
                         <div class="project-overlay"></div>
                         <div class="p-left">
-                            <div class="tag tag--accent"
-                                style="position: relative; z-index: 2; font-size: 0.6rem; margin-bottom: 1.5rem; transform: translateY(-10px);">
-                                INIT 6.0 WINNER</div>
+                            <div
+                                style="position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; transform: translateY(-10px);">
+                                <div class="tag tag--accent" style="font-size: 0.6rem; margin-bottom: 0;">3RD IAIT
+                                    CHAMPION</div>
+                                <div class="tag tag--accent" style="font-size: 0.6rem; margin-bottom: 0;">INIT 6.0
+                                    WINNER</div>
+                            </div>
                             <h3>The Nervous System of the Earth</h3>
 
                             <p>3D visualization of global subsea cables using Three.js and GeoJSON data.</p>
@@ -2696,6 +2711,46 @@
             <div class="persona-content">
 
                 <div class="achiever-list">
+                    <div class="achiever-row magnetic">
+                        <div class="ac-icon">
+                            <i data-lucide="code"></i>
+                        </div>
+                        <div class="ac-content">
+                            <h3>Champion</h3>
+                            <p>3rd IAIT National IT Fest 2026</p>
+                        </div>
+                        <div class="ac-badge">WEB DEVELOPMENT</div>
+                    </div>
+                    <div class="achiever-row magnetic">
+                        <div class="ac-icon">
+                            <i data-lucide="pen-tool"></i>
+                        </div>
+                        <div class="ac-content">
+                            <h3>Champion</h3>
+                            <p>3rd IAIT National IT Fest 2026</p>
+                        </div>
+                        <div class="ac-badge">LOGO DESIGN</div>
+                    </div>
+                    <div class="achiever-row magnetic">
+                        <div class="ac-icon">
+                            <i data-lucide="notebook-pen"></i>
+                        </div>
+                        <div class="ac-content">
+                            <h3>Champion</h3>
+                            <p>3rd IAIT National IT Fest 2026</p>
+                        </div>
+                        <div class="ac-badge">STORY WRITING</div>
+                    </div>
+                    <div class="achiever-row magnetic">
+                        <div class="ac-icon">
+                            <i data-lucide="image"></i>
+                        </div>
+                        <div class="ac-content">
+                            <h3>Runners Up</h3>
+                            <p>3rd IAIT National IT Fest 2026</p>
+                        </div>
+                        <div class="ac-badge">POSTER DESIGN</div>
+                    </div>
                     <div class="achiever-row magnetic">
                         <div class="ac-icon">
                             <i data-lucide="telescope"></i>
@@ -3037,7 +3092,11 @@
             Camera, 
             Feather, 
             MessageSquare, 
-            Landmark
+            Landmark,
+            Code,
+            PenTool,
+            NotebookPen,
+            Image
         } from 'lucide';
 
         gsap.registerPlugin(ScrollTrigger);
@@ -3052,7 +3111,11 @@
                 Camera,
                 Feather,
                 MessageSquare,
-                Landmark
+                Landmark,
+                Code,
+                PenTool,
+                NotebookPen,
+                Image
             }
         });
 
@@ -3556,7 +3619,7 @@
             },
             projects: {
                 desc: 'Featured projects',
-                out: `[1] The Nervous System of the Earth\n    — 3D subsea cable viz (Three.js)\n    → <a href="https://nsoe-project.vercel.app" target="_blank" class="terminal-link">nsoe-project.vercel.app</a>\n[2] 6th NELC Homepage\n    — Event portal for national fest\n    → <a href="https://6thnelc.vercel.app" target="_blank" class="terminal-link">6thnelc.vercel.app</a>\n[3] IELC Official Site\n    — Modern redesign for institutional presence\n    → <a href="https://ielc-homepage.vercel.app" target="_blank" class="terminal-link">ielc-homepage.vercel.app</a>`
+                out: `[1] The Nervous System of the Earth\n    — 3D subsea cable viz (Three.js)\n    → <a href="https://nsoe-project.vercel.app" target="_blank" class="terminal-link">nsoe-project.vercel.app</a>\n    ★ 3rd IAIT National IT Fest 2026 — Web Development Champion\n[2] 6th NELC Homepage\n    — Event portal for national fest\n    → <a href="https://6thnelc.vercel.app" target="_blank" class="terminal-link">6thnelc.vercel.app</a>\n[3] IELC Official Site\n    — Modern redesign for institutional presence\n    → <a href="https://ielc-homepage.vercel.app" target="_blank" class="terminal-link">ielc-homepage.vercel.app</a>`
             },
             contact: {
                 desc: 'Contact information',
